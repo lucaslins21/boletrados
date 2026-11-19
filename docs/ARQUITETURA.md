@@ -168,5 +168,10 @@ README.md            # como rodar tudo
    - Os prazos também são aplicados de forma preguiçosa a cada acesso à partida, então valem mesmo se um job se perder.
    - Os efeitos usam o horário em que deveriam ter acontecido, sem estender o prazo do adversário.
    - Para produção, falta configurar o worker do Solid Queue (`bin/jobs`) e a limpeza periódica de `idempotency_keys`, junto com a hospedagem.
-6. Frontend online: telas de partidas (em andamento, aguardando, encerradas) consumindo a API.
+6. ~~Frontend online: telas de partidas (em andamento, aguardando, encerradas) consumindo a API.~~ **Feito**:
+   - Rotas com React Router: `/`, `/convite/:key`, `/partidas/:id`, e a demo em `/demo`.
+   - Componentes visuais compartilhados com a demo.
+   - Cronômetro sincronizado pelo `server_time`; atualização automática a cada 8 s na vez do adversário.
+   - Testado ponta a ponta com dois navegadores.
+   - Login de desenvolvimento (`POST /auth/dev`) só em development/test; botão do Google via Google Identity Services quando `VITE_GOOGLE_CLIENT_ID` está definido.
 7. Web Push + e-mail.

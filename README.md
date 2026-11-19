@@ -4,7 +4,12 @@
 
 Protótipo interativo, mobile-first, do **Boletrados**: quiz de futebol com partidas X1 assíncronas, sorteio de categorias com bolinhas e seis troféus para conquistar.
 
-> **Estado atual:** protótipo frontend local (`web/`), com dois jogadores simulados no mesmo navegador. A API (`api/`, Rails 8.1 + PostgreSQL) já tem login Google, convites, partidas X1 com prazos e o motor de regras testado, mas **o frontend ainda não usa a API**: o jogo visível continua sendo a demo local. A arquitetura planejada está em [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md). As perguntas são demonstrativas e precisam de curadoria antes de publicação.
+> **Estado atual:** o **X1 online funciona localmente** de ponta a ponta:
+> - login (Google quando houver `GOOGLE_CLIENT_ID`, ou login de desenvolvimento);
+> - convite por link ou código;
+> - partida entre dois navegadores, com sorteio, perguntas e prazos aplicados pela API.
+>
+> A demo local continua em `/demo` até o lançamento. Ainda faltam os avisos (Web Push e e-mail), a hospedagem e a curadoria das perguntas, que hoje são demonstrativas. A arquitetura planejada está em [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md). As perguntas são demonstrativas e precisam de curadoria antes de publicação.
 
 Monorepo:
 
@@ -14,6 +19,25 @@ Monorepo:
 | `api/` | Backend Rails 8.1 API + PostgreSQL (esqueleto) |
 | `docs/` | Produto, arquitetura, auditoria e handoff |
 | `docker-compose.yml` | PostgreSQL + API para desenvolvimento |
+
+## Rodar o X1 online localmente
+
+```bash
+HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up -d   # API em http://localhost:3000 + Postgres
+docker compose run --rm api bin/rails db:seed               # categorias e perguntas demo (uma vez)
+cd web && npm install && npm run dev                        # http://localhost:5173
+```
+
+Abra duas janelas (uma anônima), entre com nomes diferentes no **login de desenvolvimento**, crie um desafio em uma e aceite com o código na outra.
+
+Rotas do frontend: `/` (login e partidas), `/convite/:código-ou-token`, `/partidas/:id` e `/demo`.
+
+Se as portas 3000 ou 5173 estiverem ocupadas:
+
+```bash
+API_PORT=3001 ALLOWED_ORIGINS=http://localhost:5174 docker compose up -d
+VITE_API_BASE_URL=http://localhost:3001 npx vite --port 5174
+```
 
 ## Frontend (`web/`)
 
@@ -45,6 +69,7 @@ HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up    # API em http://localho
 |---|---|
 | `GET /up` | Health check |
 | `POST /auth/google` · `GET /me` · `DELETE /session` | Login Google, usuário atual, sair |
+| `POST /auth/dev` | Login só com nome — **existe apenas em development/test** |
 | `GET /matches` · `POST /matches` · `GET /matches/:id` · `DELETE /matches/:id` | Listar, criar convite, ver partida, cancelar convite |
 | `GET /invites/:key` · `POST /invites/:key/accept` | Prévia pública e aceite (código `BOLA-XXXXXX` ou token do link) |
 | `POST /matches/:id/draw` · `question` · `answer` · `resign` | Ações da vez (aceitam `Idempotency-Key`) |
@@ -94,7 +119,10 @@ A CI (`.github/workflows/ci.yml`) roda tudo isso, mais typecheck/testes/build do
 
 ```text
 web/src/
-  App.tsx                # Fluxos, telas e controles do protótipo
+  App.tsx                # Rotas (online em /, demo em /demo)
+  online/                # X1 online: cliente da API, sessão, telas de partidas/convite
+  demo/DemoApp.tsx       # Demo local (removida no lançamento)
+  components/ui.tsx      # Componentes visuais compartilhados (pergunta, feedback, troféus, modal)
   styles.css             # Identidade visual responsiva
   components/
     Brand.tsx            # Marca provisória

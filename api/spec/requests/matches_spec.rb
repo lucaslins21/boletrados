@@ -162,6 +162,7 @@ RSpec.describe "Partidas X1", type: :request do
       open_normal(match)
       answer(match, correct: true)
       expect(json["result"]).to include("correct" => true, "timed_out" => false, "explanation" => be_present)
+      expect(json.dig("result", "selected_option")).to eq(json.dig("result", "correct_option"))
       expect(json.dig("match", "turn")).to include("my_turn" => true, "streak" => 1, "phase" => "draw")
     end
 

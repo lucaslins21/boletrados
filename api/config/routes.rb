@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   namespace :auth do
     post "google", to: "google#create"
+    # Login de desenvolvimento: a rota só existe em development/test.
+    post "dev", to: "dev#create" if Rails.env.local?
   end
   resource :session, only: :destroy
   get "me", to: "me#show"

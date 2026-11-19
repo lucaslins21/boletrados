@@ -20,7 +20,9 @@ module MatchSerializer
       winner_seat: state&.winner,
       finished_reason: match.finished_reason,
       started_at: match.started_at,
-      finished_at: match.finished_at
+      finished_at: match.finished_at,
+      # Para o cliente calcular o tempo restante sem depender do relógio do aparelho.
+      server_time: Time.current
     }
   end
 
@@ -74,6 +76,7 @@ module MatchSerializer
       match_question_id: match_question.id, category: match_question.category_slug, context: match_question.context,
       correct: match_question.correct, timed_out: match_question.timed_out, trophy_won: match_question.trophy_won,
       selected_index: match_question.selected_index, correct_index: q.correct_index,
+      selected_option: match_question.selected_index && q.options[match_question.selected_index],
       correct_option: q.options[q.correct_index], explanation: q.explanation
     }
   end
