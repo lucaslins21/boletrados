@@ -123,3 +123,7 @@ body:has(.gd){background:var(--bt-pitch)}
   .match-shelves{flex-wrap:nowrap}
   .gd-hero-art{margin:14px auto 4px}
 }
+
+/* Home sem partidas: mascote acenando */
+.home-empty{display:flex;align-items:center;gap:14px;margin-top:22px;padding:14px 16px;border-radius:18px;background:var(--bt-blue-soft);border:2px dashed #B8CDF5}
+.home-empty p{margin:0;color:var(--bt-ink-2);line-height:1.5}

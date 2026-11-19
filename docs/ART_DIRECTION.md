@@ -70,8 +70,8 @@ Fonte única: `web/src/game/tokens.css` (variáveis CSS `--bt-*`) e `web/src/gam
 | 6 troféus | ✅ SVG, um formato por categoria | Estados bloqueado (silhueta) e conquistado |
 | Bolinhas de sorteio | ✅ SVG | Abrem em duas metades |
 | Globo do sorteio | ✅ CSS + SVG | |
-| Cenário de estádio | ✅ SVG + CSS | Versão limpa (desfocada) durante as perguntas: **em andamento** |
-| Mascote (5 estados) | **Em andamento** (SVG) | Ver §5; a versão ilustrada "premium" é opcional (briefing em §6) |
+| Cenário de estádio | ✅ SVG + CSS | Durante as perguntas a arquibancada e o gramado se apagam (`GameFrame calm`), sem blur, para não pesar no celular |
+| Mascote (5 estados) | ✅ SVG animado (`game/Mascot.tsx`) | Entrada, home vazia, resultado, espera, conquista, fim de jogo e mensagens. Ver §5; a versão ilustrada "premium" é opcional (briefing em §6) |
 | Efeitos: raios, confete | ✅ SVG + CSS | |
 | Sons | ✅ Web Audio | Sintetizados, sem arquivos |
 | Legado da demo (`Brand`, `DrawBowl`, `TrophyGrid`, `styles.css` escuro) | Só em `/demo` | Remover junto com a demo no lançamento |
@@ -128,6 +128,11 @@ Se no futuro quiser uma versão renderizada do mascote (ilustrador ou IA de imag
 - **Leveza**: evitar animações contínuas desnecessárias. O que fica em loop (bolinhas no globo, mascote respirando) é leve e para com o movimento reduzido.
 
 ## 8. Checklist de revisão visual
+
+**Última revisão (2026-11-19):**
+- Entrada, home vazia, home com partidas, sorteio e pergunta conferidos em 360×800, 390×844, 768×1024 e 1440×900, com movimento reduzido.
+- Resultado: nenhuma rolagem lateral, nenhum texto cortado, nenhum botão abaixo de 36 px e nenhum erro no console.
+- O roteiro completo da partida (sorteio → pergunta → acerto e erro → troféu → vitória e derrota) também passou.
 
 - [ ] 360×800, 390×844, 768×1024 e 1440×900 sem rolagem lateral nem texto cortado.
 - [ ] Botões e alternativas com pelo menos 44 px de altura.

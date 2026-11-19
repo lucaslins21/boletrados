@@ -181,3 +181,18 @@ button.gd-cabinet-item:not(:disabled):active{transform:translateY(3px);box-shado
 .gd-loader-shadow{width:40px;height:8px;border-radius:50%;background:var(--bt-night);display:block}
 .gd-loader p{margin:8px 0 0;font-weight:800;color:#fff;text-shadow:0 1px 0 var(--bt-sky-deep);font-size:14px}
 .main-card .gd-loader p,.gd-panel .gd-loader p{color:#6B7A96;text-shadow:none}
+
+/* Pergunta com fundo limpo: o estádio se apaga (sem blur, para não pesar no celular) */
+.gd-scene .gd-stands,.gd-scene .gd-pitch{transition:opacity var(--bt-medium) ease}
+.gd--calm .gd-stands,.gd--calm .gd-pitch{opacity:.12}
+.gd--calm .gd-sky{filter:saturate(.75) brightness(1.06)}
+
+/* Mascote nas telas */
+.gd-mascot{display:block;flex-shrink:0}
+.gd-sheet-head{display:flex;align-items:center;gap:10px}
+.gd-sheet-head .gd-mascot{margin:-26px 0 -6px -4px}
+.gd-celebrate-hero{position:relative;display:flex;align-items:flex-end;justify-content:center}
+.gd-celebrate-mascot{position:absolute;right:-78px;bottom:-6px}
+.gd-hero-mascot{position:absolute;left:-14%;bottom:2%;z-index:2}
+.gd-panel .gd-mascot{margin-bottom:-6px}
+@media(max-width:420px){.gd-celebrate-mascot{right:-52px}.gd-celebrate-mascot svg{width:64px;height:80px}}

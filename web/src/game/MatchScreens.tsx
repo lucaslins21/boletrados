@@ -11,6 +11,7 @@ import { initials, timeLeft } from '../online/format';
 import { CategoryBadge, DrawBall, Rays, StadiumScene, Trophy } from './art';
 import { CATEGORY_ORDER, CATEGORY_THEME } from './theme';
 import { onSoundChange, setSoundEnabled, sfx, soundEnabled } from './sound';
+import { Mascot } from './Mascot';
 import './tokens.css';
 import './game.css';
 
@@ -18,8 +19,9 @@ const AVATAR_COLORS = ['#2F6FED', '#FF8A1F'];
 const RING = 2 * Math.PI * 27; // circunferência do anel do cronômetro
 
 /** Raiz da tela imersiva: cenário + coluna central. */
-export function GameFrame({ title, subtitle, children }: { title: string; subtitle?: string; children: ReactNode }) {
-  return <div className="gd"><StadiumScene/>
+export function GameFrame({ title, subtitle, calm = false, children }: { title: string; subtitle?: string; calm?: boolean; children: ReactNode }) {
+  // calm: durante a pergunta o estádio se apaga, para o enunciado e o cronômetro serem o foco
+  return <div className={`gd ${calm ? 'gd--calm' : ''}`}><StadiumScene/>
     <div className="gd-frame">
       <header className="gd-topbar">
         <Link to="/" className="gd-icon-btn" aria-label="Voltar para minhas partidas"><ArrowLeft size={22}/></Link>
@@ -246,7 +248,10 @@ export function ResultSheet({ result, opponentName, streakAfter, onContinue }: {
     ? (result.trophy_won ? 'Você continua com a vez.' : streakAfter >= 3 ? 'Três seguidas! Hora de disputar um troféu.' : `Sequência: ${streakAfter}/3. Você continua.`)
     : `A vez passa para ${opponentName}.`;
   return <motion.section className="gd-sheet" initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: 'spring', stiffness: 240, damping: 22 }} aria-live="polite">
-    <div className={`gd-sheet-title ${good ? 'gd-sheet-title--good' : 'gd-sheet-title--bad'}`}>{good ? <Check size={26}/> : <X size={26}/>} {title}</div>
+    <div className="gd-sheet-head">
+      <Mascot mood={good ? 'correct' : 'wrong'} size={58}/>
+      <div className={`gd-sheet-title ${good ? 'gd-sheet-title--good' : 'gd-sheet-title--bad'}`}>{good ? <Check size={26}/> : <X size={26}/>} {title}</div>
+    </div>
     <p><b>Resposta: {result.correct_option}.</b> {result.explanation}</p>
     <p>{next}</p>
     <button className={`gd-btn gd-btn--wide ${good ? '' : 'gd-btn--blue'}`} onClick={onContinue} autoFocus>{good ? 'Continuar' : 'Passar a vez'}</button>
@@ -287,9 +292,14 @@ export function TrophyCelebration({ category, onContinue }: { category: Category
     <Confetti/>
     <motion.div className="gd-celebrate" initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 180, damping: 14 }}>
       <Rays/>
-      <motion.div initial={{ y: -40, rotate: -12 }} animate={{ y: 0, rotate: 0 }} transition={{ type: 'spring', stiffness: 160, damping: 9, delay: 0.1 }}>
-        <Trophy id={category} won size={150}/>
-      </motion.div>
+      <div className="gd-celebrate-hero">
+        <motion.div initial={{ y: -40, rotate: -12 }} animate={{ y: 0, rotate: 0 }} transition={{ type: 'spring', stiffness: 160, damping: 9, delay: 0.1 }}>
+          <Trophy id={category} won size={150}/>
+        </motion.div>
+        <motion.div className="gd-celebrate-mascot" initial={{ x: 40, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.35, type: 'spring', stiffness: 200, damping: 16 }}>
+          <Mascot mood="victory" size={84}/>
+        </motion.div>
+      </div>
       <span className="gd-kicker" style={{ color: '#FFE47A' }}>TROFÉU CONQUISTADO</span>
       <h2>{CATEGORY_THEME[category].label}</h2>
       <p>A taça é sua, e a vez continua com você!</p>
@@ -305,6 +315,7 @@ export function MatchEnd({ match, iWon, reason, opponentId, opponentName }: { ma
   return <div className="gd-stage">
     {iWon && <Confetti pieces={90}/>}
     <motion.section className="gd-panel" initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 170, damping: 14 }}>
+      <Mascot mood={iWon ? 'victory' : 'wrong'} size={96}/>
       <span className="gd-kicker">{iWon ? 'É CAMPEÃO!' : 'FIM DE JOGO'}</span>
       <h2>{iWon ? 'Você levou as seis taças!' : `${opponentName} venceu desta vez.`}</h2>
       {!(iWon && match.finished_reason === 'six_trophies') && <p>{reason}</p>}
@@ -321,8 +332,7 @@ export function MatchEnd({ match, iWon, reason, opponentId, opponentName }: { ma
 export function OpponentWait({ opponent, deadline }: { opponent: MatchPlayer; deadline: string | undefined }) {
   return <div className="gd-stage">
     <motion.section className="gd-panel" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-      <motion.span className="gd-avatar gd-wait-avatar" style={{ background: AVATAR_COLORS[1] }} aria-hidden="true"
-        animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 1.8, repeat: Infinity }}>{initials(opponent.user.display_name)}</motion.span>
+      <Mascot mood="thinking" size={100}/>
       <span className="gd-kicker">PARTIDA EM ANDAMENTO</span>
       <h2>Vez de {opponent.user.display_name}</h2>
       <p>A bola volta para você quando {opponent.user.display_name} errar. Prazo da vez: {deadline ? timeLeft(deadline) : '—'}.</p>
@@ -350,6 +360,6 @@ export function InviteWait({ code, expiresAt, canManage, busy, onShare, onCancel
 
 /** Mensagem simples no cenário (erros, partida inexistente, sem perguntas). */
 export function StageMessage({ title, text, action }: { title: string; text: string; action?: ReactNode }) {
-  return <div className="gd-stage"><section className="gd-panel"><h2>{title}</h2><p>{text}</p>
+  return <div className="gd-stage"><section className="gd-panel"><Mascot mood="thinking" size={88}/><h2>{title}</h2><p>{text}</p>
     {action ?? <Link to="/" className="gd-btn gd-btn--wide">Minhas partidas</Link>}</section></div>;
 }

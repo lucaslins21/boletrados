@@ -191,7 +191,7 @@ export function MatchPage() {
   const streak = answered ? answered.streakAfter : turn?.streak ?? 0;
 
   return <>
-    <GameFrame title={title} subtitle={subtitle}>
+    <GameFrame title={title} subtitle={subtitle} calm={!!answered || (myTurn && turn?.phase === 'question')}>
       {(error || notice) && <div className="gd-alert" role="alert"><span>{error ?? notice}</span>
         <button aria-label="Fechar aviso" onClick={() => { setError(null); setNotice(null); }}><X size={16}/></button></div>}
       {match.status !== 'waiting_opponent' && <Scoreboard match={match}/>}

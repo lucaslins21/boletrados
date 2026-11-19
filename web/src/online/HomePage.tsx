@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
-import { ArrowRight, Check, Copy, Dumbbell, KeyRound, Plus, Share2, Swords } from 'lucide-react';
+import { ArrowRight, Check, Copy, Dumbbell, KeyRound, Plus, Share2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 import { Banner, Modal, Pill } from '../components/ui';
 import { ApiError, api, inviteUrl, type ApiMatch } from './api';
@@ -9,6 +9,7 @@ import { NotificationsCard } from './NotificationsCard';
 import { finishedText, initials, me, opponent, timeLeft } from './format';
 import { pendingInvite, useSession } from './session';
 import { HeroArt, Loading } from '../game/Decor';
+import { Mascot } from '../game/Mascot';
 import { Trophy } from '../game/art';
 import { CATEGORY_ORDER } from '../game/theme';
 
@@ -90,7 +91,10 @@ function MatchesHome() {
       </div>
       {error && <p className="form-error" role="alert">{error}</p>}
       {matches === null && !error && <Loading label="Carregando partidas…"/>}
-      {matches !== null && !groups.length && <Banner icon={<Swords size={17}/>}>Nenhuma partida ainda. Crie um desafio e mande o link para um amigo.</Banner>}
+      {matches !== null && !groups.length && <div className="home-empty">
+        <Mascot mood="happy" size={86}/>
+        <p><b>Bora estrear?</b> Crie um desafio e mande o link para um amigo.</p>
+      </div>}
       {groups.map(group => <section key={group.title} className="match-group" aria-label={group.title}>
         <h2 className="match-group-title">{group.title} <span>{group.items.length}</span></h2>
         <ul className="match-list">{group.items.map(m => <li key={m.id}><MatchRow match={m}/></li>)}</ul>

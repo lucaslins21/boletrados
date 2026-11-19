@@ -1,6 +1,7 @@
 /** Peças decorativas do site: carregando, ilustração da entrada. */
 import { motion } from 'framer-motion';
 import { DrawBall, Trophy } from './art';
+import { Mascot } from './Mascot';
 import { CATEGORY_ORDER } from './theme';
 
 /** "Carregando…" com uma bolinha quicando. */
@@ -30,6 +31,9 @@ export function HeroArt() {
         <div className="gd-globe-shine"/>
       </div>
       <div className="gd-globe-base">SORTEIO</div>
+      <motion.div className="gd-hero-mascot" initial={{ x: -30, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.3, type: 'spring', stiffness: 180, damping: 15 }}>
+        <Mascot mood="happy" size={96}/>
+      </motion.div>
     </div>
     <div className="gd-hero-shelf">
       {CATEGORY_ORDER.map((id, i) => <motion.div key={id} initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.15 + i * 0.07, type: 'spring', stiffness: 220, damping: 16 }}>

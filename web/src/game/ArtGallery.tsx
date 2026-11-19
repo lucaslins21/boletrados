@@ -1,6 +1,7 @@
 /** /_arte — galeria das ilustrações (só em desenvolvimento) para revisar o visual. */
 import type { ReactNode } from 'react';
 import { CategoryBadge, DrawBall, Trophy } from './art';
+import { Mascot, type MascotMood } from './Mascot';
 import { CATEGORY_ORDER, CATEGORY_THEME } from './theme';
 import './tokens.css';
 import './game.css';
@@ -29,6 +30,10 @@ export default function ArtGallery({ extra }: { extra?: ReactNode }) {
         <Row title="TROFÉUS NO PLACAR (18 PX)">
           {CATEGORY_ORDER.map((id, i) => <Trophy key={id} id={id} won={i % 2 === 0} size={18}/>)}
         </Row>
+        <Row title="MASCOTE — 5 ESTADOS">
+          {(['happy', 'correct', 'wrong', 'victory', 'thinking'] as MascotMood[]).map(m => <div key={m} style={{ display: 'grid', justifyItems: 'center', gap: 2 }}><Mascot mood={m} size={104}/><small>{m}</small></div>)}
+        </Row>
+        <Row title="MASCOTE PEQUENO (48 PX)">{(['happy', 'correct', 'wrong', 'victory', 'thinking'] as MascotMood[]).map(m => <Mascot key={m} mood={m} size={48}/>)}</Row>
         <Row title="BOLINHAS DE SORTEIO">{CATEGORY_ORDER.map((id, i) => <DrawBall key={id} id={id} size={56} open={i === 5}/>)}</Row>
         {extra}
       </div>

@@ -260,4 +260,5 @@ Não reabrir decisões fechadas. Preservar o histórico e o trabalho feito. Não
 | Logo próprio (bolinha de sorteio com taça) e favicon | ✅ provisório-bom: falta verificação de marca e, se desejado, um mascote |
 | Home com as coleções de taças por partida, ilustração na entrada, carregamento animado, transições | ✅ |
 | Efeitos sonoros (sorteio, acerto, erro, últimos segundos, troféu, vitória), sintetizados no navegador, com botão liga/desliga | ✅ |
+| Direção de arte consolidada (`docs/ART_DIRECTION.md`): tokens, ícones em escudo, 6 troféus com formatos próprios, mascote em 5 estados, fundo limpo nas perguntas | ✅ |
 | Login Facebook, revisão comunitária, peso da dificuldade no sorteio | Futuro ou indefinido |
