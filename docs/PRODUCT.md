@@ -36,7 +36,10 @@ Uma questão pode pertencer a múltiplas categorias, desde que o enquadramento s
 - Login via Google e Facebook (identidade interna única por usuário, com vinculação explícita de provedores). **MVP: só Google**; Facebook depois.
 - Avisos de vez por Web Push + e-mail (lembrete antes do prazo de 24h).
 - Criar partida/convite com token aleatório, link compartilhável e código curto; preservar convite no fluxo de login.
-- Tela de partidas em andamento, aguardando o outro jogador, completas; perfil com vitórias, derrotas, troféus e desempenho por categoria; histórico de confronto.
+- Tela de partidas em andamento, aguardando o outro jogador, completas; perfil com vitórias, derrotas, troféus e desempenho por categoria; histórico de confronto. **Implementado (2026-11-19)**:
+  - o perfil é visível só para o próprio jogador e para quem já o enfrentou (partida ativa ou encerrada);
+  - no acerto por categoria, **tempo esgotado conta como erro**;
+  - o próprio perfil lista os rivais; o de um adversário mostra o confronto direto.
 - Definir política de prazo para iniciar turnos, W.O., abandono e notificações antes de ligar o multiplayer.
 
 ## Banco de perguntas e moderação (planejado)

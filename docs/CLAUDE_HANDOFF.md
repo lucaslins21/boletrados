@@ -31,6 +31,7 @@ docker compose run --rm -e RAILS_ENV=test api bundle exec rspec
    - 4 e 5: partidas, convites, fluxo da vez, prazos de 15s e 24h, W.O. e idempotência.
    - 6: frontend online (React Router) consumindo a API, com a demo em `/demo` até o lançamento.
    - 7: avisos por Web Push (vez, convite aceito, fim de jogo) e lembrete 4 h antes do prazo (push + e-mail).
+   - Deploy gratuito preparado (`docs/DEPLOY.md`) e perfil com estatísticas (`/perfil`, `/jogadores/:id`).
 
    Próximos passos, para o lançamento: seguir `docs/DEPLOY.md` (contas Vercel, Render e Neon e as chaves), criar o `GOOGLE_CLIENT_ID`, configurar o worker do Solid Queue, fazer a curadoria das perguntas e remover a demo. Se mudar `web/src/data/questions.ts`, rode `npm run export:questions` para atualizar o seed.
 4. ~~Implementar Google/Facebook OAuth e convites por link/código, protegendo tokens e continuando o fluxo após login.~~ Feito para o Google (etapas 3, 4 e 6); o Facebook fica para depois do MVP.

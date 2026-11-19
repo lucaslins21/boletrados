@@ -1,5 +1,5 @@
 import { MotionConfig } from 'framer-motion';
-import { Dumbbell, Home, LogOut } from 'lucide-react';
+import { Dumbbell, Home, LogOut, UserRound } from 'lucide-react';
 import { Link, Outlet } from 'react-router';
 import { Brand } from '../components/Brand';
 import { Pill } from '../components/ui';
@@ -15,6 +15,7 @@ export function OnlineLayout() {
         <Link to="/" className="online-nav-link" aria-label="Início"><Home size={16}/><span>Início</span></Link>
         <Link to="/demo" className="online-nav-link" aria-label="Demo"><Dumbbell size={16}/><span>Demo</span></Link>
         {user && <>
+          <Link to="/perfil" className="online-nav-link" aria-label="Perfil"><UserRound size={16}/><span>Perfil</span></Link>
           <span className="online-user"><Pill tone="lime">{user.display_name}</Pill></span>
           <button className="online-nav-link" aria-label="Sair" onClick={() => void signOut()}><LogOut size={16}/><span>Sair</span></button>
         </>}

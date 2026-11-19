@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
   resource :session, only: :destroy
   get "me", to: "me#show"
+  resources :profiles, only: :show
 
   resources :matches, only: %i[index show create destroy] do
     member do

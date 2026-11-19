@@ -29,6 +29,18 @@ export type ApiMatch = {
   winner_seat: Seat | null; finished_reason: FinishedReason | null;
   started_at: string | null; finished_at: string | null; server_time: string;
 };
+export type CategoryStat = { category: CategoryId; answered: number; correct: number; trophies: number };
+export type HeadToHead = {
+  played: number; wins: number; losses: number; in_progress: number;
+  recent: { match_id: number; status: MatchStatus; won: boolean | null; finished_reason: FinishedReason | null; finished_at: string | null; started_at: string | null }[];
+};
+export type Profile = {
+  user: ApiUser; is_me: boolean;
+  summary: { played: number; wins: number; losses: number; in_progress: number; trophies: number };
+  categories: CategoryStat[];
+  head_to_head: HeadToHead | null;
+  rivals: { user: ApiUser; played: number; wins: number; losses: number }[] | null;
+};
 export type InvitePreview = { from: ApiUser; status: 'open' | 'expired' | 'cancelled' | 'accepted'; expires_at: string };
 
 export class ApiError extends Error {
@@ -85,6 +97,8 @@ export const api = {
   answer: (id: number, selectedIndex: number) =>
     request<MatchResponse & { result: QuestionResult }>('POST', `/matches/${id}/answer`, { selected_index: selectedIndex }, { idempotent: true }),
   resign: (id: number) => request<MatchResponse>('POST', `/matches/${id}/resign`, {}, { idempotent: true }),
+
+  profile: (id: 'me' | number | string) => request<{ profile: Profile }>('GET', `/profiles/${id}`),
 
   pushPublicKey: () => request<{ public_key: string }>('GET', '/push/public_key'),
   savePushSubscription: (subscription: PushSubscriptionJSON) => request<null>('POST', '/push/subscriptions', subscription),

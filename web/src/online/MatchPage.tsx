@@ -174,7 +174,7 @@ function Centered({ title, text }: { title: string; text: string }) {
 function PlayerChip({ player, active }: { player: MatchPlayer; active: boolean }) {
   return <div className={`player-chip ${active ? 'player-chip--active' : ''}`}>
     <div className={`player-avatar player-avatar--${player.seat}`} aria-hidden="true">{initials(player.user.display_name)}</div>
-    <div className="player-chip-info"><strong>{player.user.display_name}</strong><span>{player.trophies.length}/6 troféus</span></div>
+    <div className="player-chip-info"><Link to={`/jogadores/${player.user.id}`} className="player-link"><strong>{player.user.display_name}</strong></Link><span>{player.trophies.length}/6 troféus</span></div>
     {active && <span className="playing-dot" title="Jogador da vez"/>}
   </div>;
 }
@@ -268,5 +268,6 @@ function Finished({ match }: { match: ApiMatch }) {
     <Scoreboard match={match}/>
     {winner && <TrophyGrid trophies={winner.trophies}/>}
     <Link to="/" className="button button--primary button--full button--lg"><RotateCcw size={18}/> Nova partida</Link>
+    {match.players.filter(p => p.user.id !== user?.id).map(p => <Link key={p.user.id} to={`/jogadores/${p.user.id}`} className="subtle-link">Ver confronto com {p.user.display_name} <ArrowRight size={16}/></Link>)}
   </main></div>;
 }

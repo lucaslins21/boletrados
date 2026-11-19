@@ -3,6 +3,7 @@ import DemoApp from './demo/DemoApp';
 import { HomePage } from './online/HomePage';
 import { InvitePage } from './online/InvitePage';
 import { MatchPage } from './online/MatchPage';
+import { ProfilePage } from './online/ProfilePage';
 import { OnlineLayout } from './online/OnlineLayout';
 import { SessionProvider } from './online/session';
 
@@ -11,6 +12,7 @@ import { SessionProvider } from './online/session';
  *  /              X1 online (login ou lista de partidas)
  *  /convite/:key  prévia e aceite de convite (código BOLA-XXXXXX ou token do link)
  *  /partidas/:id  partida
+ *  /perfil        seu perfil e estatísticas;  /jogadores/:id  perfil de quem você já enfrentou
  *  /demo          demo local (dois jogadores no mesmo aparelho) — será removida no lançamento do online
  */
 export default function App() {
@@ -21,6 +23,8 @@ export default function App() {
         <Route index element={<HomePage/>}/>
         <Route path="convite/:key" element={<InvitePage/>}/>
         <Route path="partidas/:id" element={<MatchPage/>}/>
+        <Route path="perfil" element={<ProfilePage/>}/>
+        <Route path="jogadores/:id" element={<ProfilePage/>}/>
         <Route path="*" element={<HomePage/>}/>
       </Route>
     </Routes>
