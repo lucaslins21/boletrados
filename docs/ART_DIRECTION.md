@@ -47,6 +47,21 @@ Fonte única: `web/src/game/tokens.css` (variáveis CSS `--bt-*`) e `web/src/gam
 - **Sombras**: profundidade sólida embaixo, `0 5–7px 0 <tom escuro>` (botões e cartões). No clique, o elemento desce 3–4 px e a sombra diminui.
 - **Espaçamento**: base de 4 px (8, 12, 16, 20, 24…).
 
+### Tipografia e espaçamento
+
+Outfit para títulos, números e botões; DM Sans para textos. Tokens em `tokens.css`:
+
+| Token | Tamanho | Uso |
+|---|---|---|
+| `--bt-text-xs` | 12px | Rótulos em maiúsculas, pílulas, metadados. **Mínimo absoluto** |
+| `--bt-text-sm` | 14px | Texto secundário, dicas, links de apoio, avisos |
+| `--bt-text-md` | 16px | Corpo, campos, alternativas |
+| `--bt-h3` / `--bt-h2` / `--bt-h1` | 20 / 24 / 30–42px | Títulos de painel, modal e tela |
+
+Ritmo vertical: dentro de `.main-card`, `.aside-panel`, `.modal-card` e `.login-card`, cada filho direto recebe `--bt-space-4` (16px) acima. Rótulo → título fica com 10px, título → subtítulo com 8px e listas/blocos com 24px. Margens herdadas são zeradas: o espaço vem do contêiner, não do elemento.
+Caixa alta só nas ações principais da partida (SORTEAR, RESPONDER, CONTINUAR). A navegação usa caixa normal.
+No desktop (≥ 1024px), a coluna da partida tem 680px, o enunciado 26px e as alternativas 18px.
+
 ## 3. Componentes do jogo (React)
 
 | Componente | Arquivo | Uso |
@@ -57,7 +72,7 @@ Fonte única: `web/src/game/tokens.css` (variáveis CSS `--bt-*`) e `web/src/gam
 | `TrophyPick`, `TrophyCelebration`, `MatchEnd` | `game/MatchScreens.tsx` | Escolha, conquista e fim de jogo |
 | `CategoryBadge`, `CategoryGlyph`, `Trophy`, `DrawBall`, `StadiumScene`, `Rays` | `game/art.tsx` | Ilustrações SVG |
 | `Mascot` | `game/Mascot.tsx` | Mascote (5 estados) |
-| `Logo`, `LogoMark` | `game/Logo.tsx` | Marca |
+| `Logo`, `LogoMark`, `Wordmark` | `game/Logo.tsx` | Marca (v2). `arc` curva o nome na versão de destaque da entrada |
 | `Loading`, `HeroArt` | `game/Decor.tsx` | Carregamento e ilustração da entrada |
 | botões `.gd-btn` (`--gold`, `--blue`, `--white`, `--sm`, `--wide`) | `game/game.css` | Ações do jogo |
 
@@ -65,7 +80,7 @@ Fonte única: `web/src/game/tokens.css` (variáveis CSS `--bt-*`) e `web/src/gam
 
 | Asset | Situação | Observação |
 |---|---|---|
-| Logo e favicon | ✅ SVG | Bolinha de sorteio com taça. Falta a verificação de marca |
+| Logo e favicon | ✅ SVG (v2) | Emblema: aro dourado, céu e gramado, bolinha aberta revelando a taça. Nome com contorno, profundidade e brilho (BOLE branco, TRADOS dourado). Falta a verificação de marca |
 | Ícones das 6 categorias | ✅ SVG, moldura de escudo | Versões colorida e monocromática |
 | 6 troféus | ✅ SVG, um formato por categoria | Estados bloqueado (silhueta) e conquistado |
 | Bolinhas de sorteio | ✅ SVG | Abrem em duas metades |
@@ -140,3 +155,6 @@ Se no futuro quiser uma versão renderizada do mascote (ilustrador ou IA de imag
 - [ ] Foco visível no teclado.
 - [ ] Pergunta legível em 15 s: fundo limpo, sem mascote, cronômetro em destaque.
 - [ ] Nenhum asset decorativo impede o jogo se falhar.
+
+### Revisão de composição (nov/2026)
+A auditoria automática (`audit.mjs`) fotografa as 13 telas a 390 e 1440 px e verifica dois pontos: texto visível abaixo de 12px e blocos vizinhos com menos de 8px de espaço dentro de cartões. A revisão terminou com zero ocorrências nos dois. Os viewports de 360, 390, 768 e 1440 px não têm rolagem lateral, texto cortado nem alvos de toque abaixo de 36px.

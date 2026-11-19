@@ -2,6 +2,7 @@
 import type { ReactNode } from 'react';
 import { CategoryBadge, DrawBall, Trophy } from './art';
 import { Mascot, type MascotMood } from './Mascot';
+import { Logo, LogoMark } from './Logo';
 import { CATEGORY_ORDER, CATEGORY_THEME } from './theme';
 import './tokens.css';
 import './game.css';
@@ -18,6 +19,13 @@ export default function ArtGallery({ extra }: { extra?: ReactNode }) {
     <div className="gd-frame" style={{ maxWidth: 760 }}>
       <div className="gd-panel">
         <h2>Galeria de arte</h2>
+        <Row title="LOGO">
+          <div style={{ background: 'linear-gradient(#3FA6F2,#7CC8FA)', borderRadius: 18, padding: 18, display: 'grid', gap: 14, justifyItems: 'center', width: '100%' }}>
+            <Logo size={110} arc/>
+            <Logo size={44}/>
+            <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}><LogoMark size={64}/><LogoMark size={32}/><LogoMark size={16}/></div>
+          </div>
+        </Row>
         <Row title="ÍCONES DAS CATEGORIAS — COLORIDO">
           {CATEGORY_ORDER.map(id => <div key={id} style={{ display: 'grid', justifyItems: 'center', gap: 4 }}><CategoryBadge id={id} size={52}/><small>{CATEGORY_THEME[id].short}</small></div>)}
         </Row>

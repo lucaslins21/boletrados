@@ -3,7 +3,7 @@ import { Home, LogOut, PenLine, ShieldCheck, UserRound } from 'lucide-react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router';
 import { Pill } from '../components/ui';
 import { StadiumScene } from '../game/art';
-import { Logo } from '../game/Logo';
+import { Logo, LogoMark } from '../game/Logo';
 import { useSession } from './session';
 import '../game/tokens.css';
 import '../game/game.css';
@@ -20,7 +20,7 @@ export function OnlineLayout() {
   if (immersive && (status === 'anonymous' || status === 'authenticated')) return <MotionConfig reducedMotion="user"><Outlet/></MotionConfig>;
   return <MotionConfig reducedMotion="user"><div className="gd gd-site"><StadiumScene/>
     <header className="site-header"><div className="site-header-inner">
-      <Link to="/" className="brand-link" aria-label="Boletrados — início"><Logo size={42}/></Link>
+      <Link to="/" className="brand-link" aria-label="Boletrados — início">{status === 'anonymous' && pathname === '/' ? <LogoMark size={46}/> : <Logo size={42}/>}</Link>
       <div className="header-right">
         <NavLink to="/" end className="online-nav-link" aria-label="Início"><Home size={16}/><span>Início</span></NavLink>
         {user && <>

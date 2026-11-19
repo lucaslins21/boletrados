@@ -10,6 +10,7 @@ import { finishedText, initials, me, opponent, timeLeft } from './format';
 import { pendingInvite, useSession } from './session';
 import { HeroArt, Loading } from '../game/Decor';
 import { Mascot } from '../game/Mascot';
+import { Logo } from '../game/Logo';
 import { Trophy } from '../game/art';
 import { CATEGORY_ORDER } from '../game/theme';
 
@@ -27,6 +28,7 @@ export function HomePage() {
 function Welcome() {
   return <section className="online-welcome">
     <div className="online-welcome-copy">
+      <Logo size={92} arc/>
       <Pill tone="lime"><span className="tiny-pulse"/> X1 ONLINE ENTRE AMIGOS</Pill>
       <h1>Quem sabe de <em>futebol</em> merece um troféu.</h1>
       <p>Desafie um amigo por link ou código e jogue no seu tempo. Acerte perguntas, dispute categorias e conquiste os 6 troféus antes dele.</p>

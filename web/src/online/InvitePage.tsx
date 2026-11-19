@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, Swords } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { Mascot } from '../game/Mascot';
 import { Link, useNavigate, useParams } from 'react-router';
 import { Banner, Pill } from '../components/ui';
 import { ApiError, api, type InvitePreview } from './api';
 import { LoginCard } from './LoginCard';
-import { initials } from './format';
 import { pendingInvite, useSession } from './session';
 import { Loading } from '../game/Decor';
 
@@ -44,12 +44,10 @@ export function InvitePage() {
 
   const own = invite && user && invite.from.id === user.id;
   return <div className="feedback-shell"><main className="main-card feedback-card">
-    <div className="feedback-burst feedback-burst--correct" aria-hidden="true"><Swords size={46}/></div>
-    <Pill tone="purple">CONVITE PARA X1</Pill>
+    <div className="invite-hero"><Mascot mood="happy" size={92}/><Pill tone="purple">CONVITE PARA X1</Pill></div>
     {!invite && !error && <Loading label="Carregando convite…"/>}
     {invite && <>
-      <div className="invite-from"><span className="player-avatar player-avatar--0" aria-hidden="true">{initials(invite.from.display_name)}</span>
-        <h1 className="screen-title"><b>{invite.from.display_name}</b> te desafiou!</h1></div>
+      <h1 className="screen-title invite-title"><b>{invite.from.display_name}</b> te desafiou!</h1>
       {invite.status !== 'open' && <Banner>{STATUS_TEXT[invite.status]}</Banner>}
       {invite.status === 'open' && own && <Banner>Este é o seu próprio convite. Mande o link ou o código para um amigo.</Banner>}
       {invite.status === 'open' && !own && status === 'authenticated' &&

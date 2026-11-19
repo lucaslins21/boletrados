@@ -178,7 +178,7 @@ export function MatchPage() {
           onPick={category => void act(() => api.openQuestion(match.id, { context: 'trophy', category }))}/></div>;
       case 'empty':
         return <StageMessage title="Acabaram as inéditas" text="Você já viu todas as perguntas disponíveis. Novas perguntas entram com a curadoria; enquanto isso, você pode desistir desta partida."
-          action={<button className="gd-btn gd-btn--white gd-btn--wide" onClick={() => setConfirmResign(true)}>Desistir</button>}/>;
+          action={<button className="gd-btn gd-btn--white gd-btn--wide gd-btn--nav" onClick={() => setConfirmResign(true)}>Desistir</button>}/>;
       default:
         return <DrawStage phase={drawPhase} category={drawn} busy={busy} onDraw={() => void draw()} onSkip={skipDraw}
           onRevealed={() => setDrawPhase('done')} onProceed={() => void act(() => api.openQuestion(match.id, { context: 'normal' }))}/>;

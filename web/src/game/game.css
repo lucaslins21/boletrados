@@ -61,7 +61,7 @@
 .gd-globe-balls{position:absolute;inset:8%;border-radius:50%;overflow:hidden}
 .gd-globe-balls>div{position:absolute}
 .gd-globe-shine{position:absolute;left:16%;top:10%;width:30%;height:16%;border-radius:50%;background:#fff;opacity:.7;transform:rotate(-24deg);filter:blur(1px)}
-.gd-globe-base{position:absolute;left:24%;right:24%;bottom:0;height:16%;border-radius:12px 12px 18px 18px;background:linear-gradient(var(--bt-blue),var(--bt-blue-dark));box-shadow:0 6px 0 #153B8A;display:grid;place-items:center;color:#fff;font:900 11px 'Outfit',sans-serif;letter-spacing:.14em}
+.gd-globe-base{position:absolute;left:24%;right:24%;bottom:0;height:16%;border-radius:12px 12px 18px 18px;background:linear-gradient(var(--bt-blue),var(--bt-blue-dark));box-shadow:0 6px 0 #153B8A;display:grid;place-items:center;color:#fff;font:900 12px 'Outfit',sans-serif;letter-spacing:.14em}
 .gd-reveal{position:absolute;inset:0;display:grid;place-items:center;z-index:3}
 .gd-reveal-card{background:#fff;border-radius:22px;padding:18px 22px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 8px 0 var(--gd-card-edge),0 20px 40px #13213D33;min-width:210px}
 .gd-reveal-card small{font-size:11px;font-weight:900;letter-spacing:.14em;color:var(--gd-muted)}
@@ -196,3 +196,14 @@ button.gd-cabinet-item:not(:disabled):active{transform:translateY(3px);box-shado
 .gd-hero-mascot{position:absolute;left:-14%;bottom:2%;z-index:2}
 .gd-panel .gd-mascot{margin-bottom:-6px}
 @media(max-width:420px){.gd-celebrate-mascot{right:-52px}.gd-celebrate-mascot svg{width:64px;height:80px}}
+
+/* Caixa alta só nas ações principais do jogo (SORTEAR, RESPONDER, CONTINUAR); navegação em caixa normal */
+.gd-btn--nav{text-transform:none;letter-spacing:0;font-size:17px}
+.gd-site .invite-title{text-align:center}
+
+/* Desktop: coluna da partida mais larga e tipografia maior (a 1440 px a coluna de 560 px parecia um celular no meio da tela) */
+@media(min-width:1024px){
+  .gd-frame{max-width:680px;padding-top:18px}
+  .gd-q-prompt{font-size:26px}
+  .gd-opt{min-height:60px;font-size:18px}
+}

@@ -361,5 +361,5 @@ export function InviteWait({ code, expiresAt, canManage, busy, onShare, onCancel
 /** Mensagem simples no cenário (erros, partida inexistente, sem perguntas). */
 export function StageMessage({ title, text, action }: { title: string; text: string; action?: ReactNode }) {
   return <div className="gd-stage"><section className="gd-panel"><Mascot mood="thinking" size={88}/><h2>{title}</h2><p>{text}</p>
-    {action ?? <Link to="/" className="gd-btn gd-btn--wide">Minhas partidas</Link>}</section></div>;
+    {action ?? <Link to="/" className="gd-btn gd-btn--wide gd-btn--nav">Minhas partidas</Link>}</section></div>;
 }

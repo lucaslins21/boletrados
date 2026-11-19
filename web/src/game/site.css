@@ -127,3 +127,94 @@ body:has(.gd){background:var(--bt-pitch)}
 /* Home sem partidas: mascote acenando */
 .home-empty{display:flex;align-items:center;gap:14px;margin-top:22px;padding:14px 16px;border-radius:18px;background:var(--bt-blue-soft);border:2px dashed #B8CDF5}
 .home-empty p{margin:0;color:var(--bt-ink-2);line-height:1.5}
+
+/* ===== Escala tipográfica e ritmo vertical (revisão de composição) ===== */
+/* Ritmo: todo filho direto de cartão/painel/modal recebe o mesmo espaço; margens herdadas são zeradas. */
+.gd-site :is(.main-card,.aside-panel,.modal-card,.login-card)>*{margin-top:0;margin-bottom:0}
+.gd-site :is(.main-card,.aside-panel,.modal-card,.login-card)>*+*{margin-top:var(--bt-space-4)}
+.gd-site :is(.main-card,.aside-panel,.modal-card)>.eyebrow+*,
+.gd-site :is(.main-card,.aside-panel,.modal-card)>.pill+h2{margin-top:10px}
+.gd-site :is(.main-card,.aside-panel,.modal-card,.login-card)>:is(h1,h2,h3,.screen-title)+:is(p,.screen-subtitle){margin-top:var(--bt-space-2)}
+.gd-site .main-card>:is(.match-group,section,.submission-list,.home-empty){margin-top:var(--bt-space-6)}
+.gd-site .main-card>.divider,.gd-site .aside-panel>.divider{margin-top:var(--bt-space-5)}
+.gd-site .aside-panel>.divider+*{margin-top:var(--bt-space-5)}
+.gd-site .main-card,.gd-site .aside-panel{padding:var(--bt-space-8) 28px}
+.gd-site .modal-card{padding:28px 24px 26px}
+.gd-site .modal-card>.modal-close{position:absolute}
+
+/* Títulos */
+.gd-site .screen-title{font:900 var(--bt-h1)/1.08 var(--bt-font-display);letter-spacing:-.03em}
+.gd-site .aside-panel h3{font:800 var(--bt-h3)/1.2 var(--bt-font-display);letter-spacing:-.01em}
+.gd-site .modal-card h2{font:900 var(--bt-h2)/1.15 var(--bt-font-display);letter-spacing:-.02em}
+.gd-site .login-card h2{font:900 var(--bt-h2)/1.15 var(--bt-font-display)}
+/* Textos */
+.gd-site .screen-subtitle,.gd-site .modal-card>p{font-size:var(--bt-text-md);line-height:1.55;max-width:62ch}
+.gd-site .eyebrow,.gd-site .hint-label,.gd-site .match-group-title,.gd-site .kpi dt,.gd-site .field>label,.gd-site .field-label,.gd-site .review-meta dt{font-size:var(--bt-text-xs);letter-spacing:.1em}
+.gd-site .notice-banner{font-size:var(--bt-text-sm);line-height:1.5;padding:12px 14px;border-radius:14px}
+.gd-site .side-rule{margin-bottom:0;gap:12px} /* o espaço de cima vem do ritmo do cartão */
+.gd-site .side-rule+.side-rule{margin-top:var(--bt-space-3)}
+.gd-site .side-rule p{font-size:15px;line-height:1.5}
+.gd-site .rule-number{width:30px;height:30px;font-size:var(--bt-text-xs);border-radius:9px}
+.gd-site .center-hint{font-size:13px;line-height:1.4}
+.gd-site .text-action,.gd-site .subtle-link{font-size:var(--bt-text-sm);min-height:40px;display:inline-flex;align-items:center;gap:6px}
+.gd-site .subtle-link{margin-left:0;margin-right:0}
+.gd-site .kpi-note{font-size:var(--bt-text-sm)}
+.gd-site .kpi dd{font-size:32px}
+.gd-site .match-row-main strong{font-size:16px}
+.gd-site .match-row-main small{font-size:13px}
+.gd-site .meter-name{font-size:15px}
+.gd-site .meter-figure{font-size:var(--bt-text-sm)}
+.gd-site .field-hint{font-size:13px;line-height:1.45}
+.gd-site .char-count{font-size:var(--bt-text-xs)}
+.gd-site .text-input{font-size:var(--bt-text-md);min-height:50px}
+.gd-site .form-errors,.gd-site .form-error{font-size:var(--bt-text-sm)}
+.gd-site .submission-prompt{font-size:var(--bt-text-md)}
+.gd-site .submission-answer,.gd-site .submission-feedback{font-size:var(--bt-text-sm)}
+.gd-site .stock-list li{font-size:15px}
+.gd-site .review-meta dd,.gd-site .review-options li{font-size:15px}
+.gd-site .dup-row strong{font-size:var(--bt-text-sm)}
+.gd-site .dup-row small,.gd-site .history-list li{font-size:13px}
+.gd-site .tab{font-size:13px;min-height:40px}
+.gd-site .pill{font-size:var(--bt-text-xs)}
+.gd-site .tab span,.gd-site .match-status,.gd-site .meter-figure small,.gd-site .dev-login label{font-size:var(--bt-text-xs)}
+.gd-site .match-row .player-avatar{font-size:13px}
+.gd-logo-text small{font-size:13px!important}
+.gd-site .online-user .pill{font-size:12px}
+.gd-site .footer p,.gd-site .footer span{font-size:13px}
+.gd-site .online-nav-link{font-size:var(--bt-text-sm)}
+.gd-site .button{font-size:15px;min-height:52px}
+.gd-site .button--lg{font-size:var(--bt-text-md);min-height:56px}
+/* Botão "em linha" (ex.: Nova pergunta) não estica e mantém o ritmo do cartão */
+.gd-site .inline-button{width:auto!important;margin-left:0!important;margin-right:0!important;align-self:flex-start}
+/* Ações agrupadas */
+.gd-site .online-actions{margin-top:var(--bt-space-6)}
+.gd-site .share-buttons{gap:var(--bt-space-3)}
+
+/* Código do convite: uma linha só, legível */
+.gd-site .invite-preview{padding:14px 16px}
+.gd-site .invite-preview strong{font-size:clamp(20px,6vw,26px);letter-spacing:.06em;white-space:nowrap}
+
+/* Página de convite */
+.gd-site .invite-hero{display:flex;flex-direction:column;align-items:center;gap:var(--bt-space-3);text-align:center}
+
+/* Entrada: logo grande no topo da página */
+/* Logo grande: bloco próprio (a pílula vai para a linha de baixo); emblema ao lado do nome no desktop */
+.gd-logo--hero{display:flex;flex-direction:row;align-items:center;gap:14px;width:max-content;max-width:100%}
+.gd-logo--hero .gd-wordmark{max-width:100%;height:auto}
+.gd-site .online-welcome-copy>.pill{display:inline-flex}
+/* Texto sobre o cenário: sombra mais forte para continuar legível sobre a torcida colorida */
+.gd-site .online-welcome-copy p,.gd-site .online-welcome .subtle-link{text-shadow:0 1px 0 var(--bt-sky-deep),0 2px 10px #0E2A5Acc}
+.gd-site .online-welcome-copy>*+*{margin-top:var(--bt-space-4)}
+.gd-site .online-welcome-copy h1{margin:var(--bt-space-3) 0 0}
+
+@media(max-width:800px){
+  .gd-site .main-card,.gd-site .aside-panel{padding:24px 20px}
+  .gd-site .brand-link .gd-logo-mark{width:36px;height:36px}
+  .gd-site .brand-link .gd-wordmark{width:128px;height:auto}
+  .gd-logo--hero{flex-direction:column;align-items:center;gap:4px;margin:0 auto}
+  .gd-site .online-welcome-copy{text-align:center}
+  .gd-site .online-welcome-copy .pill{margin-left:auto;margin-right:auto}
+  .gd-site .online-welcome .subtle-link{justify-content:center;width:100%}
+  .gd-site .inline-button{align-self:stretch;width:100%!important}
+}
+.gd-site .h2h-score small,.gd-site .h2h-list small{font-size:var(--bt-text-xs)}

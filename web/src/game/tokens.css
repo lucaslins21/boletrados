@@ -18,3 +18,14 @@
   /* Movimento */
   --bt-fast:.12s; --bt-medium:.25s;
 }
+
+/* Escala tipográfica: Outfit (títulos, números, botões) + DM Sans (textos). Nunca abaixo de 12 px. */
+:root{
+  --bt-font-display:'Outfit',system-ui,sans-serif; --bt-font-text:'DM Sans',system-ui,sans-serif;
+  --bt-text-xs:12px;   /* rótulos em maiúsculas, metadados */
+  --bt-text-sm:14px;   /* texto secundário, dicas, links de apoio */
+  --bt-text-md:16px;   /* corpo, campos, alternativas */
+  --bt-text-lg:18px;   /* destaque de parágrafo */
+  --bt-h3:20px; --bt-h2:24px; --bt-h1:clamp(30px,4.2vw,42px);
+  --bt-space-1:4px; --bt-space-2:8px; --bt-space-3:12px; --bt-space-4:16px; --bt-space-5:20px; --bt-space-6:24px; --bt-space-8:32px;
+}
