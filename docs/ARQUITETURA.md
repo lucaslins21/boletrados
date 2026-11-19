@@ -45,7 +45,8 @@ web/  (Vite + React)  ── HTTPS + cookie de sessão ──►  api/ (Rails 8 
 2. `POST /auth/google { id_token }`: a API valida assinatura, `aud` (client ID), `iss` e expiração.
 3. Busca `identities(provider='google', uid=sub)`; se não existir, cria `users` + `identities`. **Sem vínculo automático por e-mail** (vínculo de provedores será explícito, como pede o PRODUCT.md).
 4. Cria uma sessão no servidor (`sessions`) e devolve um **cookie httpOnly, Secure, SameSite=Lax**. Nada de token em `localStorage`.
-5. Proteção CSRF para requisições que alteram estado (token em cabeçalho). Frontend e API no mesmo site (ex.: `app.` e `api.` do mesmo domínio).
+5. Proteção CSRF: requisições que alteram estado só são aceitas com cabeçalho `Origin` presente em `ALLOWED_ORIGINS`. Sem `Origin`, só passam se não houver cookie de sessão (clientes não navegadores). Isso se soma ao `SameSite=Lax`. Frontend e API ficam no mesmo site (ex.: `app.` e `api.` do mesmo domínio), com CORS com credenciais só para essas origens.
+6. Login a cada vez troca a sessão (sem fixação), sessões duram 30 dias e há limite de 10 tentativas de login por minuto por IP.
 
 ## Convites
 
@@ -151,7 +152,10 @@ README.md            # como rodar tudo
    - `QuestionPicker` (`api/app/services/question_picker.rb`): escolhe e expõe na mesma transação, com nova tentativa em caso de corrida.
    - Seeds gerados por `npm run export:questions` (em `web/`) → `api/db/seeds/demo_questions.json`, carregados só fora de produção.
    - As tabelas de partida (`matches`, `match_players`, `match_questions`, `trophies`, `match_events`) ficam para a etapa 4, junto com os endpoints.
-3. Login Google + sessões.
+3. ~~Login Google + sessões.~~ **Feito (backend)**:
+   - `POST /auth/google`, `GET /me` e `DELETE /session`; tabelas `identities` e `sessions`.
+   - `GoogleIdToken` valida o token com JWKS (com cache e nova busca limitada quando a chave rotaciona).
+   - A tela de login com Google Identity Services entra na etapa 6. Falta o `GOOGLE_CLIENT_ID` real (variável de ambiente).
 4. Partidas, convites e o fluxo de vez (draw → question → answer) com idempotência e locks.
 5. Jobs de prazo (15s / 24h / W.O.).
 6. Frontend online: telas de partidas (em andamento, aguardando, encerradas) consumindo a API.

@@ -1,7 +1,12 @@
 require "rails_helper"
 
 RSpec.describe Question do
-  let(:category) { Category.create!(slug: "europeu", label: "Futebol Europeu", short_label: "Europeu", color: "#83a7ff", icon: "🇪🇺", position: 2) }
+  # find_or_create: o banco de teste pode ter sido semeado (db:prepare roda os seeds ao criar o banco).
+  let(:category) do
+    Category.find_or_create_by!(slug: "europeu") do |c|
+      c.assign_attributes(label: "Futebol Europeu", short_label: "Europeu", color: "#83a7ff", icon: "🇪🇺", position: 2)
+    end
+  end
 
   def build_question(**attrs)
     described_class.new(prompt: "P?", options: %w[A B C D], correct_index: 0, explanation: "E", **attrs).tap do |q|

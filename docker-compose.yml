@@ -26,6 +26,9 @@ services:
     environment:
       DATABASE_URL: postgres://boletrados:boletrados@db:5432
       RAILS_ENV: development
+      # Client ID OAuth do Google (público). Sem ele, o login responde 401.
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:5173}
     ports:
       - "${API_PORT:-3000}:3000"
     volumes:

@@ -40,5 +40,14 @@ module Api
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.time_zone = "America/Sao_Paulo"
+
+    # Sessão por cookie próprio (httpOnly). Em modo API o middleware de cookies precisa ser adicionado.
+    config.middleware.use ActionDispatch::Cookies
+
+    # Client ID OAuth do Google (público). Sem ele, POST /auth/google responde 401.
+    config.x.google_client_id = ENV["GOOGLE_CLIENT_ID"]
+    # Origens do frontend autorizadas para CORS e para requisições que alteram estado (proteção CSRF).
+    config.x.allowed_origins = ENV.fetch("ALLOWED_ORIGINS", "http://localhost:5173").split(",").map(&:strip)
   end
 end

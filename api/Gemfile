@@ -26,8 +26,6 @@ gem "bootsnap", require: false
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
-# gem "rack-cors"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -45,3 +43,8 @@ group :development, :test do
   # Testes [https://rspec.info/]
   gem "rspec-rails", "~> 8.0"
 end
+
+# Validação do ID token do Google (JWT assinado, chaves via JWKS)
+gem "jwt", "~> 3.3"
+# CORS para o frontend (web/) em outra origem
+gem "rack-cors", "~> 3.0"

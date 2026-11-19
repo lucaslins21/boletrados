@@ -37,6 +37,9 @@ HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up    # API em http://localho
 ```
 
 - Portas configuráveis: `API_PORT` (padrão 3000) e `POSTGRES_PORT` (padrão 5433 no host).
+- `GOOGLE_CLIENT_ID`: Client ID OAuth do Google (tipo Web). Sem ele, `POST /auth/google` responde 401.
+- `ALLOWED_ORIGINS`: origens do frontend aceitas (CORS + CSRF), separadas por vírgula. Padrão: `http://localhost:5173`.
+- Endpoints atuais: `GET /up`, `POST /auth/google`, `GET /me`, `DELETE /session`.
 - Testes e verificações:
 
 ```bash

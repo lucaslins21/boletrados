@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_19_100005) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_19_110002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -24,6 +24,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_100005) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_categories_on_slug", unique: true
+  end
+
+  create_table "identities", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "provider", null: false
+    t.string "uid", null: false
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider", "uid"], name: "index_identities_on_provider_and_uid", unique: true
+    t.index ["user_id"], name: "index_identities_on_user_id"
+    t.check_constraint "provider::text = ANY (ARRAY['google'::character varying, 'facebook'::character varying]::text[])", name: "identities_provider_values"
   end
 
   create_table "question_categories", force: :cascade do |t|
@@ -44,7 +56,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_100005) do
     t.datetime "created_at", null: false
     t.index ["question_id"], name: "index_question_exposures_on_question_id"
     t.index ["user_id", "question_id"], name: "index_question_exposures_on_user_id_and_question_id", unique: true
-    t.check_constraint "source::text = ANY (ARRAY['play'::character varying, 'authored'::character varying, 'reviewed'::character varying]::text[])", name: "question_exposures_source_values"
+    t.check_constraint "source::text = ANY (ARRAY['play'::character varying::text, 'authored'::character varying::text, 'reviewed'::character varying::text])", name: "question_exposures_source_values"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -64,7 +76,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_100005) do
     t.check_constraint "cardinality(options) = 4", name: "questions_four_options"
     t.check_constraint "correct_index >= 0 AND correct_index <= 3", name: "questions_correct_index_range"
     t.check_constraint "difficulty IS NULL OR difficulty >= 1 AND difficulty <= 5", name: "questions_difficulty_range"
-    t.check_constraint "status::text = ANY (ARRAY['draft'::character varying, 'published'::character varying, 'retired'::character varying]::text[])", name: "questions_status_values"
+    t.check_constraint "status::text = ANY (ARRAY['draft'::character varying::text, 'published'::character varying::text, 'retired'::character varying::text])", name: "questions_status_values"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "token_digest", null: false
+    t.datetime "expires_at", null: false
+    t.string "user_agent"
+    t.string "ip_address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token_digest"], name: "index_sessions_on_token_digest", unique: true
+    t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -75,8 +99,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_100005) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "identities", "users", on_delete: :cascade
   add_foreign_key "question_categories", "categories"
   add_foreign_key "question_categories", "questions", on_delete: :cascade
   add_foreign_key "question_exposures", "questions"
   add_foreign_key "question_exposures", "users"
+  add_foreign_key "sessions", "users", on_delete: :cascade
 end
