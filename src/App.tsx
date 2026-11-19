@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'framer-motion';
 import {
   ArrowRight, BarChart3, BookOpen, Check, CheckCircle2, ChevronRight, CircleHelp,
   Clock3, Copy, Goal, Home, Info, LockKeyhole, Play, RotateCcw,
@@ -10,21 +10,20 @@ import { Brand } from './components/Brand';
 import { DrawBowl } from './components/DrawBowl';
 import { CATEGORIES, QUESTIONS, getCategory, type CategoryId } from './data/questions';
 import {
-  answerQuestion, chooseQuestion, continueAfterFeedback, createGame, getCurrentQuestion,
-  initialGame, isGame, randomlyDrawCategory, type Game, type PlayerIndex,
+  QUESTION_DURATION_MS, answerQuestion, continueAfterFeedback, createGame, drawCategory, enterDraw,
+  getCurrentQuestion, initialGame, isWinningFeedback, otherPlayer, recoverFromEmpty, restoreGame,
+  startDrawnQuestion, startTrophyQuestion, type Game, type PlayerIndex,
 } from './lib/game';
 
 const GAME_STORAGE = 'boletrados:demo:game:v1';
 const GLOBAL_SEEN_STORAGE = 'boletrados:demo:seen:v1';
 const ANIMATION_DURATION = 1450;
+const REDUCED_ANIMATION_DURATION = 300;
 
 function readGame(): Game {
   try {
     const raw = localStorage.getItem(GAME_STORAGE);
-    if (raw) {
-      const parsed: unknown = JSON.parse(raw);
-      if (isGame(parsed)) return parsed;
-    }
+    if (raw) return restoreGame(JSON.parse(raw)) ?? initialGame;
   } catch { /* corrupted browser storage starts clean */ }
   return initialGame;
 }
@@ -41,9 +40,7 @@ function readSeen(): [string[], string[]] {
 }
 
 function startDemo(): Game {
-  const game = createGame();
-  game.seenIds = readSeen();
-  return game;
+  return createGame(readSeen());
 }
 
 function getPlayerInitials(name: string) { return name === 'Você' ? 'VC' : 'AM'; }
@@ -54,7 +51,7 @@ function Pill({ children, tone = 'neutral' }: { children: ReactNode; tone?: 'neu
 
 function CategoryIcon({ id, size = 'md' }: { id: CategoryId; size?: 'sm' | 'md' | 'lg' }) {
   const cat = getCategory(id);
-  return <span className={`category-icon category-icon--${size}`} style={{ backgroundColor: `${cat.color}22`, borderColor: `${cat.color}55` }}>{cat.icon}</span>;
+  return <span aria-hidden="true" className={`category-icon category-icon--${size}`} style={{ backgroundColor: `${cat.color}22`, borderColor: `${cat.color}55` }}>{cat.icon}</span>;
 }
 
 function TrophyGrid({ trophies, interactive = false, onSelect }: { trophies: CategoryId[]; interactive?: boolean; onSelect?: (id: CategoryId) => void }) {
@@ -117,7 +114,7 @@ function HomeScreen({ onStart, onRules, onInvite }: { onStart: () => void; onRul
         </div>
         <div className="hero-tags"><span><CheckCircle2 size={16}/> 6 categorias</span><span><Clock3 size={16}/> 15s por pergunta</span><span><Users size={16}/> X1 entre amigos</span></div>
       </div>
-      <div className="hero-art" aria-label="Ilustração de troféu e estádio de futebol">
+      <div className="hero-art" role="img" aria-label="Ilustração de troféu e estádio de futebol">
         <div className="hero-orbit hero-orbit--one"/><div className="hero-orbit hero-orbit--two"/>
         <div className="hero-glow"/><div className="hero-stadium"/>
         <motion.div className="hero-main-trophy" animate={{ y: [-7, 5, -7], rotate: [-2, 2, -2] }} transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}><span>🏆</span></motion.div>
@@ -159,13 +156,15 @@ function LobbyScreen({ game, onPlay, onReset }: { game: Game; onPlay: () => void
   </div>;
 }
 
-function DrawScreen({ game, category, spinning, onDraw, onProceed }: { game: Game; category: CategoryId | null; spinning: boolean; onDraw: () => void; onProceed: () => void }) {
+function DrawScreen({ game, category, spinning, onDraw, onSkip, onProceed }: { game: Game; category: CategoryId | null; spinning: boolean; onDraw: () => void; onSkip: () => void; onProceed: () => void }) {
   return <div className="content-layout"><main className="main-card draw-card">
     <div className="eyebrow eyebrow--green"><span className="tiny-pulse"/> SORTEIO DA CATEGORIA</div>
     <h1 className="screen-title">A sorte está lançada!</h1><p className="screen-subtitle">Uma bolinha, uma categoria. Qual vai ser a próxima pergunta?</p>
     <DrawBowl isSpinning={spinning} revealed={!spinning ? category : null}/>
-    {category && !spinning ? <div className="draw-picked"><span>SORTEADA</span><strong>{getCategory(category).icon} {getCategory(category).label}</strong></div> : <p className="draw-helper">{spinning ? 'Misturando as bolinhas...' : 'Toque no botão para sortear uma categoria.'}</p>}
-    <button className="button button--primary button--full button--lg" disabled={spinning} onClick={category ? onProceed : onDraw}>{category ? <><ArrowRight size={19}/> Ver pergunta</> : <><Sparkles size={19}/> Sortear bolinha</>}</button>
+    <div aria-live="polite" aria-atomic="true">{category && !spinning ? <div className="draw-picked"><span>SORTEADA</span><strong><span aria-hidden="true">{getCategory(category).icon}</span> {getCategory(category).label}</strong></div> : <p className="draw-helper">{spinning ? 'Misturando as bolinhas...' : 'Toque no botão para sortear uma categoria.'}</p>}</div>
+    {spinning
+      ? <button className="button button--ghost button--full button--lg" onClick={onSkip}>Pular animação <ArrowRight size={19}/></button>
+      : <button className="button button--primary button--full button--lg" onClick={category ? onProceed : onDraw}>{category ? <><ArrowRight size={19}/> Ver pergunta</> : <><Sparkles size={19}/> Sortear bolinha</>}</button>}
     <p className="center-hint"><Clock3 size={14}/> Os 15 segundos começam somente quando a pergunta aparecer.</p>
   </main><aside className="aside-panel"><p className="eyebrow">SEU PROGRESSO</p><h3>{game.names[game.activePlayer]}</h3><div className="streak-side"><span>Sequência atual</span><strong>{game.streak}/3</strong></div><div className="streak-pips">{[0,1,2].map(i=><span key={i} className={i<game.streak?'done':''}/>)}</div><div className="divider"/><p className="hint-label">CATEGORIAS POSSÍVEIS</p><div className="category-list">{CATEGORIES.map(cat=><div key={cat.id}><CategoryIcon id={cat.id} size="sm"/><span>{cat.short}</span></div>)}</div></aside></div>;
 }
@@ -180,17 +179,34 @@ function QuestionScreen({ game, onAnswer }: { game: Game; onAnswer: (index: numb
     const handle = window.setInterval(sync, 75);
     return () => window.clearInterval(handle);
   }, [game.deadline]);
+  const expired = remaining === 0;
+  // Atalhos de teclado: A–D ou 1–4.
+  useEffect(() => {
+    if (expired) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.ctrlKey || event.metaKey || event.altKey || event.repeat) return;
+      const key = event.key.toLowerCase();
+      const index = 'abcd'.indexOf(key) >= 0 ? 'abcd'.indexOf(key) : '1234'.indexOf(key);
+      if (index >= 0 && key.length === 1) { event.preventDefault(); onAnswer(index); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [expired, onAnswer]);
   if (!question || !category) return <div className="main-card"><h2>Pergunta indisponível</h2></div>;
   const sec = Math.max(0, Math.ceil(remaining / 1000));
-  const pct = Math.max(0, Math.min(100, (remaining / 15000) * 100));
+  const total = Math.round(QUESTION_DURATION_MS / 1000);
+  const pct = Math.max(0, Math.min(100, (remaining / QUESTION_DURATION_MS) * 100));
+  // Leitores de tela: anunciar só marcos, não cada segundo.
+  const announcement = sec <= 5 ? 'Restam 5 segundos' : sec <= 10 ? 'Restam 10 segundos' : '';
   return <div className="question-wrap"><main className="main-card question-card" style={{ '--category-color': category.color } as CSSProperties}>
     <div className="question-top"><span className="question-category"><CategoryIcon id={category.id} size="sm"/>{category.label}</span><span className="question-label">{game.context === 'trophy' ? <><Trophy size={15}/> PERGUNTA DO TROFÉU</> : `ACERTO ${game.streak + 1} DE 3`}</span></div>
-    <div className="timer-track"><motion.div className={`timer-fill ${sec <= 5 ? 'timer-fill--danger' : ''}`} animate={{ width: `${pct}%` }} transition={{ duration: 0.075, ease: 'linear' }}/></div>
-    <div className="question-meta"><Pill tone={game.context === 'trophy' ? 'orange' : 'purple'}>{game.context === 'trophy' ? '🏆 Vale um troféu!' : '⚽ Valendo a posse'}</Pill><div className={`countdown ${sec <= 5 ? 'countdown--danger' : ''}`}><Clock3 size={18}/><b>{sec.toString().padStart(2, '0')}s</b></div></div>
+    <div className="timer-track" role="progressbar" aria-label="Tempo restante" aria-valuemin={0} aria-valuemax={total} aria-valuenow={sec} aria-valuetext={`${sec} segundos`}><motion.div className={`timer-fill ${sec <= 5 ? 'timer-fill--danger' : ''}`} animate={{ width: `${pct}%` }} transition={{ duration: 0.075, ease: 'linear' }}/></div>
+    <div className="question-meta"><Pill tone={game.context === 'trophy' ? 'orange' : 'purple'}>{game.context === 'trophy' ? '🏆 Vale um troféu!' : '⚽ Valendo a posse'}</Pill><div className={`countdown ${sec <= 5 ? 'countdown--danger' : ''}`} aria-hidden="true"><Clock3 size={18}/><b>{sec.toString().padStart(2, '0')}s</b></div></div>
+    <p className="sr-only" aria-live="assertive">{announcement}</p>
     <h1 className="question-prompt">{question.prompt}</h1>
     {question.image && <img className="question-image" src={question.image} alt="Ilustração complementar para esta pergunta"/>}
-    <div className="answer-grid">{question.options.map((option,i)=><button key={`${question.id}-${i}`} className="answer-option" onClick={()=>onAnswer(i)} disabled={remaining === 0}><span className="answer-letter">{String.fromCharCode(65+i)}</span><span>{option}</span><ChevronRight size={18}/></button>)}</div>
-    <p className="center-hint"><ShieldCheck size={15}/> Uma resposta. Sem voltar atrás. 15 segundos.</p>
+    <div className="answer-grid" role="group" aria-label="Alternativas">{question.options.map((option,i)=><button key={`${question.id}-${i}`} className="answer-option" onClick={()=>onAnswer(i)} disabled={expired} aria-keyshortcuts={`${String.fromCharCode(65+i)} ${i+1}`}><span className="answer-letter" aria-hidden="true">{String.fromCharCode(65+i)}</span><span>{option}</span><ChevronRight size={18} aria-hidden="true"/></button>)}</div>
+    <p className="center-hint"><ShieldCheck size={15}/> Uma resposta. Sem voltar atrás. {total} segundos.<span className="keyboard-hint"> Teclado: A–D ou 1–4.</span></p>
   </main></div>;
 }
 
@@ -206,15 +222,24 @@ function FeedbackScreen({ game, onContinue }: { game: Game; onContinue: () => vo
   const fb = game.feedback;
   if (!fb) return null;
   const q = getCurrentQuestion(game);
+  const winning = isWinningFeedback(game);
+  const opponent = game.names[otherPlayer(game.activePlayer)];
+  const subtitle = winning ? 'Você completou a coleção dos seis troféus!'
+    : fb.trophyWon ? `O troféu de ${getCategory(fb.categoryId).short} é seu. A posse continua!`
+    : fb.correct ? 'Você continua com a posse de bola.'
+    : `A sequência foi zerada. Agora a bola é de ${opponent}.`;
   return <div className="feedback-shell"><main className="main-card feedback-card">
-    <motion.div className={`feedback-burst ${fb.correct ? 'feedback-burst--correct' : 'feedback-burst--wrong'}`} initial={{ scale: 0.35, opacity: 0, rotate: -20 }} animate={{ scale: 1, opacity: 1, rotate: 0 }} transition={{ type: 'spring', damping: 12 }}>
+    <motion.div className={`feedback-burst ${fb.correct ? 'feedback-burst--correct' : 'feedback-burst--wrong'}`} initial={{ scale: 0.35, opacity: 0, rotate: -20 }} animate={{ scale: 1, opacity: 1, rotate: 0 }} transition={{ type: 'spring', damping: 12 }} aria-hidden="true">
       {fb.trophyWon ? <Trophy size={50}/> : fb.correct ? <Check size={56}/> : <X size={56}/>}
     </motion.div>
     <p className="eyebrow">{fb.trophyWon ? 'TROFÉU CONQUISTADO!' : fb.correct ? 'NA MOSCA!' : 'QUE PENA!'}</p>
     <h1 className="screen-title">{fb.trophyWon ? 'É campeão dessa categoria!' : fb.correct ? 'Boa! Você acertou.' : fb.timedOut ? 'O tempo acabou!' : 'Essa passou raspando.'}</h1>
-    <p className="screen-subtitle">{fb.trophyWon ? `O troféu de ${getCategory(fb.categoryId).short} é seu. A posse continua!` : fb.correct ? 'Você continua com a posse de bola.' : 'A sequência foi zerada. Agora a bola é do seu amigo.'}</p>
-    <div className="feedback-explanation"><span>RESPOSTA CORRETA</span><strong>{q?.options[fb.correctIndex] ?? '—'}</strong><p>{fb.explanation}</p></div>
-    <button className="button button--primary button--lg button--full" onClick={onContinue}>{fb.correct ? 'Continuar jogando' : 'Passar a vez'} <ArrowRight size={19}/></button>
+    <p className="screen-subtitle">{subtitle}</p>
+    <div className="feedback-explanation">
+      {!fb.correct && fb.selectedIndex !== null && q && <><span>SUA RESPOSTA</span><strong className="feedback-wrong-answer">{q.options[fb.selectedIndex]}</strong></>}
+      <span>RESPOSTA CORRETA</span><strong>{q?.options[fb.correctIndex] ?? '—'}</strong><p>{fb.explanation}</p>
+    </div>
+    <button className="button button--primary button--lg button--full" onClick={onContinue} autoFocus>{winning ? 'Ver resultado' : fb.correct ? 'Continuar jogando' : 'Passar a vez'} <ArrowRight size={19}/></button>
   </main></div>;
 }
 
@@ -228,20 +253,45 @@ function EmptyScreen({ game, onRetry, onRestart }: { game: Game; onRetry: () => 
   return <div className="feedback-shell"><main className="main-card feedback-card"><div className="feedback-burst feedback-burst--wrong"><CircleHelp size={50}/></div><h1 className="screen-title">Acabaram as inéditas.</h1><p className="screen-subtitle">Não temos mais perguntas novas de {cat?.short ?? 'essa categoria'} para este jogador. Na versão final, a comunidade ajudará a manter o banco abastecido.</p><button className="button button--primary button--full" onClick={onRetry}>Voltar sem perder a vez <ArrowRight size={17}/></button><button className="button button--ghost button--full" onClick={onRestart}>Iniciar nova demo</button></main></div>;
 }
 
+/** Modal acessível: Esc fecha, foco inicial no diálogo, Tab preso dentro dele e foco restaurado ao fechar. */
+function Modal({ label, onClose, children }: { label: string; onClose: () => void; children: ReactNode }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
+  useEffect(() => {
+    const previous = document.activeElement as HTMLElement | null;
+    const card = cardRef.current;
+    card?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { event.preventDefault(); closeRef.current(); return; }
+      if (event.key !== 'Tab' || !card) return;
+      const focusable = card.querySelectorAll<HTMLElement>('button:not([disabled]), [href], input, [tabindex]:not([tabindex="-1"])');
+      if (!focusable.length) return;
+      const firstEl = focusable[0], lastEl = focusable[focusable.length - 1];
+      if (event.shiftKey && (document.activeElement === firstEl || document.activeElement === card)) { event.preventDefault(); lastEl.focus(); }
+      else if (!event.shiftKey && document.activeElement === lastEl) { event.preventDefault(); firstEl.focus(); }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => { document.removeEventListener('keydown', onKey); previous?.focus?.(); };
+  }, []);
+  return <div className="modal-backdrop" onMouseDown={onClose} role="presentation"><motion.div ref={cardRef} tabIndex={-1} className="modal-card" initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onMouseDown={event=>event.stopPropagation()} role="dialog" aria-modal="true" aria-label={label}><button className="modal-close" aria-label="Fechar" onClick={onClose}><X size={20}/></button>{children}</motion.div></div>;
+}
+
 function RulesModal({ onClose }: { onClose: () => void }) {
-  return <div className="modal-backdrop" onMouseDown={onClose} role="presentation"><motion.div className="modal-card" initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onMouseDown={event=>event.stopPropagation()} role="dialog" aria-modal="true" aria-label="Como jogar Boletrados"><button className="modal-close" aria-label="Fechar" onClick={onClose}><X size={20}/></button><Pill tone="lime">MANUAL DO BOLEIRO</Pill><h2>É fácil entrar em campo.</h2><div className="rules-list"><div><span>01</span><p><b>Sorteie a categoria.</b> Uma bolinha define o tema da próxima pergunta.</p></div><div><span>02</span><p><b>Responda em 15 segundos.</b> Acertou? Sua posse continua. Errou? Passa a vez.</p></div><div><span>03</span><p><b>Faça três acertos seguidos.</b> Você escolhe um troféu e responde à pergunta decisiva.</p></div><div><span>04</span><p><b>Conquiste os seis troféus.</b> O primeiro a completar a coleção vence.</p></div></div><Banner>Esta versão é uma simulação local. O X1 online, os convites e o login social serão ligados ao backend futuramente.</Banner><button className="button button--primary button--full" onClick={onClose}>Entendi! <Check size={18}/></button></motion.div></div>;
+  return <Modal label="Como jogar Boletrados" onClose={onClose}><Pill tone="lime">MANUAL DO BOLEIRO</Pill><h2>É fácil entrar em campo.</h2><div className="rules-list"><div><span>01</span><p><b>Sorteie a categoria.</b> Uma bolinha define o tema da próxima pergunta.</p></div><div><span>02</span><p><b>Responda em 15 segundos.</b> Acertou? Sua posse continua. Errou? Passa a vez.</p></div><div><span>03</span><p><b>Faça três acertos seguidos.</b> Você escolhe um troféu e responde à pergunta decisiva.</p></div><div><span>04</span><p><b>Conquiste os seis troféus.</b> O primeiro a completar a coleção vence.</p></div></div><Banner>Esta versão é uma simulação local. O X1 online, os convites e o login social serão ligados ao backend futuramente.</Banner><button className="button button--primary button--full" onClick={onClose}>Entendi! <Check size={18}/></button></Modal>;
 }
 
 function InviteModal({ onClose }: { onClose: () => void }) {
-  return <div className="modal-backdrop" onMouseDown={onClose}><motion.div className="modal-card" initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onMouseDown={e=>e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Convites para amigos"><button className="modal-close" aria-label="Fechar" onClick={onClose}><X size={20}/></button><Pill tone="purple">EM BREVE</Pill><h2>Desafie aquele amigo que sabe tudo.</h2><p>Na versão online, você vai poder criar um X1 e mandar um link pelo WhatsApp ou compartilhar um código de convite. Seu amigo joga quando puder.</p><div className="invite-preview"><span>CÓDIGO DE EXEMPLO</span><strong>BOLA-6X1</strong><Copy size={18}/></div><Banner icon={<LockKeyhole size={17}/>}>O código acima é apenas ilustrativo. Convites reais ainda não estão implementados.</Banner><button className="button button--primary button--full" onClick={onClose}>Beleza <Check size={18}/></button></motion.div></div>;
+  return <Modal label="Convites para amigos" onClose={onClose}><Pill tone="purple">EM BREVE</Pill><h2>Desafie aquele amigo que sabe tudo.</h2><p>Na versão online, você vai poder criar um X1 e mandar um link pelo WhatsApp ou compartilhar um código de convite. Seu amigo joga quando puder.</p><div className="invite-preview"><span>CÓDIGO DE EXEMPLO</span><strong>BOLA-6X1</strong><Copy size={18}/></div><Banner icon={<LockKeyhole size={17}/>}>O código acima é apenas ilustrativo. Convites reais ainda não estão implementados.</Banner><button className="button button--primary button--full" onClick={onClose}>Beleza <Check size={18}/></button></Modal>;
 }
 
 export default function App() {
   const [game, setGame] = useState<Game>(readGame);
   const [rulesOpen, setRulesOpen] = useState(false);
   const [inviteOpen, setInviteOpen] = useState(false);
-  const [drawChoice, setDrawChoice] = useState<CategoryId | null>(null);
   const [spinning, setSpinning] = useState(false);
+  const spinTimer = useRef<number | undefined>(undefined);
+  const reduceMotion = useReducedMotion();
   const [showReset, setShowReset] = useState(false);
   const uniqueSeen = useMemo(() => [game.seenIds[0].length, game.seenIds[1].length], [game.seenIds]);
 
@@ -260,26 +310,35 @@ export default function App() {
     sync(); const timer = window.setInterval(sync, 100);
     return () => window.clearInterval(timer);
   }, [game.phase, game.deadline]);
-  useEffect(() => { if (game.phase !== 'draw') { setDrawChoice(null); setSpinning(false); } }, [game.phase]);
+  useEffect(() => { if (game.phase !== 'draw') { window.clearTimeout(spinTimer.current); setSpinning(false); } }, [game.phase]);
+  useEffect(() => () => window.clearTimeout(spinTimer.current), []);
 
-  const reset = () => { setGame(startDemo()); setShowReset(false); setDrawChoice(null); setSpinning(false); };
+  const reset = () => { setGame(startDemo()); setShowReset(false); setSpinning(false); };
   const openHome = () => setShowReset(true);
   const begin = () => { setGame(current => current.phase === 'home' ? startDemo() : current); };
-  const enterDraw = () => { setDrawChoice(null); setSpinning(false); setGame(current => ({ ...current, phase: 'draw' })); };
-  const spin = () => { if (spinning || drawChoice) return; const next = randomlyDrawCategory(); setSpinning(true); window.setTimeout(() => { setDrawChoice(next); setSpinning(false); }, ANIMATION_DURATION); };
-  const startNormal = () => { if (!drawChoice || spinning) return; setGame(current => chooseQuestion(current, drawChoice, 'normal')); };
-  const startTrophy = (id: CategoryId) => setGame(current => chooseQuestion(current, id, 'trophy'));
+  const goToDraw = () => { setSpinning(false); setGame(enterDraw); };
+  // O resultado é decidido (e salvo) no clique; a animação apenas o revela. Recarregar a página não refaz o sorteio.
+  const spin = () => {
+    if (spinning || game.drawnCategory) return;
+    setGame(current => drawCategory(current));
+    setSpinning(true);
+    spinTimer.current = window.setTimeout(() => setSpinning(false), reduceMotion ? REDUCED_ANIMATION_DURATION : ANIMATION_DURATION);
+  };
+  const skipSpin = () => { window.clearTimeout(spinTimer.current); setSpinning(false); };
+  const startNormal = () => { if (spinning) return; setGame(current => startDrawnQuestion(current)); };
+  const startTrophy = (id: CategoryId) => setGame(current => startTrophyQuestion(current, id));
   const chooseAnswer = (i: number | null) => setGame(current => answerQuestion(current, i));
   const afterFeedback = () => setGame(current => continueAfterFeedback(current));
-  const recoverEmpty = () => setGame(current => ({ ...current, phase: current.context === 'trophy' ? 'trophy' : 'draw', selectedCategory: null, deadline: null }));
+  const recoverEmpty = () => setGame(recoverFromEmpty);
+  const dockPlay = game.phase === 'home' ? begin : game.phase === 'lobby' ? goToDraw : null;
 
-  return <div className="app-shell"><Header phase={game.phase} onHome={openHome}/><div className="bg-spark bg-spark--one"/><div className="bg-spark bg-spark--two"/>
+  return <MotionConfig reducedMotion="user"><div className="app-shell"><Header phase={game.phase} onHome={openHome}/><div className="bg-spark bg-spark--one"/><div className="bg-spark bg-spark--two"/>
     <div className={`main-container main-container--${game.phase}`}>
       <AnimatePresence mode="wait" initial={false}>
         <motion.div key={game.phase} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.22 }}>
           {game.phase === 'home' && <HomeScreen onStart={begin} onRules={()=>setRulesOpen(true)} onInvite={()=>setInviteOpen(true)}/>}
-          {game.phase === 'lobby' && <LobbyScreen game={game} onPlay={enterDraw} onReset={openHome}/>}
-          {game.phase === 'draw' && <DrawScreen game={game} category={drawChoice} spinning={spinning} onDraw={spin} onProceed={startNormal}/>}
+          {game.phase === 'lobby' && <LobbyScreen game={game} onPlay={goToDraw} onReset={openHome}/>}
+          {game.phase === 'draw' && <DrawScreen game={game} category={game.drawnCategory} spinning={spinning} onDraw={spin} onSkip={skipSpin} onProceed={startNormal}/>}
           {game.phase === 'question' && <QuestionScreen key={game.questionId} game={game} onAnswer={chooseAnswer}/>}
           {game.phase === 'trophy' && <TrophyScreen game={game} onSelect={startTrophy}/>}
           {game.phase === 'feedback' && <FeedbackScreen game={game} onContinue={afterFeedback}/>}
@@ -291,7 +350,13 @@ export default function App() {
     <footer className="footer"><div><Brand small/><span>Quem entende de bola, joga.</span></div><p>Protótipo local · React + TypeScript · {QUESTIONS.length} perguntas demonstrativas · {uniqueSeen[0] + uniqueSeen[1]} exposições registradas</p></footer>
     {rulesOpen && <RulesModal onClose={()=>setRulesOpen(false)}/>}
     {inviteOpen && <InviteModal onClose={()=>setInviteOpen(false)}/>}
-    {showReset && <div className="modal-backdrop" onMouseDown={()=>setShowReset(false)}><motion.div className="modal-card" onMouseDown={e=>e.stopPropagation()} initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} role="dialog" aria-modal="true" aria-label="Sair da partida"><button className="modal-close" onClick={()=>setShowReset(false)} aria-label="Fechar"><X size={20}/></button><Pill tone="orange">SAIR DA PARTIDA?</Pill><h2>O jogo está pegando fogo!</h2><p>O progresso atual é salvo neste navegador. Voltar ao início criará uma nova partida de demonstração, mas não permitirá repetir as perguntas já vistas.</p><button className="button button--primary button--full" onClick={()=>{ setGame(current=>({ ...current, phase:'home' }));setShowReset(false); }}>Voltar ao início <Home size={18}/></button><button className="button button--ghost button--full" onClick={()=>setShowReset(false)}>Continuar jogando</button></motion.div></div>}
-    <div className="mobile-dock"><button className="mobile-dock-button" onClick={()=>game.phase==='home'?setRulesOpen(true):openHome}><Home size={21}/><span>Início</span></button><button className="mobile-dock-button mobile-dock-button--primary" onClick={()=>game.phase==='home'?begin:game.phase==='lobby'?enterDraw:setRulesOpen(true)}><Swords size={21}/><span>Jogar</span></button><button className="mobile-dock-button" onClick={()=>setInviteOpen(true)}><Users size={21}/><span>Amigos</span></button></div>
-  </div>;
+    {showReset && <Modal label="Sair da partida" onClose={()=>setShowReset(false)}><Pill tone="orange">SAIR DA PARTIDA?</Pill><h2>O jogo está pegando fogo!</h2><p>{game.phase === 'question' ? 'O cronômetro continua correndo e esta pergunta já conta como vista. ' : ''}Voltar ao início encerra esta partida de demonstração; a próxima não repetirá as perguntas já vistas.</p><button className="button button--primary button--full" onClick={()=>{ setGame(current=>({ ...current, phase:'home' }));setShowReset(false); }}>Voltar ao início <Home size={18}/></button><button className="button button--ghost button--full" onClick={()=>setShowReset(false)}>Continuar jogando</button></Modal>}
+    <nav className={`mobile-dock ${game.phase === 'question' ? 'mobile-dock--hidden' : ''}`} aria-label="Navegação rápida">
+      <button className="mobile-dock-button" onClick={()=>game.phase==='home' ? window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }) : openHome()}><Home size={21}/><span>Início</span></button>
+      {dockPlay
+        ? <button className="mobile-dock-button mobile-dock-button--primary" onClick={dockPlay}><Swords size={21}/><span>Jogar</span></button>
+        : <button className="mobile-dock-button mobile-dock-button--primary" onClick={()=>setRulesOpen(true)}><BookOpen size={21}/><span>Regras</span></button>}
+      <button className="mobile-dock-button" onClick={()=>setInviteOpen(true)}><Users size={21}/><span>Amigos</span></button>
+    </nav>
+  </div></MotionConfig>;
 }

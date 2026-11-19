@@ -6,7 +6,7 @@ export function DrawBowl({ isSpinning, revealed, compact = false }: { isSpinning
   const positions = [[18, 34], [42, 22], [68, 34], [25, 66], [52, 61], [75, 69]];
   const chosen = CATEGORIES.find(category => category.id === revealed);
   return (
-    <div className={`draw-visual ${compact ? 'draw-visual--compact' : ''}`} aria-label="Globo com seis bolinhas de sorteio">
+    <div className={`draw-visual ${compact ? 'draw-visual--compact' : ''}`} role="img" aria-label="Globo com seis bolinhas de sorteio">
       <div className="draw-halo" />
       <motion.div className="bowl-shell"
         animate={isSpinning ? { rotate: [0, -6, 5, -4, 0] } : { rotate: 0 }}

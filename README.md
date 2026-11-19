@@ -19,6 +19,7 @@ Abra o endereço mostrado pelo Vite, normalmente `http://localhost:5173`.
 
 ```bash
 npm run typecheck
+npm test        # testes do motor de partidas (Vitest)
 npm run build
 ```
 
@@ -28,6 +29,7 @@ npm run build
 - CSS responsivo com design tokens próprios (sem biblioteca de componentes)
 - Motion (`framer-motion`) nas transições e no globo de sorteio
 - Ícones Lucide
+- Vitest para os testes do motor
 - `localStorage` para manter a partida demonstrativa e histórico local de perguntas já vistas
 
 ## Mecânica definida
@@ -60,12 +62,14 @@ src/
     Brand.tsx            # Marca provisória
     DrawBowl.tsx         # Globo de sorteio animado
   data/questions.ts      # Questões demonstrativas e categorias
-  lib/game.ts            # Máquina de estados e regras locais
+  lib/game.ts            # Máquina de estados e regras locais (funções puras)
+  lib/game.test.ts       # Testes das regras (Vitest)
   assets/stadium.svg     # Ilustração original simplificada
 public/favicon.svg
 docs/
   PRODUCT.md             # Regras fechadas, detalhes e próximos passos
   CLAUDE_HANDOFF.md      # Guia para continuar no Claude CLI
+  AUDITORIA_v0.2.md      # Auditoria da demo: correções e pendências
 ```
 
 ## Limitações da demo

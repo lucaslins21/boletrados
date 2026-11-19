@@ -6,6 +6,8 @@ Projeto **Boletrados** — quiz de futebol X1 por turnos.
 
 O repositório contém frontend Vite + React + TS jogável em modo **demo local**. Há uma home, sala da partida, sorteio de bolinhas com Motion, perguntas de 15s, 3 acertos para chance de troféu, feedback e conquista dos 6 troféus. Possui perguntas demonstrativas e registro local do histórico de exposições.
 
+**v0.2 (2026-11-19):** auditoria de qualidade feita — ver `docs/AUDITORIA_v0.2.md`. O motor (`src/lib/game.ts`) tem transições puras e testadas com Vitest (`npm test`); o sorteio é persistido no estado do jogo; modais, cronômetro e dock mobile foram revisados para acessibilidade e movimento reduzido.
+
 **Não afirmar** que login, convites, backend e multiplayer existem: estão planejados. Manter o visual polido/mobile-first e respeitar as decisões em `docs/PRODUCT.md`.
 
 ## Primeiros passos
@@ -14,13 +16,14 @@ O repositório contém frontend Vite + React + TS jogável em modo **demo local*
 npm install
 npm run dev
 npm run typecheck
+npm test
 npm run build
 ```
 
 ## O que fazer em seguida
 
-1. Revisar e melhorar acessibilidade e responsividade; criar testes de unidade para o motor de partidas (`src/lib/game.ts`).
-2. Refinar os assets e o sorteio de bolinhas (com opção de pular/reduzir animação). Fazer testes de UX de 15 segundos.
+1. ~~Revisar acessibilidade e responsividade; testes de unidade do motor.~~ Feito na v0.2. Decidir as pendências listadas em `docs/AUDITORIA_v0.2.md`.
+2. Refinar os assets do sorteio (pular/reduzir animação já implementados). Fazer testes de UX de 15 segundos.
 3. Criar backend Rails API + PostgreSQL, com esquema de dados e autorização — somente quando for hora de adicionar contas e X1 real.
 4. Implementar Google/Facebook OAuth e convites por link/código, protegendo tokens e continuando o fluxo após login.
 5. Mover para o servidor o relógio autoritativo, sorteios, reserva de perguntas inéditas, mudanças de posse e concessão de troféus. Preferir endpoints idempotentes e transações.

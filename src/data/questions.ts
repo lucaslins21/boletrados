@@ -63,7 +63,7 @@ const seeds: Seed[] = [
   [['selecoes', 'sulamericano'], 'Qual seleção venceu a Copa América de 2011?', ['Argentina', 'Uruguai', 'Paraguai', 'Chile'], 1, 'O Uruguai conquistou a Copa América de 2011.'],
   [['selecoes'], 'A Copa Africana de Nações é disputada por equipes de qual confederação?', ['AFC', 'CONCACAF', 'CAF', 'UEFA'], 2, 'CAF é a confederação africana de futebol.'],
 
-  [['escudos', 'brasileiro'], 'Qual clube brasileiro tem uma estrela vermelha no escudo e é conhecido como Estrela Solitária?', ['Botafogo', 'Vasco', 'Fluminense', 'Santos'], 0, 'O Botafogo utiliza uma estrela solitária branca sobre fundo preto; o enunciado deveria dizer estrela branca.', undefined],
+  [['escudos', 'brasileiro'], 'Qual clube brasileiro usa uma estrela solitária branca no escudo?', ['Botafogo', 'Vasco', 'Fluminense', 'Santos'], 0, 'O Botafogo tem uma estrela solitária branca no escudo.'],
   [['escudos'], 'Qual sigla aparece no escudo do FC Barcelona?', ['FCB', 'RMA', 'ACM', 'PSG'], 0, 'O escudo do Barcelona traz as letras FCB.'],
   [['escudos'], 'Qual clube é associado ao símbolo de um galo em sua identidade?', ['Tottenham', 'Chelsea', 'Arsenal', 'Fulham'], 0, 'O Tottenham usa um galo como elemento principal do emblema.'],
   [['escudos'], 'Qual clube tem uma águia em destaque no escudo?', ['Benfica', 'Porto', 'Sporting', 'Braga'], 0, 'O escudo do Benfica tem uma águia sobre o símbolo.'],
@@ -83,10 +83,6 @@ const seeds: Seed[] = [
   [['estadios'], 'O estádio Azteca fica em qual cidade?', ['Monterrey', 'Guadalajara', 'Cidade do México', 'Cancún'], 2, 'O Estádio Azteca está localizado na Cidade do México.'],
   [['estadios'], 'O estádio San Siro é associado a quais clubes?', ['Milan e Inter', 'Roma e Lazio', 'Juventus e Torino', 'Real Madrid e Atlético'], 0, 'Milan e Inter historicamente compartilham o estádio de San Siro.'],
 ];
-
-// Corrige um enunciado demonstrativo antes da exposição: a Estrela Solitária é branca.
-seeds[36][1] = 'Qual clube brasileiro usa uma estrela solitária branca no escudo?';
-seeds[36][4] = 'O Botafogo tem uma estrela solitária branca no escudo.';
 
 export const QUESTIONS: Question[] = seeds.map(([categoryIds, prompt, options, correctIndex, explanation, image], index) => ({
   id: `demo-${String(index + 1).padStart(3, '0')}`,

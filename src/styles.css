@@ -6,3 +6,10 @@
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
 .question-card{user-select:none;-webkit-user-select:none}
+/* Acessibilidade e ajustes da auditoria v0.2 */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.modal-card:focus{outline:none}.modal-card:focus-visible{outline:3px solid #c9fa66;outline-offset:3px}
+.feedback-explanation strong.feedback-wrong-answer{color:#ff9d9d;text-decoration:line-through;text-decoration-thickness:2px;margin-bottom:10px}
+.mobile-dock.mobile-dock--hidden{display:none}
+@media(hover:none),(max-width:800px){.keyboard-hint{display:none}}
+.app-shell{overflow:clip}
