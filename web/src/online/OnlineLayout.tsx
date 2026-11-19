@@ -43,6 +43,6 @@ export function OnlineLayout() {
         </motion.div>
       </AnimatePresence>}
     </div>
-    <footer className="footer gd-footer"><Logo size={34} tagline/><p>X1 entre amigos · versão de desenvolvimento</p></footer>
+    <footer className="footer gd-footer"><Logo size={34} tagline/><nav className="footer-links" aria-label="Informações"><Link to="/privacidade">Privacidade</Link><Link to="/termos">Termos de uso</Link></nav></footer>
   </div></MotionConfig>;
 }

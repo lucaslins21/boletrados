@@ -16,6 +16,7 @@ import { SessionProvider } from './online/session';
  *  /perfil        seu perfil e estatísticas;  /jogadores/:id  perfil de quem você já enfrentou
  *  /perguntas     suas perguntas enviadas (nova, editar quando devolvida)
  *  /admin         moderação (só administradores)
+ *  /privacidade, /termos  política de privacidade (LGPD) e termos de uso (públicas)
  *  /demo          demo local (dois jogadores no mesmo aparelho) — será removida no lançamento do online
  */
 // Páginas carregadas sob demanda: deixam a primeira abertura (home e partida) mais leve no celular.
@@ -26,6 +27,8 @@ const SubmissionFormPage = lazy(() => import('./online/curation/SubmissionPages'
 const AdminQueuePage = lazy(() => import('./online/curation/AdminPages').then(m => ({ default: m.AdminQueuePage })));
 const AdminQuestionPage = lazy(() => import('./online/curation/AdminPages').then(m => ({ default: m.AdminQuestionPage })));
 const AdminNewQuestionPage = lazy(() => import('./online/curation/AdminPages').then(m => ({ default: m.AdminNewQuestionPage })));
+const PrivacyPage = lazy(() => import('./online/LegalPages').then(m => ({ default: m.PrivacyPage })));
+const TermsPage = lazy(() => import('./online/LegalPages').then(m => ({ default: m.TermsPage })));
 const page = (node: React.ReactNode) => <Suspense fallback={<Loading/>}>{node}</Suspense>;
 
 // Galeria das ilustrações: só em desenvolvimento (não entra no build de produção).
@@ -48,6 +51,8 @@ export default function App() {
         <Route path="admin" element={page(<AdminQueuePage/>)}/>
         <Route path="admin/perguntas/nova" element={page(<AdminNewQuestionPage/>)}/>
         <Route path="admin/perguntas/:id" element={page(<AdminQuestionPage/>)}/>
+        <Route path="privacidade" element={page(<PrivacyPage/>)}/>
+        <Route path="termos" element={page(<TermsPage/>)}/>
         <Route path="*" element={<HomePage/>}/>
       </Route>
     </Routes>

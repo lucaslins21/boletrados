@@ -218,3 +218,17 @@ body:has(.gd){background:var(--bt-pitch)}
   .gd-site .inline-button{align-self:stretch;width:100%!important}
 }
 .gd-site .h2h-score small,.gd-site .h2h-list small{font-size:var(--bt-text-xs)}
+
+/* Páginas legais (privacidade e termos): leitura confortável */
+.gd-site .legal-wrap{max-width:760px;margin:0 auto;width:100%}
+.gd-site .legal-page .subtle-link{align-self:flex-start;min-height:32px}
+.gd-site .legal-updated{font-size:var(--bt-text-sm);color:var(--bt-muted)}
+.gd-site .legal-body{font-size:var(--bt-text-md);line-height:1.65;color:var(--bt-ink-2)}
+.gd-site .legal-body>*+*{margin-top:var(--bt-space-3)}
+.gd-site .legal-body h2{margin-top:var(--bt-space-8);font:800 var(--bt-h3)/1.25 var(--bt-font-display);color:var(--bt-ink)}
+.gd-site .legal-body ul{padding-left:1.2em;display:grid;gap:var(--bt-space-2)}
+.gd-site .legal-body strong{color:var(--bt-ink)}
+.gd-site .legal-body a,.gd-site .login-legal a,.gd-site .footer-links a{color:var(--bt-blue);font-weight:700}
+.gd-site .login-legal{font-size:var(--bt-text-xs);line-height:1.5;color:var(--bt-muted)}
+.gd-site .footer-links{display:flex;gap:var(--bt-space-5);flex-wrap:wrap}
+.gd-site .footer-links a{color:#fff;font-size:var(--bt-text-sm);text-shadow:0 1px 0 #0003}

@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { LogIn } from 'lucide-react';
@@ -78,5 +79,6 @@ export function LoginCard({ title = 'Entre para jogar', subtitle }: { title?: st
     {GOOGLE_CLIENT_ID ? <GoogleButton onError={setError}/> : !import.meta.env.DEV && <Banner>Login com Google ainda não configurado neste ambiente.</Banner>}
     {import.meta.env.DEV && <DevLogin onError={setError}/>}
     {error && <p className="form-error" role="alert">{error}</p>}
+    <p className="login-legal">Ao entrar, você concorda com os <Link to="/termos">Termos de uso</Link> e a <Link to="/privacidade">Política de Privacidade</Link>.</p>
   </div>;
 }
