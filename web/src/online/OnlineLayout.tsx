@@ -5,6 +5,7 @@ import { Pill } from '../components/ui';
 import { StadiumScene } from '../game/art';
 import { Logo } from '../game/Logo';
 import { useSession } from './session';
+import '../game/tokens.css';
 import '../game/game.css';
 import './online.css';
 import './curation/curation.css';

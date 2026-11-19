@@ -1,0 +1,20 @@
+/* Boletrados — tokens do design system ("Dia de jogo"). Fonte única de cores, raios e sombras.
+   Cores das categorias para SVG ficam em theme.ts. Ver docs/ART_DIRECTION.md. */
+:root{
+  /* Marca e ações */
+  --bt-green:#22B357; --bt-green-dark:#168A41; --bt-green-soft:#E7F7EC;
+  --bt-blue:#2F6FED;  --bt-blue-dark:#1F52BD;  --bt-blue-soft:#EEF4FF;
+  --bt-gold:#FFC531;  --bt-gold-dark:#D99100;  --bt-gold-soft:#FFF4D1; --bt-gold-ink:#5C3B00;
+  --bt-red:#F0484E;   --bt-red-dark:#C42B30;   --bt-red-soft:#FDECEC;
+  /* Texto */
+  --bt-ink:#13213D; --bt-ink-2:#40506F; --bt-muted:#7A88A3; --bt-muted-2:#8A97B0;
+  /* Superfícies */
+  --bt-card:#FFFFFF; --bt-soft:#F3F7FC; --bt-soft-2:#F6F9FD; --bt-line:#E3EAF4; --bt-edge:#CBD8EA; --bt-edge-soft:#D7E2EF;
+  /* Cenário */
+  --bt-sky:#7CC8FA; --bt-sky-deep:#1F5FAF; --bt-night:#0E2A5A; --bt-pitch:#34AD50;
+  /* Forma */
+  --bt-radius-sm:12px; --bt-radius:16px; --bt-radius-lg:24px;
+  --bt-depth:0 6px 0 var(--bt-edge);
+  /* Movimento */
+  --bt-fast:.12s; --bt-medium:.25s;
+}

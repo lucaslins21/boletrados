@@ -2,73 +2,73 @@
    Ajusta, só dentro de .gd-site, as classes compartilhadas com a demo (styles.css continua escuro para /demo). */
 .gd-site{background:transparent}
 .gd-site .site-header{background:#ffffff26;border-bottom:1px solid #ffffff40;backdrop-filter:blur(10px)}
-.gd-site .brand{color:#fff;text-shadow:0 2px 0 #1F5FAF}
+.gd-site .brand{color:#fff;text-shadow:0 2px 0 var(--bt-sky-deep)}
 .gd-site .brand-accent{color:#FFD23F}
 .gd-site .brand-period{color:#fff}
-.gd-site .brand-icon{background:#fff;color:#22B357;box-shadow:0 4px 0 #CBD8EA}
-.gd-site .online-nav-link{color:#fff;text-shadow:0 1px 0 #1F5FAF}
+.gd-site .brand-icon{background:#fff;color:var(--bt-green);box-shadow:0 4px 0 var(--bt-edge)}
+.gd-site .online-nav-link{color:#fff;text-shadow:0 1px 0 var(--bt-sky-deep)}
 .gd-site .online-nav-link:hover{color:#FFF6C2}
 .gd-site .main-container{padding-bottom:30px}
 .gd-site .footer{border-top:0;color:#fff}
 .gd-site .footer span,.gd-site .footer p{color:#ffffffd9}
 
 /* Cartões */
-.gd-site .main-card,.gd-site .aside-panel{background:#fff;border:0;color:#13213D;box-shadow:0 7px 0 #CBD8EA,0 18px 40px #0E2A5A22;border-radius:24px}
-.gd-site .screen-title{color:#13213D}
-.gd-site .screen-subtitle{color:#40506F}
-.gd-site .eyebrow{color:#7A88A3}
+.gd-site .main-card,.gd-site .aside-panel{background:#fff;border:0;color:var(--bt-ink);box-shadow:0 7px 0 var(--bt-edge),0 18px 40px #0E2A5A22;border-radius:24px}
+.gd-site .screen-title{color:var(--bt-ink)}
+.gd-site .screen-subtitle{color:var(--bt-ink-2)}
+.gd-site .eyebrow{color:var(--bt-muted)}
 .gd-site .eyebrow--green{color:#178A41}
-.gd-site .tiny-pulse{background:#22B357;box-shadow:0 0 0 4px #22B35726}
-.gd-site .aside-panel h3{color:#13213D}
-.gd-site .divider{background:#E3EAF4}
-.gd-site .side-rule p{color:#40506F}
-.gd-site .rule-number{background:#FFF4D1;color:#B07400}
-.gd-site .center-hint{color:#7A88A3}
-.gd-site .hint-label{color:#7A88A3}
-.gd-site .text-action{color:#2F6FED}
-.gd-site .subtle-link{color:#2F6FED}
+.gd-site .tiny-pulse{background:var(--bt-green);box-shadow:0 0 0 4px #22B35726}
+.gd-site .aside-panel h3{color:var(--bt-ink)}
+.gd-site .divider{background:var(--bt-line)}
+.gd-site .side-rule p{color:var(--bt-ink-2)}
+.gd-site .rule-number{background:var(--bt-gold-soft);color:#B07400}
+.gd-site .center-hint{color:var(--bt-muted)}
+.gd-site .hint-label{color:var(--bt-muted)}
+.gd-site .text-action{color:var(--bt-blue)}
+.gd-site .subtle-link{color:var(--bt-blue)}
 .gd-site .notice-banner{background:#EEF6FF;border-color:#CFE2FB;color:#1F4E9A}
-.gd-site .invite-preview{background:#EEF4FF;border:2px dashed #B8CDF5}
-.gd-site .invite-preview span{color:#7A88A3}
-.gd-site .invite-preview strong{color:#2F6FED}
-.gd-site .player-avatar{background:#2F6FED;color:#fff;box-shadow:inset 0 -3px 0 #0003}
+.gd-site .invite-preview{background:var(--bt-blue-soft);border:2px dashed #B8CDF5}
+.gd-site .invite-preview span{color:var(--bt-muted)}
+.gd-site .invite-preview strong{color:var(--bt-blue)}
+.gd-site .player-avatar{background:var(--bt-blue);color:#fff;box-shadow:inset 0 -3px 0 #0003}
 .gd-site .player-avatar--1{background:#FF8A1F}
 
 /* Botões: mesmo "gordinho" da partida */
 .gd-site .button{border-radius:16px;font-family:'Outfit',sans-serif;font-weight:900;letter-spacing:.02em;transition:transform .08s,box-shadow .08s,filter .15s}
 .gd-site .button:not(:disabled):hover{transform:none;filter:brightness(1.04)}
-.gd-site .button--primary{background:#22B357;color:#fff;box-shadow:0 5px 0 #168A41}
-.gd-site .button--primary:hover{background:#22B357}
-.gd-site .button--primary:not(:disabled):active{transform:translateY(3px);box-shadow:0 2px 0 #168A41}
-.gd-site .button--ghost{background:#fff;color:#13213D;border:2px solid #E3EAF4;box-shadow:0 4px 0 #D7E2EF}
-.gd-site .button--ghost:hover{background:#F6F9FD;border-color:#D7E2EF}
-.gd-site .button--ghost:not(:disabled):active{transform:translateY(3px);box-shadow:0 1px 0 #D7E2EF}
+.gd-site .button--primary{background:var(--bt-green);color:#fff;box-shadow:0 5px 0 var(--bt-green-dark)}
+.gd-site .button--primary:hover{background:var(--bt-green)}
+.gd-site .button--primary:not(:disabled):active{transform:translateY(3px);box-shadow:0 2px 0 var(--bt-green-dark)}
+.gd-site .button--ghost{background:#fff;color:var(--bt-ink);border:2px solid var(--bt-line);box-shadow:0 4px 0 var(--bt-edge-soft)}
+.gd-site .button--ghost:hover{background:var(--bt-soft-2);border-color:var(--bt-edge-soft)}
+.gd-site .button--ghost:not(:disabled):active{transform:translateY(3px);box-shadow:0 1px 0 var(--bt-edge-soft)}
 .gd-site button:disabled{opacity:.55}
 
 /* Pílulas */
-.gd-site .pill{background:#F1F5FA;border-color:#E3EAF4;color:#40506F}
-.gd-site .pill--lime{background:#E7F7EC;border-color:#BFE8CB;color:#178A41}
+.gd-site .pill{background:#F1F5FA;border-color:var(--bt-line);color:var(--bt-ink-2)}
+.gd-site .pill--lime{background:var(--bt-green-soft);border-color:#BFE8CB;color:#178A41}
 .gd-site .pill--purple{background:#F1EBFF;border-color:#DCCDFD;color:#6B3BD8}
 .gd-site .pill--orange{background:#FFF1E3;border-color:#FFD3A8;color:#B4570A}
 
 /* Modais (convite, regras) */
 .gd-site .modal-backdrop{background:#0E2A5Acc;backdrop-filter:blur(4px)}
-.gd-site .modal-card{background:#fff;color:#13213D;border:0;box-shadow:0 8px 0 #CBD8EA,0 24px 60px #0E2A5A55}
-.gd-site .modal-card h2{color:#13213D}
-.gd-site .modal-card>p{color:#40506F}
-.gd-site .modal-close{color:#7A88A3;background:#F1F5FA;border-color:#E3EAF4}
+.gd-site .modal-card{background:#fff;color:var(--bt-ink);border:0;box-shadow:0 8px 0 var(--bt-edge),0 24px 60px #0E2A5A55}
+.gd-site .modal-card h2{color:var(--bt-ink)}
+.gd-site .modal-card>p{color:var(--bt-ink-2)}
+.gd-site .modal-close{color:var(--bt-muted);background:#F1F5FA;border-color:var(--bt-line)}
 
 /* Boas-vindas e mensagens */
-.gd-site .online-welcome-copy h1{color:#fff;text-shadow:0 3px 0 #1F5FAF}
+.gd-site .online-welcome-copy h1{color:#fff;text-shadow:0 3px 0 var(--bt-sky-deep)}
 .gd-site .online-welcome-copy h1 em{color:#FFD23F}
-.gd-site .online-welcome-copy p{color:#fff;font-weight:600;text-shadow:0 1px 0 #1F5FAF}
-.gd-site .online-welcome .subtle-link{color:#fff;text-shadow:0 1px 0 #1F5FAF}
-.gd-site .online-loading{color:#fff;text-shadow:0 1px 0 #1F5FAF}
+.gd-site .online-welcome-copy p{color:#fff;font-weight:600;text-shadow:0 1px 0 var(--bt-sky-deep)}
+.gd-site .online-welcome .subtle-link{color:#fff;text-shadow:0 1px 0 var(--bt-sky-deep)}
+.gd-site .online-loading{color:#fff;text-shadow:0 1px 0 var(--bt-sky-deep)}
 .gd-site .online-user .pill{background:#ffffff33;border-color:#ffffff66;color:#fff}
 
 /* Fundo da página atrás do cenário fixo (aparece ao rolar além do fim, no iPhone) */
-:root:has(.gd){background:#34AD50}
-body:has(.gd){background:#34AD50}
+:root:has(.gd){background:var(--bt-pitch)}
+body:has(.gd){background:var(--bt-pitch)}
 
 /* Ícone + texto centralizados (styles.css empurra o último ícone para a direita) */
 .gd-site .button--primary svg:last-child{margin-left:0}
@@ -76,12 +76,12 @@ body:has(.gd){background:#34AD50}
 
 /* Selo grande dos cartões de convite/mensagem */
 .gd-site .feedback-burst{border-radius:24px;box-shadow:0 6px 0 #0001}
-.gd-site .feedback-burst--correct{background:#FFC531;color:#5C3B00;box-shadow:0 6px 0 #D99100}
-.gd-site .feedback-burst--wrong{background:#FDECEC;color:#C42B30;box-shadow:0 6px 0 #F5B5B8}
+.gd-site .feedback-burst--correct{background:var(--bt-gold);color:var(--bt-gold-ink);box-shadow:0 6px 0 var(--bt-gold-dark)}
+.gd-site .feedback-burst--wrong{background:var(--bt-red-soft);color:var(--bt-red-dark);box-shadow:0 6px 0 #F5B5B8}
 
 /* Cabeçalho: link da página atual */
 .gd-site .online-nav-link{border-radius:12px;padding:6px 10px}
-.gd-site .online-nav-link.active{background:#ffffff33;box-shadow:inset 0 -3px 0 #FFC531}
+.gd-site .online-nav-link.active{background:#ffffff33;box-shadow:inset 0 -3px 0 var(--bt-gold)}
 .gd-site .brand-link{display:inline-flex}
 
 /* Rodapé */
@@ -91,21 +91,21 @@ body:has(.gd){background:#34AD50}
 /* Entrada: ilustração do sorteio e coleção */
 .gd-hero-art{display:flex;flex-direction:column;align-items:center;gap:6px;margin:20px 0 6px;max-width:420px}
 .gd-hero-globe{width:min(62vw,260px)}
-.gd-hero-shelf{display:flex;gap:6px;margin-top:-6px;background:#ffffffd9;border-radius:18px;padding:10px 14px 8px;box-shadow:0 5px 0 #CBD8EA}
+.gd-hero-shelf{display:flex;gap:6px;margin-top:-6px;background:#ffffffd9;border-radius:18px;padding:10px 14px 8px;box-shadow:0 5px 0 var(--bt-edge)}
 
 /* Home: linha de partida com as duas coleções */
-.gd-site .match-row{padding:12px 14px;border:2px solid #E3EAF4;box-shadow:0 4px 0 #D7E2EF}
+.gd-site .match-row{padding:12px 14px;border:2px solid var(--bt-line);box-shadow:0 4px 0 var(--bt-edge-soft)}
 .gd-site .match-row:hover{transform:translateY(-1px);background:#FBFDFF}
-.gd-site .match-row--my-turn{border-color:#22B357;background:linear-gradient(120deg,#E9F8EE,#fff 65%)}
+.gd-site .match-row--my-turn{border-color:var(--bt-green);background:linear-gradient(120deg,#E9F8EE,#fff 65%)}
 .match-row-top{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
 .match-row-top strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .match-shelves{display:flex;align-items:center;gap:6px;margin:4px 0 2px;flex-wrap:wrap}
-.match-shelves i{font-style:normal;font-weight:900;color:#8A97B0;font-size:12px}
+.match-shelves i{font-style:normal;font-weight:900;color:var(--bt-muted-2);font-size:12px}
 .match-shelf{display:inline-flex;gap:1px;flex-shrink:0}
 .match-status{flex-shrink:0;font:900 11px 'Outfit',sans-serif;letter-spacing:.06em;border-radius:20px;padding:6px 10px;white-space:nowrap}
-.match-status--go{background:#22B357;color:#fff;box-shadow:0 3px 0 #168A41}
-.match-status--wait{background:#EEF4FF;color:#1F52BD}
-.match-status--win{background:#FFC531;color:#5C3B00;box-shadow:0 3px 0 #D99100}
+.match-status--go{background:var(--bt-green);color:#fff;box-shadow:0 3px 0 var(--bt-green-dark)}
+.match-status--wait{background:var(--bt-blue-soft);color:var(--bt-blue-dark)}
+.match-status--win{background:var(--bt-gold);color:var(--bt-gold-ink);box-shadow:0 3px 0 var(--bt-gold-dark)}
 .match-status--loss{background:#F1F5FA;color:#6B7A96}
 
 /* Perfil: taça desenhada por categoria */

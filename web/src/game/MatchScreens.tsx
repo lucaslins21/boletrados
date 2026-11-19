@@ -11,6 +11,7 @@ import { initials, timeLeft } from '../online/format';
 import { CategoryBadge, DrawBall, Rays, StadiumScene, Trophy } from './art';
 import { CATEGORY_ORDER, CATEGORY_THEME } from './theme';
 import { onSoundChange, setSoundEnabled, sfx, soundEnabled } from './sound';
+import './tokens.css';
 import './game.css';
 
 const AVATAR_COLORS = ['#2F6FED', '#FF8A1F'];
