@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import DemoApp from './demo/DemoApp';
 import { HomePage } from './online/HomePage';
@@ -19,10 +20,14 @@ import { SessionProvider } from './online/session';
  *  /admin         moderação (só administradores)
  *  /demo          demo local (dois jogadores no mesmo aparelho) — será removida no lançamento do online
  */
+// Galeria das ilustrações: só em desenvolvimento (não entra no build de produção).
+const ArtGallery = import.meta.env.DEV ? lazy(() => import('./game/ArtGallery')) : null;
+
 export default function App() {
   return <BrowserRouter>
     <Routes>
       <Route path="/demo" element={<DemoApp/>}/>
+      {ArtGallery && <Route path="/_arte" element={<Suspense fallback={null}><ArtGallery/></Suspense>}/>}
       <Route element={<SessionProvider><OnlineLayout/></SessionProvider>}>
         <Route index element={<HomePage/>}/>
         <Route path="convite/:key" element={<InvitePage/>}/>

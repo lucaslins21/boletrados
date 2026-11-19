@@ -33,7 +33,7 @@ export function Banner({ children, icon = <Info size={17}/> }: { children: React
 }
 
 /** Modal acessível: Esc fecha, foco inicial no diálogo, Tab preso dentro dele e foco restaurado ao fechar. */
-export function Modal({ label, onClose, children }: { label: string; onClose: () => void; children: ReactNode }) {
+export function Modal({ label, onClose, children, className = '' }: { label: string; onClose: () => void; children: ReactNode; className?: string }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef(onClose);
   closeRef.current = onClose;
@@ -53,7 +53,7 @@ export function Modal({ label, onClose, children }: { label: string; onClose: ()
     document.addEventListener('keydown', onKey);
     return () => { document.removeEventListener('keydown', onKey); previous?.focus?.(); };
   }, []);
-  return <div className="modal-backdrop" onMouseDown={onClose} role="presentation"><motion.div ref={cardRef} tabIndex={-1} className="modal-card" initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onMouseDown={event=>event.stopPropagation()} role="dialog" aria-modal="true" aria-label={label}><button className="modal-close" aria-label="Fechar" onClick={onClose}><X size={20}/></button>{children}</motion.div></div>;
+  return <div className="modal-backdrop" onMouseDown={onClose} role="presentation"><motion.div ref={cardRef} tabIndex={-1} className={`modal-card ${className}`} initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} onMouseDown={event=>event.stopPropagation()} role="dialog" aria-modal="true" aria-label={label}><button className="modal-close" aria-label="Fechar" onClick={onClose}><X size={20}/></button>{children}</motion.div></div>;
 }
 
 /** Milissegundos restantes até `deadline` (relógio do cliente), atualizado ~13x por segundo. */

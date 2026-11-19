@@ -1,6 +1,6 @@
 import { MotionConfig } from 'framer-motion';
 import { Home, LogOut, PenLine, ShieldCheck, UserRound } from 'lucide-react';
-import { Link, Outlet } from 'react-router';
+import { Link, Outlet, useLocation } from 'react-router';
 import { Brand } from '../components/Brand';
 import { Pill } from '../components/ui';
 import { useSession } from './session';
@@ -9,6 +9,9 @@ import './curation/curation.css';
 
 export function OnlineLayout() {
   const { status, user, signOut, retry } = useSession();
+  // A partida é uma tela imersiva (cenário "Dia de jogo"), sem o cabeçalho e o rodapé do site.
+  const immersive = useLocation().pathname.startsWith('/partidas/');
+  if (immersive && (status === 'anonymous' || status === 'authenticated')) return <MotionConfig reducedMotion="user"><Outlet/></MotionConfig>;
   return <MotionConfig reducedMotion="user"><div className="app-shell">
     <header className="site-header"><div className="site-header-inner">
       <Link to="/" className="brand-link" aria-label="Boletrados — início"><Brand small/></Link>

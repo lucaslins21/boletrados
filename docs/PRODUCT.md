@@ -100,6 +100,16 @@ Não existe pergunta só de imagem: o enunciado é sempre obrigatório. A imagem
   As animações recorrentes devem ser curtas, com opção de pular e de movimento reduzido.
 - **Evoluir o que já existe**, sem refazer a identidade visual sem necessidade.
 - **Marca**: *Boletrados* é provisória e não usa símbolos registrados de ligas ou clubes. Logo, mascote e verificação de marca ainda estão pendentes.
+- **Identidade escolhida (2026-11-19): "Dia de jogo".** Substitui o antigo "estúdio noturno com verde-lima".
+  - **Cenário**: céu claro, arquibancada com torcida e gramado listrado.
+  - **Elementos**: cartões brancos e botões "gordinhos" com profundidade; um único foco grande por tela; pouco texto.
+  - **Cores das categorias**: saturadas e validadas para daltonismo, sempre acompanhadas de ícone e nome.
+  - **Ilustrações próprias em SVG**, sem IA de imagem e sem arte de terceiros:
+    - ícones das 6 categorias;
+    - a taça de cada categoria, cinza (silhueta) até ser conquistada;
+    - bolinhas de sorteio que abrem;
+    - cenário do estádio, raios e confete.
+  - Inspirada na *qualidade* dos jogos casuais, sem copiar a arte, os personagens ou a roleta de nenhum. A galeria das peças fica em `/_arte`, só em desenvolvimento.
 
 ## 10. Nunca repetir perguntas (regra central)
 
@@ -245,5 +255,6 @@ Não reabrir decisões fechadas. Preservar o histórico e o trabalho feito. Não
 | Dificuldade dinâmica (contadores, faixas, mínimo de 50, timeouts à parte) | ✅ — falta considerar habilidade e manipulação |
 | Imagens nas perguntas | ✅ |
 | Dificultar cópia do texto | ✅ — **falta registrar eventos suspeitos** |
-| Animação de "bolinha que abre" e polimento das animações da seção 9 | Parcial (o globo e a revelação existem) |
+| Identidade "Dia de jogo" na partida: sorteio com bolinha que abre, pergunta com resultado nas alternativas, escolha e conquista de troféu, vitória | ✅ |
+| "Dia de jogo" nas demais telas (home, convite, perfil, perguntas, moderação) | Pendente: ainda no visual escuro antigo |
 | Login Facebook, revisão comunitária, peso da dificuldade no sorteio | Futuro ou indefinido |
