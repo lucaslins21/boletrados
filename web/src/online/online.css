@@ -52,6 +52,8 @@
 .aside-panel .match-scoreboard .versus{display:none}
 .aside-panel .trophy-grid{grid-template-columns:repeat(3,1fr);gap:6px}
 a.button{text-decoration:none}
+.notifications-text{color:#a7b6c9;font-size:13px;line-height:1.55;margin:6px 0 4px}
+.notifications-card .button{margin-top:10px}
 
 .online-user{max-width:160px;overflow:hidden;text-overflow:ellipsis;display:inline-block}
 

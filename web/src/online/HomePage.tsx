@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router';
 import { Banner, Modal, Pill } from '../components/ui';
 import { ApiError, api, inviteUrl, type ApiMatch } from './api';
 import { LoginCard } from './LoginCard';
+import { NotificationsCard } from './NotificationsCard';
 import { finishedText, initials, me, opponent, timeLeft } from './format';
 import { pendingInvite, useSession } from './session';
 
@@ -95,6 +96,8 @@ function MatchesHome() {
       <div className="side-rule"><span className="rule-number">01</span><p>Crie um desafio e mande o link ou o código.</p></div>
       <div className="side-rule"><span className="rule-number">02</span><p>Acertou? Continue. Errou? A vez passa.</p></div>
       <div className="side-rule"><span className="rule-number">03</span><p>Três acertos seguidos valem uma disputa de troféu.</p></div>
+      <div className="divider"/>
+      <NotificationsCard/>
       <div className="divider"/>
       <Link to="/demo" className="text-action"><Dumbbell size={15}/> Treinar na demo</Link>
     </aside>

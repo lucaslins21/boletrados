@@ -63,6 +63,9 @@ HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up    # API em http://localho
 - Portas configuráveis: `API_PORT` (padrão 3000) e `POSTGRES_PORT` (padrão 5433 no host).
 - `GOOGLE_CLIENT_ID`: Client ID OAuth do Google (tipo Web). Sem ele, `POST /auth/google` responde 401.
 - `ALLOWED_ORIGINS`: origens do frontend aceitas (CORS + CSRF), separadas por vírgula. Padrão: `http://localhost:5173`.
+- `FRONTEND_URL`: endereço do frontend usado nos links dos avisos. Padrão: `http://localhost:5173`.
+- `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` / `VAPID_SUBJECT`: chaves do Web Push (gere com `docker compose run --rm api bin/rails push:vapid_keys`). Sem elas, os avisos push ficam desligados. **A chave privada é segredo.**
+- `MAIL_FROM`: remetente dos e-mails. Em desenvolvimento, os e-mails vão para `api/tmp/mails`.
 - Endpoints atuais:
 
 | Método e rota | O quê |
@@ -73,6 +76,7 @@ HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up    # API em http://localho
 | `GET /matches` · `POST /matches` · `GET /matches/:id` · `DELETE /matches/:id` | Listar, criar convite, ver partida, cancelar convite |
 | `GET /invites/:key` · `POST /invites/:key/accept` | Prévia pública e aceite (código `BOLA-XXXXXX` ou token do link) |
 | `POST /matches/:id/draw` · `question` · `answer` · `resign` | Ações da vez (aceitam `Idempotency-Key`) |
+| `GET /push/public_key` · `POST /push/subscriptions` · `DELETE /push/subscriptions` | Avisos Web Push do navegador |
 - Testes e verificações:
 
 ```bash

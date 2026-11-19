@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :identities, dependent: :destroy
   has_many :sessions, dependent: :destroy
   has_many :question_exposures, dependent: :destroy
+  has_many :push_subscriptions, dependent: :destroy
   has_many :match_players, dependent: :restrict_with_exception
   has_many :matches, through: :match_players
 

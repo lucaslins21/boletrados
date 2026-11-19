@@ -29,6 +29,11 @@ services:
       # Client ID OAuth do Google (público). Sem ele, o login responde 401.
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:5173}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
+      # Web Push: gere com `docker compose run --rm api bin/rails push:vapid_keys`. Sem elas, os avisos push ficam desligados.
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-mailto:avisos@boletrados.invalid}
     ports:
       - "${API_PORT:-3000}:3000"
     volumes:

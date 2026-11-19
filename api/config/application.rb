@@ -49,5 +49,13 @@ module Api
     config.x.google_client_id = ENV["GOOGLE_CLIENT_ID"]
     # Origens do frontend autorizadas para CORS e para requisições que alteram estado (proteção CSRF).
     config.x.allowed_origins = ENV.fetch("ALLOWED_ORIGINS", "http://localhost:5173").split(",").map(&:strip)
+    # Endereço do frontend, usado nos links de avisos (push e e-mail).
+    config.x.frontend_url = ENV.fetch("FRONTEND_URL", "http://localhost:5173").chomp("/")
+    # Chaves VAPID do Web Push (gerar com `bin/rails push:vapid_keys`). Sem elas, os avisos push ficam desligados.
+    config.x.vapid = {
+      public_key: ENV["VAPID_PUBLIC_KEY"], private_key: ENV["VAPID_PRIVATE_KEY"],
+      subject: ENV.fetch("VAPID_SUBJECT", "mailto:avisos@boletrados.invalid")
+    }
+    config.x.mail_from = ENV.fetch("MAIL_FROM", "Boletrados <avisos@boletrados.invalid>")
   end
 end

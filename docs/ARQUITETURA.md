@@ -174,4 +174,13 @@ README.md            # como rodar tudo
    - Cronômetro sincronizado pelo `server_time`; atualização automática a cada 8 s na vez do adversário.
    - Testado ponta a ponta com dois navegadores.
    - Login de desenvolvimento (`POST /auth/dev`) só em development/test; botão do Google via Google Identity Services quando `VITE_GOOGLE_CLIENT_ID` está definido.
-7. Web Push + e-mail.
+7. ~~Web Push + e-mail.~~ **Feito**:
+   - **Web Push**: tabela `push_subscriptions` e `public/sw.js`. Avisa quando a vez muda de mãos, quando o convite é aceito e quando a partida termina; quem fez a jogada não é avisado da própria ação.
+   - **Lembrete 4 h antes do prazo**: só se a vez não começou; vai por push e por e-mail (este só para e-mail verificado).
+   - **Anti-SSRF**: só são aceitos endpoints dos serviços de push conhecidos (FCM, Mozilla, Apple, Microsoft).
+   - Inscrições inválidas (HTTP 404/410) são apagadas sozinhas.
+   - Em dev, os e-mails vão para `api/tmp/mails`.
+   - **Falta**:
+     - provedor de e-mail e chaves VAPID de produção (com a hospedagem);
+     - ícone PNG (`apple-touch-icon`) para instalar no iPhone, onde o push só funciona com o site instalado na tela de início;
+     - preferências de aviso por usuário.

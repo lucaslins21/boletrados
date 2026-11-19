@@ -48,3 +48,5 @@ end
 gem "jwt", "~> 3.3"
 # CORS para o frontend (web/) em outra origem
 gem "rack-cors", "~> 3.0"
+
+gem "web-push", "~> 3.1"

@@ -85,6 +85,10 @@ export const api = {
   answer: (id: number, selectedIndex: number) =>
     request<MatchResponse & { result: QuestionResult }>('POST', `/matches/${id}/answer`, { selected_index: selectedIndex }, { idempotent: true }),
   resign: (id: number) => request<MatchResponse>('POST', `/matches/${id}/resign`, {}, { idempotent: true }),
+
+  pushPublicKey: () => request<{ public_key: string }>('GET', '/push/public_key'),
+  savePushSubscription: (subscription: PushSubscriptionJSON) => request<null>('POST', '/push/subscriptions', subscription),
+  deletePushSubscription: (endpoint: string) => request<null>('DELETE', '/push/subscriptions', { endpoint }),
 };
 
 /** Link de convite para compartilhar (o token só é conhecido logo após criar o convite). */

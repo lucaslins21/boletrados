@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_19_120007) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_19_130001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -91,7 +91,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_120007) do
     t.index ["match_id"], name: "index_match_questions_on_match_id"
     t.index ["question_id"], name: "index_match_questions_on_question_id"
     t.index ["user_id"], name: "index_match_questions_on_user_id"
-    t.check_constraint "context::text = ANY (ARRAY['normal'::character varying, 'trophy'::character varying]::text[])", name: "match_questions_context_values"
+    t.check_constraint "context::text = ANY (ARRAY['normal'::character varying::text, 'trophy'::character varying::text])", name: "match_questions_context_values"
   end
 
   create_table "matches", force: :cascade do |t|
@@ -117,8 +117,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_120007) do
     t.index ["status"], name: "index_matches_on_status"
     t.index ["turn_deadline_at"], name: "index_matches_on_turn_deadline_at", where: "((status)::text = 'active'::text)"
     t.index ["winner_id"], name: "index_matches_on_winner_id"
-    t.check_constraint "finished_reason IS NULL OR (finished_reason::text = ANY (ARRAY['six_trophies'::character varying, 'walkover'::character varying, 'resigned'::character varying]::text[]))", name: "matches_finished_reason_values"
-    t.check_constraint "status::text = ANY (ARRAY['waiting_opponent'::character varying, 'active'::character varying, 'finished'::character varying, 'cancelled'::character varying]::text[])", name: "matches_status_values"
+    t.check_constraint "finished_reason IS NULL OR (finished_reason::text = ANY (ARRAY['six_trophies'::character varying::text, 'walkover'::character varying::text, 'resigned'::character varying::text]))", name: "matches_finished_reason_values"
+    t.check_constraint "status::text = ANY (ARRAY['waiting_opponent'::character varying::text, 'active'::character varying::text, 'finished'::character varying::text, 'cancelled'::character varying::text])", name: "matches_status_values"
+  end
+
+  create_table "push_subscriptions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "endpoint", null: false
+    t.string "p256dh", null: false
+    t.string "auth", null: false
+    t.string "user_agent"
+    t.datetime "last_sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["endpoint"], name: "index_push_subscriptions_on_endpoint", unique: true
+    t.index ["user_id"], name: "index_push_subscriptions_on_user_id"
   end
 
   create_table "question_categories", force: :cascade do |t|
@@ -207,6 +220,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_120007) do
   add_foreign_key "matches", "users", column: "created_by_id"
   add_foreign_key "matches", "users", column: "current_user_id"
   add_foreign_key "matches", "users", column: "winner_id"
+  add_foreign_key "push_subscriptions", "users", on_delete: :cascade
   add_foreign_key "question_categories", "categories"
   add_foreign_key "question_categories", "questions", on_delete: :cascade
   add_foreign_key "question_exposures", "matches", on_delete: :nullify

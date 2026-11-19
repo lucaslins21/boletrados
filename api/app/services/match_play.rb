@@ -118,6 +118,7 @@ class MatchPlay
   end
 
   def resign!(user)
+    @actor = user
     seat = match.seat_of(user)
     raise MatchError.new("Partida não está em andamento.", status: :conflict) unless match.status == "active"
 
@@ -128,6 +129,7 @@ class MatchPlay
   private
 
   def require_turn!(user)
+    @actor = user
     raise MatchError.new("Partida não está em andamento.", status: :conflict) unless match.status == "active"
     raise MatchError.new("Não é a sua vez.", status: :conflict) unless match.current_user_id == user.id
   end
@@ -143,6 +145,7 @@ class MatchPlay
   def persist!(new_state)
     finished = new_state.phase == :finished
     turn_changed = @state.nil? || new_state.turn_deadline != @state.turn_deadline
+    previous_user_id = match.current_user_id
     match.update!(
       state: MatchState.dump(new_state),
       status: finished ? "finished" : "active",
@@ -153,8 +156,36 @@ class MatchPlay
       finished_at: finished ? (match.finished_at || @now) : nil
     )
     MatchEvents.record!(match, :finished, at: @now, reason: new_state.finished_reason, winner_seat: new_state.winner) if finished && !@state&.phase.eql?(:finished)
-    schedule_clock(new_state.turn_deadline) if turn_changed && !finished
+    if turn_changed && !finished
+      schedule_clock(new_state.turn_deadline)
+      schedule_reminder(new_state)
+    end
+    notify_changes(new_state, previous_user_id)
     @state = new_state
+  end
+
+  # Avisos push: vez que muda de mãos, convite aceito (primeira vez do criador) e fim de jogo.
+  # Quem fez a jogada não é avisado da própria ação.
+  def notify_changes(new_state, previous_user_id)
+    if new_state.phase == :finished
+      return if @state&.phase == :finished
+
+      match.match_players.each { |mp| notify(:match_finished, mp.user_id) unless mp.user_id == @actor&.id }
+    elsif match.current_user_id != previous_user_id
+      notify(@state.nil? ? :invite_accepted : :your_turn, match.current_user_id)
+    end
+  end
+
+  def notify(kind, user_id)
+    match_id = match.id
+    ActiveRecord.after_all_transactions_commit { MatchNotificationJob.perform_later(kind.to_s, match_id, user_id) }
+  end
+
+  def schedule_reminder(new_state)
+    at = new_state.turn_deadline - MatchNotifier::REMINDER_BEFORE
+    match_id = match.id
+    turn_number = new_state.turn_number
+    ActiveRecord.after_all_transactions_commit { TurnReminderJob.set(wait_until: at).perform_later(match_id, turn_number) }
   end
 
   # Agenda o "relógio" da partida após o commit. O job só chama settle!, então é seguro rodar a mais.
