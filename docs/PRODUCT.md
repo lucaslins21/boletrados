@@ -33,7 +33,8 @@ Uma questão pode pertencer a múltiplas categorias, desde que o enquadramento s
 
 ## Login, convites, estatísticas (planejado)
 
-- Login via Google e Facebook (identidade interna única por usuário, com vinculação explícita de provedores).
+- Login via Google e Facebook (identidade interna única por usuário, com vinculação explícita de provedores). **MVP: só Google**; Facebook depois.
+- Avisos de vez por Web Push + e-mail (lembrete antes do prazo de 24h).
 - Criar partida/convite com token aleatório, link compartilhável e código curto; preservar convite no fluxo de login.
 - Tela de partidas em andamento, aguardando o outro jogador, completas; perfil com vitórias, derrotas, troféus e desempenho por categoria; histórico de confronto.
 - Definir política de prazo para iniciar turnos, W.O., abandono e notificações antes de ligar o multiplayer.
@@ -63,7 +64,7 @@ Uma questão pode pertencer a múltiplas categorias, desde que o enquadramento s
 
 ## Incertezas (não inventar)
 
-- Prazo máximo de cada turno e política de W.O. ainda não definidos.
+- ~~Prazo máximo de cada turno e política de W.O.~~ **Decidido (2026-11-19):** 24h por vez; o estouro passa a vez e 3 estouros seguidos do mesmo jogador dão W.O. Ver `docs/ARQUITETURA.md`.
 - Peso real de dificuldade no sorteio ainda não definido.
 - Feedback após pergunta e duração dos efeitos visuais podem ser refinados em testes.
 - Identidade final/logotipo/mascote ainda pendentes de design e verificação de marca.

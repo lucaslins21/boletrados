@@ -72,6 +72,7 @@ docs/
   PRODUCT.md             # Regras fechadas, detalhes e próximos passos
   CLAUDE_HANDOFF.md      # Guia para continuar no Claude CLI
   AUDITORIA_v0.2.md      # Auditoria da demo: correções e pendências
+  ARQUITETURA.md         # Proposta do backend (Rails + PostgreSQL)
 ```
 
 ## Limitações da demo
