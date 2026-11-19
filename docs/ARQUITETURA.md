@@ -12,7 +12,7 @@
 | Estouro do prazo | **Passa a vez** (conta como erro). **3 estouros seguidos** do mesmo jogador = **W.O.** (decidido) |
 | Avisos de vez | **Web Push + e-mail** (decidido) |
 | Repositório | **Monorepo**: `web/` (frontend atual) e `api/` (Rails) (decidido) |
-| Hospedagem | **Decidir depois**; desenvolvimento local com Docker Compose (decidido) |
+| Hospedagem | **Grátis: Vercel (frontend, com proxy `/api`) + Render free (API) + Neon free (Postgres)**, com tick de hora em hora por GitHub Actions (decidido; ver `docs/DEPLOY.md`) |
 | Categoria esgotada | Re-sorteio automático entre as categorias com inéditas (decidido; ver PRODUCT.md) |
 | Sair com pergunta aberta | Conta como timeout (decidido; ver PRODUCT.md) |
 | Tolerância de rede no prazo de 15s | **1 segundo** no servidor; o cliente mostra 15s (decidido) |

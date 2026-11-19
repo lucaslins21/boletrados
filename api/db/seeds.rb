@@ -5,8 +5,9 @@ data.fetch("categories").each do |attrs|
   Category.find_or_initialize_by(slug: attrs.fetch("slug")).update!(attrs.slice("label", "short_label", "color", "icon", "position"))
 end
 
-# Perguntas demonstrativas: só fora de produção (precisam de curadoria antes de publicar de verdade).
-unless Rails.env.production?
+# Perguntas demonstrativas: fora de produção, ou em produção com SEED_DEMO_QUESTIONS=1 (fase de testes,
+# enquanto não houver perguntas curadas). Elas precisam de curadoria antes de um lançamento público.
+if !Rails.env.production? || ENV["SEED_DEMO_QUESTIONS"] == "1"
   categories = Category.all.index_by(&:slug)
   data.fetch("questions").each do |attrs|
     Question.transaction do

@@ -3,7 +3,7 @@ class InvitesController < ApplicationController
 
   before_action :authenticate!, only: :accept
   around_action :with_idempotency, only: :accept
-  rate_limit to: 20, within: 1.minute, with: -> { render_error(:too_many_requests, "Muitas tentativas. Aguarde um minuto.") }
+  rate_limit to: 20, within: 1.minute, by: -> { client_ip }, with: -> { render_error(:too_many_requests, "Muitas tentativas. Aguarde um minuto.") }
   rescue_from MatchError, with: ->(e) { render_error(e.status, e.message) }
 
   # GET /invites/:key — prévia pública do convite (código BOLA-XXXXXX ou token do link).

@@ -1,0 +1,43 @@
+# Blueprint do Render (https://render.com/docs/blueprint-spec) — API Rails no plano grátis.
+# O banco é externo (Neon grátis): o Postgres grátis do Render expira em 30 dias. Passo a passo: docs/DEPLOY.md
+services:
+  - type: web
+    name: boletrados-api
+    runtime: ruby
+    plan: free
+    region: virginia # perto do Neon aws-us-east-1
+    rootDir: api
+    buildFilter:
+      paths: [ "api/**" ]
+    buildCommand: bundle install
+    # db:prepare cria/migra o banco (e roda os seeds só na criação). Plano grátis não tem pre-deploy command.
+    startCommand: bundle exec rails db:prepare && bundle exec puma -C config/puma.rb
+    healthCheckPath: /up
+    autoDeploy: true
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: WEB_CONCURRENCY
+        value: "0" # um processo (512 MB)
+      - key: RAILS_MAX_THREADS
+        value: "3"
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: TICK_TOKEN
+        generateValue: true # copie para o secret TICK_TOKEN do GitHub (workflow Tick)
+      - key: DATABASE_URL
+        sync: false # connection string DIRETA do Neon (sem "-pooler"), com sslmode=require
+      - key: ALLOWED_ORIGINS
+        sync: false # ex.: https://boletrados.vercel.app
+      - key: FRONTEND_URL
+        sync: false # ex.: https://boletrados.vercel.app
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: VAPID_PUBLIC_KEY
+        sync: false
+      - key: VAPID_PRIVATE_KEY
+        sync: false
+      - key: VAPID_SUBJECT
+        value: mailto:avisos@boletrados.invalid
+      - key: SEED_DEMO_QUESTIONS
+        value: "1" # remover quando houver perguntas curadas

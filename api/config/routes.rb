@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       post :resign, to: "match_actions#resign"
     end
   end
+  post "internal/tick", to: "internal/ticks#create"
+
   get "push/public_key", to: "push_subscriptions#public_key"
   post "push/subscriptions", to: "push_subscriptions#create"
   delete "push/subscriptions", to: "push_subscriptions#destroy"

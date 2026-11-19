@@ -57,5 +57,7 @@ module Api
       subject: ENV.fetch("VAPID_SUBJECT", "mailto:avisos@boletrados.invalid")
     }
     config.x.mail_from = ENV.fetch("MAIL_FROM", "Boletrados <avisos@boletrados.invalid>")
+    # Token do POST /internal/tick (cron de hora em hora). Sem ele, o endpoint fica desligado.
+    config.x.tick_token = ENV["TICK_TOKEN"]
   end
 end

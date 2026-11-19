@@ -141,20 +141,26 @@ RSpec.describe "Avisos (Web Push e e-mail)", type: :request do
         .to have_enqueued_job(MatchNotificationJob).with("match_finished", match.id, alice.id).exactly(:once)
     end
 
-    it "o lembrete só sai se a vez ainda não começou, com push e e-mail" do
+    it "o lembrete só sai uma vez, faltando 4 h, com push e e-mail" do
       match = start_match
       allow(WebPushSender).to receive(:deliver).and_return(1)
-      expect { TurnReminderJob.perform_now(match.id, 1) }.to have_enqueued_mail(TurnMailer, :reminder)
-      expect(WebPushSender).to have_received(:deliver).with(alice, hash_including(title: "Faltam 4 h para sua vez expirar"))
+      expect { TurnReminderJob.perform_now(match.id, 1) }.not_to have_enqueued_mail(TurnMailer, :reminder) # ainda é cedo
 
-      sign_in(alice)
-      api_post "/matches/#{match.id}/draw" # Alice começou a vez
-      expect { TurnReminderJob.perform_now(match.id, 1) }.not_to have_enqueued_mail(TurnMailer, :reminder)
+      travel_to(match.reload.turn_deadline_at - 3.hours) do
+        expect { TurnReminderJob.perform_now(match.id, 1) }.to have_enqueued_mail(TurnMailer, :reminder)
+        expect(WebPushSender).to have_received(:deliver).with(alice, hash_including(title: "Faltam 4 h para sua vez expirar"))
+        expect { TurnReminderJob.perform_now(match.id, 1) }.not_to have_enqueued_mail(TurnMailer, :reminder) # já lembrado
+      end
     end
 
-    it "o lembrete não sai se a vez já é outra" do
+    it "o lembrete não sai se a vez já começou ou se é outra" do
       match = start_match
-      expect { TurnReminderJob.perform_now(match.id, 2) }.not_to have_enqueued_mail(TurnMailer, :reminder)
+      travel_to(match.reload.turn_deadline_at - 3.hours) do
+        expect { TurnReminderJob.perform_now(match.id, 2) }.not_to have_enqueued_mail(TurnMailer, :reminder)
+        sign_in(alice)
+        api_post "/matches/#{match.id}/draw" # Alice começou a vez
+        expect { TurnReminderJob.perform_now(match.id, 1) }.not_to have_enqueued_mail(TurnMailer, :reminder)
+      end
     end
 
     it "o e-mail de lembrete traz o adversário e o link da partida" do

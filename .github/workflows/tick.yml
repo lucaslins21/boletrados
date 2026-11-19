@@ -1,0 +1,23 @@
+# Chama POST /internal/tick de hora em hora: aplica prazos de partidas que ninguém abriu e envia lembretes.
+# Necessário no plano grátis (sem worker permanente). Configure em Settings → Secrets and variables → Actions:
+#   variável API_URL (ex.: https://boletrados-api.onrender.com) e secret TICK_TOKEN (o mesmo valor do Render).
+name: Tick
+
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch:
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    if: vars.API_URL != ''
+    steps:
+      - name: POST /internal/tick
+        env:
+          API_URL: ${{ vars.API_URL }}
+          TICK_TOKEN: ${{ secrets.TICK_TOKEN }}
+        # --max-time alto: a instância grátis do Render pode estar dormindo (30–60 s para acordar).
+        run: |
+          curl -fsS --max-time 120 --retry 2 --retry-delay 20 -X POST \
+            -H "Authorization: Bearer $TICK_TOKEN" "$API_URL/internal/tick"

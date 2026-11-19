@@ -23,6 +23,24 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
+  # O health check do Render chega por HTTP interno: não redirecionar /up.
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+
+  # Plano grátis (docs/DEPLOY.md): uma instância, sem Redis e sem worker separado.
+  # Cache em memória (usado pelo rate limit) e jobs em threads do próprio processo. Jobs agendados se perdem
+  # se a instância reiniciar ou dormir; o "tick" de hora em hora (POST /internal/tick) cobre prazos e lembretes.
+  config.cache_store = :memory_store, { size: 32.megabytes }
+  config.active_job.queue_adapter = :async
+
+  # E-mail só é enviado se houver SMTP configurado (requer domínio próprio para não cair no spam).
+  config.action_mailer.perform_deliveries = ENV["SMTP_ADDRESS"].present?
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: ENV["SMTP_ADDRESS"], port: ENV.fetch("SMTP_PORT", 587).to_i,
+    user_name: ENV["SMTP_USERNAME"], password: ENV["SMTP_PASSWORD"],
+    authentication: :plain, enable_starttls_auto: true
+  }
 
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
@@ -51,7 +69,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  config.action_mailer.default_url_options = { host: URI(ENV.fetch("FRONTEND_URL", "https://example.com")).host }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
   # config.action_mailer.smtp_settings = {

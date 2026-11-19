@@ -16,12 +16,19 @@ class ApplicationController < ActionController::API
 
   def current_user = current_session&.user
 
+  # IP do cliente. Atrás de proxies (Vercel → Render), request.remote_ip devolveria o IP do proxy e
+  # todos os usuários dividiriam o mesmo limite de tentativas. O primeiro X-Forwarded-For pode ser forjado,
+  # então serve só para rate limit e registro, nunca para autorização.
+  def client_ip
+    request.headers["X-Forwarded-For"].to_s.split(",").first.to_s.strip.presence || request.remote_ip
+  end
+
   def authenticate!
     render_error(:unauthorized, "Faça login para continuar.") unless current_user
   end
 
   def start_session_for(user)
-    session, token = Session.start!(user, user_agent: request.user_agent, ip_address: request.remote_ip)
+    session, token = Session.start!(user, user_agent: request.user_agent, ip_address: client_ip)
     cookies[SESSION_COOKIE] = {
       value: token, expires: session.expires_at, httponly: true,
       secure: Rails.env.production?, same_site: :lax

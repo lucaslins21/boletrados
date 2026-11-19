@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_19_130001) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_19_140001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -110,6 +110,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_130001) do
     t.integer "lock_version", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "reminded_turn_number"
     t.index ["created_by_id"], name: "index_matches_on_created_by_id"
     t.index ["current_user_id"], name: "index_matches_on_current_user_id"
     t.index ["invite_code"], name: "index_matches_on_open_invite_code", unique: true, where: "((status)::text = 'waiting_opponent'::text)"

@@ -20,6 +20,10 @@ Monorepo:
 | `docs/` | Produto, arquitetura, auditoria e handoff |
 | `docker-compose.yml` | PostgreSQL + API para desenvolvimento |
 
+## Deploy
+
+Plano gratuito (Vercel + Render + Neon) com passo a passo em [`docs/DEPLOY.md`](docs/DEPLOY.md).
+
 ## Rodar o X1 online localmente
 
 ```bash
@@ -147,6 +151,7 @@ docs/
   CLAUDE_HANDOFF.md      # Guia para continuar no Claude CLI
   AUDITORIA_v0.2.md      # Auditoria da demo: correções e pendências
   ARQUITETURA.md         # Proposta do backend (Rails + PostgreSQL)
+  DEPLOY.md              # Deploy gratuito: Vercel + Render + Neon + cron
 ```
 
 ## Limitações da demo

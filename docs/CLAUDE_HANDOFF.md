@@ -32,7 +32,7 @@ docker compose run --rm -e RAILS_ENV=test api bundle exec rspec
    - 6: frontend online (React Router) consumindo a API, com a demo em `/demo` até o lançamento.
    - 7: avisos por Web Push (vez, convite aceito, fim de jogo) e lembrete 4 h antes do prazo (push + e-mail).
 
-   Próximos passos, para o lançamento: definir a hospedagem, criar o `GOOGLE_CLIENT_ID`, configurar o worker do Solid Queue, fazer a curadoria das perguntas e remover a demo. Se mudar `web/src/data/questions.ts`, rode `npm run export:questions` para atualizar o seed.
+   Próximos passos, para o lançamento: seguir `docs/DEPLOY.md` (contas Vercel, Render e Neon e as chaves), criar o `GOOGLE_CLIENT_ID`, configurar o worker do Solid Queue, fazer a curadoria das perguntas e remover a demo. Se mudar `web/src/data/questions.ts`, rode `npm run export:questions` para atualizar o seed.
 4. ~~Implementar Google/Facebook OAuth e convites por link/código, protegendo tokens e continuando o fluxo após login.~~ Feito para o Google (etapas 3, 4 e 6); o Facebook fica para depois do MVP.
 5. ~~Mover para o servidor o relógio autoritativo, sorteios, reserva de perguntas inéditas, mudanças de posse e concessão de troféus. Preferir endpoints idempotentes e transações.~~ Feito (etapas 2, 4 e 5).
 6. Criar um banco de perguntas curadas e painel de moderação. Não publicar fatos gerados por IA sem checagem.

@@ -1,7 +1,7 @@
 module Auth
   # POST /auth/google { credential: "<ID token do Google Identity Services>" }
   class GoogleController < ApplicationController
-    rate_limit to: 10, within: 1.minute, with: -> { render_error(:too_many_requests, "Muitas tentativas. Aguarde um minuto.") }
+    rate_limit to: 10, within: 1.minute, by: -> { client_ip }, with: -> { render_error(:too_many_requests, "Muitas tentativas. Aguarde um minuto.") }
 
     def create
       claims = GoogleIdToken.verify(params.require(:credential))
