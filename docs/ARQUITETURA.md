@@ -145,7 +145,12 @@ README.md            # como rodar tudo
 ## Ordem de implementação sugerida
 
 1. ~~Monorepo: mover o frontend para `web/` e criar o esqueleto `api/` + Docker Compose + CI (typecheck, testes JS e RSpec).~~ **Feito**: Rails 8.1.4 / Ruby 3.4, RSpec, RuboCop, Brakeman, bundler-audit.
-2. Schema + seeds com as 54 perguntas demo; port das regras para Ruby com specs espelhando `game.test.ts`.
+2. ~~Schema + seeds com as 54 perguntas demo; port das regras para Ruby com specs espelhando `game.test.ts`.~~ **Feito**:
+   - Tabelas de conteúdo: `users`, `categories`, `questions`, `question_categories`, `question_exposures`, com check constraints e unicidade no banco.
+   - `MatchEngine` (`api/app/domain/match_engine.rb`): regras puras, já com tolerância de 1s, 24h e W.O.
+   - `QuestionPicker` (`api/app/services/question_picker.rb`): escolhe e expõe na mesma transação, com nova tentativa em caso de corrida.
+   - Seeds gerados por `npm run export:questions` (em `web/`) → `api/db/seeds/demo_questions.json`, carregados só fora de produção.
+   - As tabelas de partida (`matches`, `match_players`, `match_questions`, `trophies`, `match_events`) ficam para a etapa 4, junto com os endpoints.
 3. Login Google + sessões.
 4. Partidas, convites e o fluxo de vez (draw → question → answer) com idempotência e locks.
 5. Jobs de prazo (15s / 24h / W.O.).

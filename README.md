@@ -4,7 +4,7 @@
 
 Protótipo interativo, mobile-first, do **Boletrados**: quiz de futebol com partidas X1 assíncronas, sorteio de categorias com bolinhas e seis troféus para conquistar.
 
-> **Estado atual:** protótipo frontend local (`web/`), com dois jogadores simulados no mesmo navegador. A API (`api/`, Rails 8.1 + PostgreSQL) **tem só o esqueleto**: ainda não existem login, convites, partidas entre aparelhos nem endpoints de jogo. A arquitetura planejada está em [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md). As perguntas são demonstrativas e precisam de curadoria antes de publicação.
+> **Estado atual:** protótipo frontend local (`web/`), com dois jogadores simulados no mesmo navegador. A API (`api/`, Rails 8.1 + PostgreSQL) tem o schema de perguntas, os seeds e o motor de regras testado, mas **ainda não existem** login, convites, partidas entre aparelhos nem endpoints de jogo. A arquitetura planejada está em [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md). As perguntas são demonstrativas e precisam de curadoria antes de publicação.
 
 Monorepo:
 
@@ -93,7 +93,12 @@ web/src/
   lib/game.test.ts       # Testes das regras (Vitest)
   assets/stadium.svg     # Ilustração original simplificada
 web/public/favicon.svg
-api/                     # Rails 8.1 API (esqueleto; specs em api/spec)
+web/scripts/export-demo-questions.ts  # Gera o seed da API a partir das perguntas demo
+api/
+  app/domain/match_engine.rb      # Regras do X1 em Ruby (puras, espelham game.ts)
+  app/services/question_picker.rb # Pergunta inédita + exposição na mesma transação
+  db/seeds/demo_questions.json    # Seed gerado (não editar à mão)
+  spec/                           # RSpec
 docs/
   PRODUCT.md             # Regras fechadas, detalhes e próximos passos
   CLAUDE_HANDOFF.md      # Guia para continuar no Claude CLI

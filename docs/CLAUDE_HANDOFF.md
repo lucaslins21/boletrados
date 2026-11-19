@@ -24,7 +24,7 @@ docker compose run --rm -e RAILS_ENV=test api bundle exec rspec
 
 1. ~~Revisar acessibilidade e responsividade; testes de unidade do motor.~~ Feito na v0.2. Decidir as pendências listadas em `docs/AUDITORIA_v0.2.md`.
 2. Refinar os assets do sorteio (pular/reduzir animação já implementados). Fazer testes de UX de 15 segundos.
-3. Backend Rails API + PostgreSQL conforme `docs/ARQUITETURA.md`. **Etapa 1 (monorepo + esqueleto `api/` + Docker Compose + CI) concluída**; a próxima é a etapa 2 (schema, seeds das 54 perguntas e port das regras para Ruby).
+3. Backend Rails API + PostgreSQL conforme `docs/ARQUITETURA.md`. **Etapas 1 (monorepo, esqueleto `api/`, Docker Compose, CI) e 2 (schema de conteúdo, seeds, `MatchEngine` e `QuestionPicker` em Ruby) concluídas**; a próxima é a etapa 3 (login Google + sessões). Se mudar `web/src/data/questions.ts`, rode `npm run export:questions` para atualizar o seed.
 4. Implementar Google/Facebook OAuth e convites por link/código, protegendo tokens e continuando o fluxo após login.
 5. Mover para o servidor o relógio autoritativo, sorteios, reserva de perguntas inéditas, mudanças de posse e concessão de troféus. Preferir endpoints idempotentes e transações.
 6. Criar um banco de perguntas curadas e painel de moderação. Não publicar fatos gerados por IA sem checagem.

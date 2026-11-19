@@ -1,0 +1,870 @@
+{
+  "_aviso": "Gerado por web/scripts/export-demo-questions.ts. Conteúdo demonstrativo: validar fatos e fontes antes de produção.",
+  "categories": [
+    {
+      "slug": "brasileiro",
+      "label": "Futebol Brasileiro",
+      "short_label": "Brasileiro",
+      "color": "#64de8b",
+      "icon": "🇧🇷",
+      "position": 1
+    },
+    {
+      "slug": "europeu",
+      "label": "Futebol Europeu",
+      "short_label": "Europeu",
+      "color": "#83a7ff",
+      "icon": "🇪🇺",
+      "position": 2
+    },
+    {
+      "slug": "sulamericano",
+      "label": "Futebol Sul-Americano",
+      "short_label": "Sul-Americano",
+      "color": "#ffb36c",
+      "icon": "🌎",
+      "position": 3
+    },
+    {
+      "slug": "selecoes",
+      "label": "Seleções",
+      "short_label": "Seleções",
+      "color": "#db9dfb",
+      "icon": "🌍",
+      "position": 4
+    },
+    {
+      "slug": "escudos",
+      "label": "Escudos",
+      "short_label": "Escudos",
+      "color": "#ffc96d",
+      "icon": "🛡️",
+      "position": 5
+    },
+    {
+      "slug": "estadios",
+      "label": "Estádios",
+      "short_label": "Estádios",
+      "color": "#7fe1dc",
+      "icon": "🏟️",
+      "position": 6
+    }
+  ],
+  "questions": [
+    {
+      "external_ref": "demo-001",
+      "categories": [
+        "brasileiro"
+      ],
+      "prompt": "Quem conquistou o Brasileirão de 2008?",
+      "options": [
+        "Grêmio",
+        "São Paulo",
+        "Cruzeiro",
+        "Flamengo"
+      ],
+      "correct_index": 1,
+      "explanation": "O São Paulo conquistou seu terceiro título brasileiro consecutivo."
+    },
+    {
+      "external_ref": "demo-002",
+      "categories": [
+        "brasileiro"
+      ],
+      "prompt": "Qual clube é conhecido como Galo?",
+      "options": [
+        "Atlético Mineiro",
+        "Santos",
+        "Sport",
+        "Botafogo"
+      ],
+      "correct_index": 0,
+      "explanation": "Galo é o apelido tradicional do Atlético-MG."
+    },
+    {
+      "external_ref": "demo-003",
+      "categories": [
+        "brasileiro"
+      ],
+      "prompt": "O clássico Gre-Nal envolve quais clubes?",
+      "options": [
+        "Grêmio e Internacional",
+        "Grêmio e Juventude",
+        "Inter e Caxias",
+        "Athletico e Coritiba"
+      ],
+      "correct_index": 0,
+      "explanation": "Gre-Nal é a rivalidade entre Grêmio e Internacional."
+    },
+    {
+      "external_ref": "demo-004",
+      "categories": [
+        "brasileiro"
+      ],
+      "prompt": "Quem conquistou a Copa do Brasil de 2023?",
+      "options": [
+        "Flamengo",
+        "Corinthians",
+        "São Paulo",
+        "Grêmio"
+      ],
+      "correct_index": 2,
+      "explanation": "O São Paulo conquistou sua primeira Copa do Brasil em 2023."
+    },
+    {
+      "external_ref": "demo-005",
+      "categories": [
+        "brasileiro"
+      ],
+      "prompt": "Qual clube é conhecido como Leão da Ilha?",
+      "options": [
+        "Vitória",
+        "Sport",
+        "Avaí",
+        "Fortaleza"
+      ],
+      "correct_index": 1,
+      "explanation": "O Sport Club do Recife é conhecido como Leão da Ilha."
+    },
+    {
+      "external_ref": "demo-006",
+      "categories": [
+        "brasileiro"
+      ],
+      "prompt": "Qual competição reúne clubes do Nordeste brasileiro?",
+      "options": [
+        "Copa Verde",
+        "Copa do Nordeste",
+        "Recopa Sul-Americana",
+        "Série B"
+      ],
+      "correct_index": 1,
+      "explanation": "A Copa do Nordeste é uma competição regional de clubes."
+    },
+    {
+      "external_ref": "demo-007",
+      "categories": [
+        "brasileiro"
+      ],
+      "prompt": "Qual foi o campeão brasileiro de 2009?",
+      "options": [
+        "São Paulo",
+        "Internacional",
+        "Flamengo",
+        "Palmeiras"
+      ],
+      "correct_index": 2,
+      "explanation": "O Flamengo venceu o Campeonato Brasileiro de 2009."
+    },
+    {
+      "external_ref": "demo-008",
+      "categories": [
+        "brasileiro"
+      ],
+      "prompt": "O clássico Atletiba é disputado entre quais clubes?",
+      "options": [
+        "Atlético-MG e Cruzeiro",
+        "Athletico-PR e Coritiba",
+        "Atlético-GO e Goiás",
+        "Avaí e Figueirense"
+      ],
+      "correct_index": 1,
+      "explanation": "Atletiba é o clássico de Athletico Paranaense e Coritiba."
+    },
+    {
+      "external_ref": "demo-009",
+      "categories": [
+        "brasileiro"
+      ],
+      "prompt": "Qual clube conquistou a Copa do Brasil de 2022?",
+      "options": [
+        "Flamengo",
+        "Corinthians",
+        "Palmeiras",
+        "São Paulo"
+      ],
+      "correct_index": 0,
+      "explanation": "O Flamengo foi campeão da Copa do Brasil de 2022."
+    },
+    {
+      "external_ref": "demo-010",
+      "categories": [
+        "europeu"
+      ],
+      "prompt": "Quem venceu a Champions League de 2005?",
+      "options": [
+        "Milan",
+        "Chelsea",
+        "Liverpool",
+        "Barcelona"
+      ],
+      "correct_index": 2,
+      "explanation": "O Liverpool venceu o Milan na final em Istambul."
+    },
+    {
+      "external_ref": "demo-011",
+      "categories": [
+        "europeu"
+      ],
+      "prompt": "Qual clube inglês é conhecido como The Gunners?",
+      "options": [
+        "Arsenal",
+        "Chelsea",
+        "Tottenham",
+        "Everton"
+      ],
+      "correct_index": 0,
+      "explanation": "The Gunners é o apelido do Arsenal."
+    },
+    {
+      "external_ref": "demo-012",
+      "categories": [
+        "europeu"
+      ],
+      "prompt": "Quem venceu a Premier League na temporada 2015/16?",
+      "options": [
+        "Manchester City",
+        "Chelsea",
+        "Leicester City",
+        "Liverpool"
+      ],
+      "correct_index": 2,
+      "explanation": "O Leicester surpreendeu ao conquistar o campeonato inglês."
+    },
+    {
+      "external_ref": "demo-013",
+      "categories": [
+        "europeu"
+      ],
+      "prompt": "Qual clube manda seus jogos no Camp Nou?",
+      "options": [
+        "Real Madrid",
+        "Barcelona",
+        "Valencia",
+        "Atlético de Madrid"
+      ],
+      "correct_index": 1,
+      "explanation": "O Camp Nou é tradicionalmente a casa do Barcelona."
+    },
+    {
+      "external_ref": "demo-014",
+      "categories": [
+        "europeu"
+      ],
+      "prompt": "Qual foi o campeão da Champions League em 2022?",
+      "options": [
+        "Liverpool",
+        "Chelsea",
+        "Real Madrid",
+        "Bayern"
+      ],
+      "correct_index": 2,
+      "explanation": "O Real Madrid venceu o Liverpool na final de 2022."
+    },
+    {
+      "external_ref": "demo-015",
+      "categories": [
+        "europeu"
+      ],
+      "prompt": "Em qual país é disputada a Bundesliga?",
+      "options": [
+        "Espanha",
+        "Alemanha",
+        "Itália",
+        "França"
+      ],
+      "correct_index": 1,
+      "explanation": "Bundesliga é o principal campeonato de clubes da Alemanha."
+    },
+    {
+      "external_ref": "demo-016",
+      "categories": [
+        "europeu"
+      ],
+      "prompt": "A Copa del Rey é uma competição de qual país?",
+      "options": [
+        "Portugal",
+        "Itália",
+        "Espanha",
+        "França"
+      ],
+      "correct_index": 2,
+      "explanation": "É a principal copa nacional da Espanha."
+    },
+    {
+      "external_ref": "demo-017",
+      "categories": [
+        "europeu"
+      ],
+      "prompt": "Quem venceu a Champions League de 2012?",
+      "options": [
+        "Barcelona",
+        "Chelsea",
+        "Bayern",
+        "Juventus"
+      ],
+      "correct_index": 1,
+      "explanation": "O Chelsea venceu o Bayern nos pênaltis em Munique."
+    },
+    {
+      "external_ref": "demo-018",
+      "categories": [
+        "europeu"
+      ],
+      "prompt": "Qual clube italiano é apelidado de Vecchia Signora?",
+      "options": [
+        "Roma",
+        "Napoli",
+        "Juventus",
+        "Lazio"
+      ],
+      "correct_index": 2,
+      "explanation": "Vecchia Signora é um apelido tradicional da Juventus."
+    },
+    {
+      "external_ref": "demo-019",
+      "categories": [
+        "sulamericano"
+      ],
+      "prompt": "Quem venceu a Libertadores de 2016?",
+      "options": [
+        "River Plate",
+        "Atlético Nacional",
+        "Boca Juniors",
+        "San Lorenzo"
+      ],
+      "correct_index": 1,
+      "explanation": "O Atlético Nacional, da Colômbia, venceu a edição de 2016."
+    },
+    {
+      "external_ref": "demo-020",
+      "categories": [
+        "sulamericano"
+      ],
+      "prompt": "Qual clube conquistou a Copa Mercosul de 2000?",
+      "options": [
+        "Palmeiras",
+        "Vasco da Gama",
+        "Flamengo",
+        "Cruzeiro"
+      ],
+      "correct_index": 1,
+      "explanation": "O Vasco venceu o Palmeiras na decisão de 2000."
+    },
+    {
+      "external_ref": "demo-021",
+      "categories": [
+        "sulamericano"
+      ],
+      "prompt": "Qual clube argentino é conhecido como Xeneize?",
+      "options": [
+        "River Plate",
+        "Racing",
+        "Boca Juniors",
+        "Independiente"
+      ],
+      "correct_index": 2,
+      "explanation": "Xeneize é um dos apelidos do Boca Juniors."
+    },
+    {
+      "external_ref": "demo-022",
+      "categories": [
+        "sulamericano"
+      ],
+      "prompt": "Qual equipe venceu a Libertadores de 2019?",
+      "options": [
+        "Flamengo",
+        "River Plate",
+        "Grêmio",
+        "Boca Juniors"
+      ],
+      "correct_index": 0,
+      "explanation": "O Flamengo venceu o River Plate por 2 a 1."
+    },
+    {
+      "external_ref": "demo-023",
+      "categories": [
+        "sulamericano"
+      ],
+      "prompt": "Em qual país joga o Peñarol?",
+      "options": [
+        "Argentina",
+        "Uruguai",
+        "Chile",
+        "Paraguai"
+      ],
+      "correct_index": 1,
+      "explanation": "O Peñarol é um clube de Montevidéu, no Uruguai."
+    },
+    {
+      "external_ref": "demo-024",
+      "categories": [
+        "sulamericano"
+      ],
+      "prompt": "Qual clube venceu a Libertadores de 2018?",
+      "options": [
+        "Boca Juniors",
+        "Palmeiras",
+        "River Plate",
+        "Grêmio"
+      ],
+      "correct_index": 2,
+      "explanation": "O River Plate venceu o Boca Juniors na final."
+    },
+    {
+      "external_ref": "demo-025",
+      "categories": [
+        "sulamericano"
+      ],
+      "prompt": "A Recopa Sul-Americana reúne tradicionalmente campeões de quais torneios?",
+      "options": [
+        "Libertadores e Sul-Americana",
+        "Brasileirão e Libertadores",
+        "Copa América e Libertadores",
+        "Sul-Americana e Champions"
+      ],
+      "correct_index": 0,
+      "explanation": "A Recopa coloca frente a frente os campeões dos dois torneios continentais."
+    },
+    {
+      "external_ref": "demo-026",
+      "categories": [
+        "sulamericano"
+      ],
+      "prompt": "Qual clube do Equador venceu a Libertadores de 2008?",
+      "options": [
+        "Barcelona SC",
+        "Emelec",
+        "LDU Quito",
+        "Independiente del Valle"
+      ],
+      "correct_index": 2,
+      "explanation": "A LDU Quito foi campeã em 2008."
+    },
+    {
+      "external_ref": "demo-027",
+      "categories": [
+        "sulamericano"
+      ],
+      "prompt": "Qual foi o país do campeão da Libertadores de 2016?",
+      "options": [
+        "Colômbia",
+        "Brasil",
+        "Argentina",
+        "Uruguai"
+      ],
+      "correct_index": 0,
+      "explanation": "O Atlético Nacional é colombiano."
+    },
+    {
+      "external_ref": "demo-028",
+      "categories": [
+        "selecoes"
+      ],
+      "prompt": "Quem conquistou a Copa do Mundo de 2010?",
+      "options": [
+        "Holanda",
+        "Espanha",
+        "Alemanha",
+        "Brasil"
+      ],
+      "correct_index": 1,
+      "explanation": "A Espanha conquistou seu primeiro título mundial na África do Sul."
+    },
+    {
+      "external_ref": "demo-029",
+      "categories": [
+        "selecoes"
+      ],
+      "prompt": "Quem venceu a Eurocopa de 2016?",
+      "options": [
+        "França",
+        "Alemanha",
+        "Portugal",
+        "Itália"
+      ],
+      "correct_index": 2,
+      "explanation": "Portugal derrotou a França na decisão."
+    },
+    {
+      "external_ref": "demo-030",
+      "categories": [
+        "selecoes"
+      ],
+      "prompt": "Qual seleção venceu a Copa do Mundo de 2006?",
+      "options": [
+        "França",
+        "Brasil",
+        "Alemanha",
+        "Itália"
+      ],
+      "correct_index": 3,
+      "explanation": "A Itália venceu a França nos pênaltis."
+    },
+    {
+      "external_ref": "demo-031",
+      "categories": [
+        "selecoes",
+        "sulamericano"
+      ],
+      "prompt": "Quem venceu a Copa América de 2015?",
+      "options": [
+        "Argentina",
+        "Brasil",
+        "Chile",
+        "Uruguai"
+      ],
+      "correct_index": 2,
+      "explanation": "O Chile conquistou seu primeiro título da Copa América."
+    },
+    {
+      "external_ref": "demo-032",
+      "categories": [
+        "selecoes"
+      ],
+      "prompt": "Quem venceu a Copa do Mundo de 2014?",
+      "options": [
+        "Argentina",
+        "Alemanha",
+        "Brasil",
+        "Holanda"
+      ],
+      "correct_index": 1,
+      "explanation": "A Alemanha venceu a Argentina por 1 a 0 na final."
+    },
+    {
+      "external_ref": "demo-033",
+      "categories": [
+        "selecoes"
+      ],
+      "prompt": "Em qual país aconteceu a Copa do Mundo de 2010?",
+      "options": [
+        "África do Sul",
+        "Alemanha",
+        "Brasil",
+        "Rússia"
+      ],
+      "correct_index": 0,
+      "explanation": "Foi a primeira Copa do Mundo disputada no continente africano."
+    },
+    {
+      "external_ref": "demo-034",
+      "categories": [
+        "selecoes"
+      ],
+      "prompt": "Quem venceu a Copa do Mundo de 2022?",
+      "options": [
+        "França",
+        "Croácia",
+        "Argentina",
+        "Marrocos"
+      ],
+      "correct_index": 2,
+      "explanation": "A Argentina conquistou seu terceiro título mundial."
+    },
+    {
+      "external_ref": "demo-035",
+      "categories": [
+        "selecoes",
+        "sulamericano"
+      ],
+      "prompt": "Qual seleção venceu a Copa América de 2011?",
+      "options": [
+        "Argentina",
+        "Uruguai",
+        "Paraguai",
+        "Chile"
+      ],
+      "correct_index": 1,
+      "explanation": "O Uruguai conquistou a Copa América de 2011."
+    },
+    {
+      "external_ref": "demo-036",
+      "categories": [
+        "selecoes"
+      ],
+      "prompt": "A Copa Africana de Nações é disputada por equipes de qual confederação?",
+      "options": [
+        "AFC",
+        "CONCACAF",
+        "CAF",
+        "UEFA"
+      ],
+      "correct_index": 2,
+      "explanation": "CAF é a confederação africana de futebol."
+    },
+    {
+      "external_ref": "demo-037",
+      "categories": [
+        "escudos",
+        "brasileiro"
+      ],
+      "prompt": "Qual clube brasileiro usa uma estrela solitária branca no escudo?",
+      "options": [
+        "Botafogo",
+        "Vasco",
+        "Fluminense",
+        "Santos"
+      ],
+      "correct_index": 0,
+      "explanation": "O Botafogo tem uma estrela solitária branca no escudo."
+    },
+    {
+      "external_ref": "demo-038",
+      "categories": [
+        "escudos"
+      ],
+      "prompt": "Qual sigla aparece no escudo do FC Barcelona?",
+      "options": [
+        "FCB",
+        "RMA",
+        "ACM",
+        "PSG"
+      ],
+      "correct_index": 0,
+      "explanation": "O escudo do Barcelona traz as letras FCB."
+    },
+    {
+      "external_ref": "demo-039",
+      "categories": [
+        "escudos"
+      ],
+      "prompt": "Qual clube é associado ao símbolo de um galo em sua identidade?",
+      "options": [
+        "Tottenham",
+        "Chelsea",
+        "Arsenal",
+        "Fulham"
+      ],
+      "correct_index": 0,
+      "explanation": "O Tottenham usa um galo como elemento principal do emblema."
+    },
+    {
+      "external_ref": "demo-040",
+      "categories": [
+        "escudos"
+      ],
+      "prompt": "Qual clube tem uma águia em destaque no escudo?",
+      "options": [
+        "Benfica",
+        "Porto",
+        "Sporting",
+        "Braga"
+      ],
+      "correct_index": 0,
+      "explanation": "O escudo do Benfica tem uma águia sobre o símbolo."
+    },
+    {
+      "external_ref": "demo-041",
+      "categories": [
+        "escudos"
+      ],
+      "prompt": "Qual clube tem um diabo vermelho no escudo?",
+      "options": [
+        "Manchester United",
+        "Liverpool",
+        "West Ham",
+        "Newcastle"
+      ],
+      "correct_index": 0,
+      "explanation": "O escudo do Manchester United traz um diabo vermelho."
+    },
+    {
+      "external_ref": "demo-042",
+      "categories": [
+        "escudos"
+      ],
+      "prompt": "Qual animal aparece no escudo do Leicester City?",
+      "options": [
+        "Leão",
+        "Raposa",
+        "Lobo",
+        "Águia"
+      ],
+      "correct_index": 1,
+      "explanation": "A raposa é o símbolo do Leicester City."
+    },
+    {
+      "external_ref": "demo-043",
+      "categories": [
+        "escudos"
+      ],
+      "prompt": "As letras CRF aparecem no monograma de qual clube?",
+      "options": [
+        "Fluminense",
+        "Corinthians",
+        "Flamengo",
+        "Fortaleza"
+      ],
+      "correct_index": 2,
+      "explanation": "CRF corresponde a Clube de Regatas do Flamengo."
+    },
+    {
+      "external_ref": "demo-044",
+      "categories": [
+        "escudos"
+      ],
+      "prompt": "Qual clube alemão usa as iniciais BVB no escudo?",
+      "options": [
+        "Bayern",
+        "Borussia Dortmund",
+        "Bayer Leverkusen",
+        "Werder Bremen"
+      ],
+      "correct_index": 1,
+      "explanation": "BVB é a sigla usada no escudo do Borussia Dortmund."
+    },
+    {
+      "external_ref": "demo-045",
+      "categories": [
+        "escudos"
+      ],
+      "prompt": "Qual seleção tem uma cruz branca em seu escudo nacional?",
+      "options": [
+        "Suíça",
+        "Portugal",
+        "Japão",
+        "México"
+      ],
+      "correct_index": 0,
+      "explanation": "A cruz branca é um símbolo nacional suíço."
+    },
+    {
+      "external_ref": "demo-046",
+      "categories": [
+        "estadios",
+        "selecoes"
+      ],
+      "prompt": "Qual estádio recebeu a partida decisiva da Copa do Mundo de 1950?",
+      "options": [
+        "Maracanã",
+        "Mineirão",
+        "Morumbi",
+        "Pacaembu"
+      ],
+      "correct_index": 0,
+      "explanation": "O Maracanã recebeu Brasil x Uruguai no Mundial de 1950."
+    },
+    {
+      "external_ref": "demo-047",
+      "categories": [
+        "estadios",
+        "europeu"
+      ],
+      "prompt": "Qual clube é tradicionalmente associado ao estádio Anfield?",
+      "options": [
+        "Everton",
+        "Liverpool",
+        "Manchester United",
+        "Leeds"
+      ],
+      "correct_index": 1,
+      "explanation": "Anfield é a casa do Liverpool."
+    },
+    {
+      "external_ref": "demo-048",
+      "categories": [
+        "estadios"
+      ],
+      "prompt": "Em qual cidade fica o estádio La Bombonera?",
+      "options": [
+        "Córdoba",
+        "Montevidéu",
+        "Buenos Aires",
+        "Rosário"
+      ],
+      "correct_index": 2,
+      "explanation": "A Bombonera é o estádio do Boca Juniors em Buenos Aires."
+    },
+    {
+      "external_ref": "demo-049",
+      "categories": [
+        "estadios"
+      ],
+      "prompt": "Qual estádio é a casa do Real Madrid?",
+      "options": [
+        "San Siro",
+        "Santiago Bernabéu",
+        "Camp Nou",
+        "Metropolitano"
+      ],
+      "correct_index": 1,
+      "explanation": "O Real Madrid manda seus jogos no Santiago Bernabéu."
+    },
+    {
+      "external_ref": "demo-050",
+      "categories": [
+        "estadios"
+      ],
+      "prompt": "O estádio Wembley fica em qual cidade?",
+      "options": [
+        "Manchester",
+        "Londres",
+        "Liverpool",
+        "Birmingham"
+      ],
+      "correct_index": 1,
+      "explanation": "Wembley está localizado em Londres."
+    },
+    {
+      "external_ref": "demo-051",
+      "categories": [
+        "estadios"
+      ],
+      "prompt": "Qual clube manda suas partidas no Allianz Parque?",
+      "options": [
+        "São Paulo",
+        "Corinthians",
+        "Palmeiras",
+        "Santos"
+      ],
+      "correct_index": 2,
+      "explanation": "O Allianz Parque é o estádio do Palmeiras."
+    },
+    {
+      "external_ref": "demo-052",
+      "categories": [
+        "estadios"
+      ],
+      "prompt": "O estádio Signal Iduna Park é a casa de qual clube?",
+      "options": [
+        "Bayern",
+        "Borussia Dortmund",
+        "Schalke",
+        "RB Leipzig"
+      ],
+      "correct_index": 1,
+      "explanation": "O Borussia Dortmund joga no Signal Iduna Park."
+    },
+    {
+      "external_ref": "demo-053",
+      "categories": [
+        "estadios"
+      ],
+      "prompt": "O estádio Azteca fica em qual cidade?",
+      "options": [
+        "Monterrey",
+        "Guadalajara",
+        "Cidade do México",
+        "Cancún"
+      ],
+      "correct_index": 2,
+      "explanation": "O Estádio Azteca está localizado na Cidade do México."
+    },
+    {
+      "external_ref": "demo-054",
+      "categories": [
+        "estadios"
+      ],
+      "prompt": "O estádio San Siro é associado a quais clubes?",
+      "options": [
+        "Milan e Inter",
+        "Roma e Lazio",
+        "Juventus e Torino",
+        "Real Madrid e Atlético"
+      ],
+      "correct_index": 0,
+      "explanation": "Milan e Inter historicamente compartilham o estádio de San Siro."
+    }
+  ]
+}
