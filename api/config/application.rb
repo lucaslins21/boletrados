@@ -47,6 +47,11 @@ module Api
     # Sessão por cookie próprio (httpOnly). Em modo API o middleware de cookies precisa ser adicionado.
     config.middleware.use ActionDispatch::Cookies
 
+    # Atrás do proxy da Vercel chegam Client-IP e X-Forwarded-For com valores diferentes, e a checagem de
+    # "IP spoofing" do Rails responderia 500 em todas as requisições. O IP nunca é usado para autorização,
+    # só para limitar tentativas e registro (ver ApplicationController#client_ip).
+    config.action_dispatch.ip_spoofing_check = false
+
     # Client ID OAuth do Google (público). Sem ele, POST /auth/google responde 401.
     config.x.google_client_id = ENV["GOOGLE_CLIENT_ID"]
     # Origens do frontend autorizadas para CORS e para requisições que alteram estado (proteção CSRF).
