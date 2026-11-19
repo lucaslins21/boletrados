@@ -50,7 +50,7 @@ export function PrivacyPage() {
     <h2>Com quem os dados ficam</h2>
     <p>Usamos serviços de terceiros para funcionar, que tratam os dados apenas para isso:</p>
     <ul>
-      <li><strong>Google</strong>: login e fontes do site.</li>
+      <li><strong>Google</strong>: login, fontes do site e exibição da sua foto de perfil.</li>
       <li><strong>Vercel</strong>: hospedagem do site.</li>
       <li><strong>Render</strong>: servidor do jogo.</li>
       <li><strong>Neon</strong>: banco de dados.</li>

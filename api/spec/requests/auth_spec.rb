@@ -31,6 +31,15 @@ RSpec.describe "Login com Google e sessões", type: :request do
       expect { login }.not_to change(User, :count)
     end
 
+    it "atualiza a foto a cada login e mantém a anterior se o Google não mandar foto" do
+      login
+      expect(response.parsed_body["user"]["avatar_url"]).to eq("https://example.com/a.png")
+      login(google_token(picture: "https://example.com/nova.png"))
+      expect(User.sole.avatar_url).to eq("https://example.com/nova.png")
+      login(google_token(picture: nil))
+      expect(User.sole.avatar_url).to eq("https://example.com/nova.png")
+    end
+
     it "não vincula contas pelo e-mail: outro sub com o mesmo e-mail é outra conta" do
       login(google_token(sub: "a", email: "x@example.com"))
       expect { login(google_token(sub: "b", email: "x@example.com")) }.to change(User, :count).by(1)

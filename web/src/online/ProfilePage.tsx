@@ -4,9 +4,9 @@ import { ArrowRight, Swords } from 'lucide-react';
 import { Link, useParams } from 'react-router';
 import { getCategory } from '../data/questions';
 import { ApiError, api, type CategoryStat, type HeadToHead, type Profile } from './api';
-import { initials } from './format';
 import { CategoryBadge, Trophy as TrophyArt } from '../game/art';
 import { Loading } from '../game/Decor';
+import { Avatar } from '../game/Avatar';
 
 const pct = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
 
@@ -32,7 +32,7 @@ export function ProfilePage() {
   return <div className="content-layout">
     <main className="main-card profile-card">
       <div className="profile-head">
-        <span className="player-avatar player-avatar--0 profile-avatar" aria-hidden="true">{initials(user.display_name)}</span>
+        <Avatar user={user} className="player-avatar player-avatar--0 profile-avatar"/>
         <div><p className="eyebrow eyebrow--green">{isMe ? 'SEU PERFIL' : 'PERFIL DO ADVERSÁRIO'}</p><h1 className="screen-title">{user.display_name}</h1></div>
       </div>
 
@@ -97,7 +97,7 @@ function Rivals({ rivals }: { rivals: NonNullable<Profile['rivals']> }) {
     {!rivals.length && <p className="kpi-note">Crie um desafio para começar a sua lista de rivais.</p>}
     <ul className="rival-list">{rivals.map(r => <li key={r.user.id}>
       <Link to={`/jogadores/${r.user.id}`} className="rival-row">
-        <span className="player-avatar player-avatar--1" aria-hidden="true">{initials(r.user.display_name)}</span>
+        <Avatar user={r.user} className="player-avatar player-avatar--1"/>
         <span className="rival-name">{r.user.display_name}</span>
         <span className="rival-score" aria-label={`${r.wins} vitórias e ${r.losses} derrotas`}>{r.wins}<i>×</i>{r.losses}</span>
       </Link></li>)}</ul>

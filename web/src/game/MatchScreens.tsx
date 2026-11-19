@@ -7,13 +7,14 @@ import { Link } from 'react-router';
 import type { CategoryId } from '../data/questions';
 import { useCountdown, QUESTION_SECONDS } from '../components/ui';
 import type { ApiMatch, MatchPlayer, OpenQuestion, QuestionResult } from '../online/api';
-import { initials, timeLeft } from '../online/format';
+import { timeLeft } from '../online/format';
 import { CategoryBadge, DrawBall, Rays, StadiumScene, Trophy } from './art';
 import { CATEGORY_ORDER, CATEGORY_THEME } from './theme';
 import { onSoundChange, setSoundEnabled, sfx, soundEnabled } from './sound';
 import { Mascot } from './Mascot';
 import './tokens.css';
 import './game.css';
+import { Avatar } from './Avatar';
 
 const AVATAR_COLORS = ['#2F6FED', '#FF8A1F'];
 const RING = 2 * Math.PI * 27; // circunferência do anel do cronômetro
@@ -45,7 +46,7 @@ export function SoundToggle() {
 function PlayerCard({ player, active, side }: { player: MatchPlayer; active: boolean; side: 'left' | 'right' }) {
   return <div className={`gd-player gd-player--${side} ${active ? 'gd-player--active' : ''}`}>
     <div className="gd-player-top">
-      <span className="gd-avatar" style={{ background: AVATAR_COLORS[side === 'left' ? 0 : 1] }} aria-hidden="true">{initials(player.user.display_name)}</span>
+      <Avatar user={player.user} className="gd-avatar" style={{ background: AVATAR_COLORS[side === 'left' ? 0 : 1] }}/>
       <div style={{ minWidth: 0 }}>
         <Link to={`/jogadores/${player.user.id}`} className="gd-player-name">{player.user.display_name}</Link>
         {active && <div className="gd-player-turn">NA VEZ</div>}

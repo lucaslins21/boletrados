@@ -17,7 +17,7 @@ class User < ApplicationRecord
   # Nunca vincula por e-mail: dois "sub" diferentes com o mesmo e-mail são contas diferentes.
   def self.from_google!(claims)
     identity = Identity.find_by(provider: "google", uid: claims.sub)
-    return identity.user if identity
+    return identity.user.tap { |user| user.refresh_avatar!(claims.picture) } if identity
 
     transaction do
       user = create!(display_name: display_name_from(claims), avatar_url: claims.picture,
@@ -28,6 +28,11 @@ class User < ApplicationRecord
   rescue ActiveRecord::RecordNotUnique
     # Primeiro login simultâneo com a mesma conta Google: a outra requisição criou a identidade.
     Identity.find_by!(provider: "google", uid: claims.sub).user
+  end
+
+  # A foto acompanha a conta Google: atualiza a cada login (o nome de exibição não muda sozinho).
+  def refresh_avatar!(url)
+    update!(avatar_url: url) if url.present? && url != avatar_url
   end
 
   def self.display_name_from(claims)

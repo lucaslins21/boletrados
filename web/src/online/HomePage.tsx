@@ -6,13 +6,14 @@ import { Banner, Modal, Pill } from '../components/ui';
 import { ApiError, api, inviteUrl, type ApiMatch } from './api';
 import { LoginCard } from './LoginCard';
 import { NotificationsCard } from './NotificationsCard';
-import { finishedText, initials, me, opponent, timeLeft } from './format';
+import { finishedText, me, opponent, timeLeft } from './format';
 import { pendingInvite, useSession } from './session';
 import { HeroArt, Loading } from '../game/Decor';
 import { Mascot } from '../game/Mascot';
 import { Logo } from '../game/Logo';
 import { Trophy } from '../game/art';
 import { CATEGORY_ORDER } from '../game/theme';
+import { Avatar } from '../game/Avatar';
 
 export function HomePage() {
   const { status } = useSession();
@@ -130,7 +131,7 @@ function MatchRow({ match }: { match: ApiMatch }) {
     : myTurn ? { label: 'SUA VEZ', tone: 'go' } : { label: 'AGUARDANDO', tone: 'wait' };
   const shelf = (won: readonly string[]) => <span className="match-shelf">{CATEGORY_ORDER.map(id => <Trophy key={id} id={id} won={won.includes(id)} size={13}/>)}</span>;
   return <Link to={`/partidas/${match.id}`} className={`match-row ${myTurn ? 'match-row--my-turn' : ''}`}>
-    <span className="player-avatar player-avatar--1" aria-hidden="true">{initials(other?.user.display_name ?? '?')}</span>
+    <Avatar user={other?.user} className="player-avatar player-avatar--1"/>
     <span className="match-row-main">
       <span className="match-row-top"><strong>{other ? `vs ${other.user.display_name}` : 'Aguardando adversário'}</strong>
         <span className={`match-status match-status--${status.tone}`}>{status.label}</span></span>
