@@ -256,5 +256,6 @@ Não reabrir decisões fechadas. Preservar o histórico e o trabalho feito. Não
 | Imagens nas perguntas | ✅ |
 | Dificultar cópia do texto | ✅ — **falta registrar eventos suspeitos** |
 | Identidade "Dia de jogo" na partida: sorteio com bolinha que abre, pergunta com resultado nas alternativas, escolha e conquista de troféu, vitória | ✅ |
-| "Dia de jogo" nas demais telas (home, convite, perfil, perguntas, moderação) | Pendente: ainda no visual escuro antigo |
+| "Dia de jogo" nas demais telas (home, convite, perfil, perguntas, moderação), com ícones próprios das categorias | ✅ (a demo `/demo` continua no visual antigo até ser removida) |
+| Logo e mascote definitivos | Pendente (marca provisória) |
 | Login Facebook, revisão comunitária, peso da dificuldade no sorteio | Futuro ou indefinido |

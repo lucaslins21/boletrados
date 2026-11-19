@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { ArrowRight, MessageSquareWarning, PenLine, Plus } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router';
-import { Banner, CategoryIcon } from '../../components/ui';
+import { Banner } from '../../components/ui';
 import { ApiError, api, type QuestionFull, type QuestionInput } from '../api';
 import { QuestionForm } from './QuestionForm';
 import { StatusPill } from './StatusPill';
+import { CategoryBadge } from '../../game/art';
 
 const NOTICE_KEY = 'boletrados:submission-notice';
 
@@ -31,7 +32,7 @@ export function MySubmissionsPage() {
       {items?.length === 0 && <Banner icon={<PenLine size={17}/>}>Você ainda não enviou perguntas.</Banner>}
       <ul className="submission-list">{items?.map(q => <li key={q.id} className="submission-item">
         <div className="submission-top"><StatusPill status={q.status} label={q.status_label}/>
-          <span className="submission-cats">{q.categories.map(c => <CategoryIcon key={c} id={c} size="sm"/>)}</span></div>
+          <span className="submission-cats">{q.categories.map(c => <CategoryBadge key={c} id={c} size={26}/>)}</span></div>
         <strong className="submission-prompt">{q.prompt}</strong>
         <small className="submission-answer">Resposta: {q.options[q.correct_index]}</small>
         {q.feedback && (q.status === 'changes_requested' || q.status === 'rejected') &&

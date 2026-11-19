@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ChangeEvent, FormEvent, ReactNode } from 'react';
 import { Check, ImagePlus, Send, Trash2 } from 'lucide-react';
-import { CategoryIcon } from '../../components/ui';
 import { CATEGORIES, type CategoryId } from '../../data/questions';
 import { ApiError, api, apiUrl, type Difficulty, type QuestionInput } from '../api';
+import { CategoryBadge } from '../../game/art';
 
 // Mesmos limites da API (legível em 15 segundos).
 export const LIMITS = { prompt: 180, option: 60, explanation: 500, categories: 3 };
@@ -146,7 +146,7 @@ export function QuestionForm({ initial, initialImagePath = null, draftKey, submi
         const on = input.categories.includes(cat.id);
         return <button key={cat.id} type="button" className={`category-chip ${on ? 'category-chip--on' : ''}`} aria-pressed={on}
           onClick={() => toggleCategory(cat.id)} disabled={!on && input.categories.length >= LIMITS.categories} title={CATEGORY_HINTS[cat.id]}>
-          <CategoryIcon id={cat.id} size="sm"/>{cat.short}</button>;
+          <CategoryBadge id={cat.id} size={26}/>{cat.short}</button>;
       })}</div>
       <small className="field-hint">Marque só as de relação direta com o assunto e que não entreguem a resposta.</small>
       {input.categories.length > 0 && <ul className="category-hints">{input.categories.map(id => <li key={id}><b>{CATEGORIES.find(c => c.id === id)!.short}:</b> {CATEGORY_HINTS[id]}</li>)}</ul>}

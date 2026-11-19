@@ -2,12 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { Archive, ArrowLeft, ArrowRight, Check, CornerUpLeft, ExternalLink, Eye, ImageIcon, PenLine, Plus, RotateCcw, ShieldAlert, X } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router';
-import { Banner, CategoryIcon, Modal, Pill } from '../../components/ui';
+import { Banner, Modal, Pill } from '../../components/ui';
 import { CATEGORIES, getCategory, type CategoryId } from '../../data/questions';
 import { ApiError, api, apiUrl, type AdminAction, type AdminQuestion, type QuestionPreview, type QuestionStatus } from '../api';
 import { useSession } from '../session';
 import { QuestionForm } from './QuestionForm';
 import { StatusPill } from './StatusPill';
+import { CategoryBadge } from '../../game/art';
 
 const TABS: { id: string; label: string; statuses: QuestionStatus[] }[] = [
   { id: 'queue', label: 'Fila', statuses: ['submitted', 'in_review'] },
@@ -68,7 +69,7 @@ function AdminQueue() {
       <Link to="/admin/perguntas/nova" className="button button--primary button--full"><Plus size={18}/> Cadastrar pergunta</Link>
       <div className="divider"/>
       <p className="eyebrow">ESTOQUE PUBLICADO</p>
-      <ul className="stock-list">{CATEGORIES.map(c => <li key={c.id}><CategoryIcon id={c.id} size="sm"/><span className="stock-name">{c.short}</span><b>{data?.published_by_category[c.id] ?? '—'}</b></li>)}</ul>
+      <ul className="stock-list">{CATEGORIES.map(c => <li key={c.id}><CategoryBadge id={c.id} size={26}/><span className="stock-name">{c.short}</span><b>{data?.published_by_category[c.id] ?? '—'}</b></li>)}</ul>
       <p className="kpi-note">Uma pergunta conta em cada uma das suas categorias.</p>
     </aside>
   </div>;
@@ -76,7 +77,7 @@ function AdminQueue() {
 
 function QueueRow({ q }: { q: QuestionPreview }) {
   return <Link to={`/admin/perguntas/${q.id}`} className="match-row">
-    <span className="queue-cats">{q.categories.map(c => <CategoryIcon key={c} id={c} size="sm"/>)}</span>
+    <span className="queue-cats">{q.categories.map(c => <CategoryBadge key={c} id={c} size={26}/>)}</span>
     <span className="match-row-main">
       <strong>{q.prompt_preview}{q.has_image && <ImageIcon size={14} aria-label="com imagem" className="inline-icon"/>}</strong>
       <small>#{q.id} · {q.author ?? 'importada'} · {DIFFICULTY_LABEL[q.difficulty]}{q.submitted_at ? ` · enviada em ${new Date(q.submitted_at).toLocaleDateString('pt-BR')}` : ''}</small>
@@ -131,7 +132,7 @@ function AdminQuestionDetail() {
           <ol className="review-options">{q.options.map((o, i) => <li key={i} className={i === q.correct_index ? 'review-option--correct' : ''}>
             <span aria-hidden="true">{String.fromCharCode(65 + i)}</span>{o}{i === q.correct_index && <><Check size={15} aria-hidden="true"/><span className="sr-only"> (correta)</span></>}</li>)}</ol>
           <dl className="review-meta">
-            <div><dt>Categorias</dt><dd>{q.categories.map(c => <span key={c} className="meta-cat"><CategoryIcon id={c} size="sm"/>{getCategory(c).short}</span>)}</dd></div>
+            <div><dt>Categorias</dt><dd>{q.categories.map(c => <span key={c} className="meta-cat"><CategoryBadge id={c} size={26}/>{getCategory(c).short}</span>)}</dd></div>
             <div><dt>Dificuldade</dt><dd>{DIFFICULTY_LABEL[q.difficulty]} <small>(estimada: {DIFFICULTY_LABEL[q.initial_difficulty]})</small></dd></div>
             <div><dt>Fonte</dt><dd>{q.source_url ? <a href={q.source_url} target="_blank" rel="noreferrer noopener">{new URL(q.source_url).hostname} <ExternalLink size={13}/></a> : <em>sem fonte</em>}</dd></div>
             <div><dt>Explicação</dt><dd>{q.explanation}</dd></div>
