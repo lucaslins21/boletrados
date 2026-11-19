@@ -259,4 +259,5 @@ Não reabrir decisões fechadas. Preservar o histórico e o trabalho feito. Não
 | "Dia de jogo" nas demais telas (home, convite, perfil, perguntas, moderação), com ícones próprios das categorias | ✅ (a demo `/demo` continua no visual antigo até ser removida) |
 | Logo próprio (bolinha de sorteio com taça) e favicon | ✅ provisório-bom: falta verificação de marca e, se desejado, um mascote |
 | Home com as coleções de taças por partida, ilustração na entrada, carregamento animado, transições | ✅ |
+| Efeitos sonoros (sorteio, acerto, erro, últimos segundos, troféu, vitória), sintetizados no navegador, com botão liga/desliga | ✅ |
 | Login Facebook, revisão comunitária, peso da dificuldade no sorteio | Futuro ou indefinido |

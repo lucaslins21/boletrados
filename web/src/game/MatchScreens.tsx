@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { ArrowLeft, Check, Clock3, Flag, Share2, X } from 'lucide-react';
+import { ArrowLeft, Check, Clock3, Flag, Share2, Volume2, VolumeX, X } from 'lucide-react';
 import { Link } from 'react-router';
 import type { CategoryId } from '../data/questions';
 import { useCountdown, QUESTION_SECONDS } from '../components/ui';
@@ -10,6 +10,7 @@ import type { ApiMatch, MatchPlayer, OpenQuestion, QuestionResult } from '../onl
 import { initials, timeLeft } from '../online/format';
 import { CategoryBadge, DrawBall, Rays, StadiumScene, Trophy } from './art';
 import { CATEGORY_ORDER, CATEGORY_THEME } from './theme';
+import { onSoundChange, setSoundEnabled, sfx, soundEnabled } from './sound';
 import './game.css';
 
 const AVATAR_COLORS = ['#2F6FED', '#FF8A1F'];
@@ -22,11 +23,20 @@ export function GameFrame({ title, subtitle, children }: { title: string; subtit
       <header className="gd-topbar">
         <Link to="/" className="gd-icon-btn" aria-label="Voltar para minhas partidas"><ArrowLeft size={22}/></Link>
         <div><h1>{title}</h1>{subtitle && <small>{subtitle}</small>}</div>
-        <span/>
+        <SoundToggle/>
       </header>
       {children}
     </div>
   </div>;
+}
+
+/** Liga/desliga os efeitos sonoros (preferência salva no aparelho). */
+export function SoundToggle() {
+  const [on, setOn] = useState(soundEnabled);
+  useEffect(() => onSoundChange(setOn), []);
+  return <button className="gd-icon-btn" onClick={() => setSoundEnabled(!on)} aria-pressed={on} aria-label={on ? 'Desligar sons' : 'Ligar sons'} title={on ? 'Sons ligados' : 'Sons desligados'}>
+    {on ? <Volume2 size={21}/> : <VolumeX size={21}/>}
+  </button>;
 }
 
 function PlayerCard({ player, active, side }: { player: MatchPlayer; active: boolean; side: 'left' | 'right' }) {
@@ -87,10 +97,11 @@ export function DrawStage({ phase, category, busy, onDraw, onSkip, onProceed, on
   const revealedRef = useRef(onRevealed);
   revealedRef.current = onRevealed;
 
+  useEffect(() => { if (phase === 'spinning') sfx.spin(1500); }, [phase]);
   useEffect(() => {
     if (phase === 'done') { setOpened(true); return; }
     if (phase !== 'revealing') { setOpened(false); return; }
-    const open = window.setTimeout(() => setOpened(true), reduce ? 0 : 750);
+    const open = window.setTimeout(() => { setOpened(true); sfx.reveal(); }, reduce ? 0 : 750);
     const finish = window.setTimeout(() => revealedRef.current(), reduce ? 50 : 1350);
     return () => { window.clearTimeout(open); window.clearTimeout(finish); };
   }, [phase, reduce]);
@@ -175,6 +186,11 @@ export function QuestionStage({ question, imageUrl, streak, deadline, busy, resu
   }, [locked]);
 
   const seconds = result ? 0 : Math.ceil(remaining / 1000);
+  useEffect(() => { if (!result && seconds > 0 && seconds <= 5) sfx.tick(seconds <= 3); }, [seconds, result]);
+  useEffect(() => {
+    if (!result || result.trophy_won) return; // a conquista de troféu tem a própria fanfarra
+    if (result.correct) sfx.correct(); else sfx.wrong();
+  }, [result]);
   const pct = result ? 0 : Math.max(0, Math.min(100, (remaining / (QUESTION_SECONDS * 1000)) * 100));
   const danger = !result && seconds <= 5;
   const block = (event: { preventDefault: () => void }) => event.preventDefault();
@@ -265,6 +281,7 @@ export function Confetti({ pieces = 70 }: { pieces?: number }) {
 
 /** Comemoração da conquista de um troféu. */
 export function TrophyCelebration({ category, onContinue }: { category: CategoryId; onContinue: () => void }) {
+  useEffect(() => { sfx.trophy(); }, []);
   return <div className="gd gd-overlay" role="dialog" aria-modal="true" aria-label="Troféu conquistado">
     <Confetti/>
     <motion.div className="gd-celebrate" initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 180, damping: 14 }}>
@@ -283,6 +300,7 @@ export function TrophyCelebration({ category, onContinue }: { category: Category
 /** Fim de jogo: vitória (com festa) ou derrota. */
 export function MatchEnd({ match, iWon, reason, opponentId, opponentName }: { match: ApiMatch; iWon: boolean; reason: string; opponentId?: number; opponentName: string }) {
   const winner = match.players.find(p => p.seat === match.winner_seat);
+  useEffect(() => { if (iWon) sfx.victory(); }, [iWon]);
   return <div className="gd-stage">
     {iWon && <Confetti pieces={90}/>}
     <motion.section className="gd-panel" initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 170, damping: 14 }}>
