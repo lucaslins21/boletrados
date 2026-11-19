@@ -1,0 +1,38 @@
+# Desenvolvimento local: PostgreSQL + API Rails.
+#   HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up   (padrão: 1000:1000)
+# O frontend roda à parte: cd web && npm run dev
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: boletrados
+      POSTGRES_PASSWORD: boletrados
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U boletrados"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+    command: bash -c "bundle install --quiet && rm -f tmp/pids/server.pid && bin/rails db:prepare && bin/rails server -b 0.0.0.0 -p 3000"
+    environment:
+      DATABASE_URL: postgres://boletrados:boletrados@db:5432
+      RAILS_ENV: development
+    ports:
+      - "${API_PORT:-3000}:3000"
+    volumes:
+      - ./api:/app
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

@@ -36,7 +36,7 @@ web/  (Vite + React)  ── HTTPS + cookie de sessão ──►  api/ (Rails 8 
                                                          └─ Action Mailer (provedor SMTP a definir)
 ```
 
-- **Rails 8 API-only** + **Solid Queue** para jobs agendados (os prazos dependem disso) sem adicionar Redis.
+- **Rails 8.1 API-only** + **Solid Queue** para jobs agendados (os prazos dependem disso) sem adicionar Redis.
 - **Docker Compose** local: `db` (postgres:16) + `api`. O frontend continua com `npm run dev`, apontando para `VITE_API_BASE_URL`.
 
 ## Autenticação (Google)
@@ -55,7 +55,7 @@ web/  (Vite + React)  ── HTTPS + cookie de sessão ──►  api/ (Rails 8 
   - expiração de 7 dias.
 - O convite sobrevive ao login: o frontend guarda o código em `sessionStorage`, faz o login e depois chama `POST /invites/:code/accept`.
 - Aceitar o próprio convite é proibido; convite aceito ou expirado não pode ser reutilizado.
-- **Limite de 3 partidas em andamento** por jogador: criar ou aceitar convite além disso retorna erro. A aplicação confere o limite dentro da transação, com lock no usuário. Proposta (a confirmar): convites ainda não aceitos também contam para quem os criou.
+- **Limite de 3 partidas em andamento** por jogador: criar ou aceitar convite além disso retorna erro. A aplicação confere o limite dentro da transação, com lock no usuário. **Convites pendentes não contam** nesse limite (decidido); eles têm um limite próprio (proposta: 5 convites pendentes por jogador).
 
 ## Modelo de dados (MVP)
 
@@ -140,12 +140,11 @@ README.md            # como rodar tudo
 
 1. **LGPD**: política de privacidade, exclusão de conta e retenção de `match_events`/exposições antes de abrir ao público.
 2. **Provedor de e-mail** (Resend, Postmark, SES…) e **domínio**: dependem da hospedagem.
-3. **Convites pendentes** contam no limite de 3? (proposta acima)
-4. **Peso de dificuldade** no sorteio de perguntas: continua indefinido (PRODUCT.md); no MVP, aleatório uniforme entre as inéditas.
+3. **Peso de dificuldade** no sorteio de perguntas: continua indefinido (PRODUCT.md); no MVP, aleatório uniforme entre as inéditas.
 
 ## Ordem de implementação sugerida
 
-1. Monorepo: mover o frontend para `web/` e criar o esqueleto `api/` + Docker Compose + CI (typecheck, testes JS e RSpec).
+1. ~~Monorepo: mover o frontend para `web/` e criar o esqueleto `api/` + Docker Compose + CI (typecheck, testes JS e RSpec).~~ **Feito**: Rails 8.1.4 / Ruby 3.4, RSpec, RuboCop, Brakeman, bundler-audit.
 2. Schema + seeds com as 54 perguntas demo; port das regras para Ruby com specs espelhando `game.test.ts`.
 3. Login Google + sessões.
 4. Partidas, convites e o fluxo de vez (draw → question → answer) com idempotência e locks.

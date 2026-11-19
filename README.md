@@ -4,26 +4,51 @@
 
 Protótipo interativo, mobile-first, do **Boletrados**: quiz de futebol com partidas X1 assíncronas, sorteio de categorias com bolinhas e seis troféus para conquistar.
 
-> **Estado atual:** protótipo frontend local. O jogo roda com dois jogadores simulados no mesmo navegador. **Ainda não existem** login com Google/Facebook, convites reais, partidas entre aparelhos, banco de dados ou API. As perguntas são demonstrativas e precisam de curadoria antes de publicação.
+> **Estado atual:** protótipo frontend local (`web/`), com dois jogadores simulados no mesmo navegador. A API (`api/`, Rails 8.1 + PostgreSQL) **tem só o esqueleto**: ainda não existem login, convites, partidas entre aparelhos nem endpoints de jogo. A arquitetura planejada está em [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md). As perguntas são demonstrativas e precisam de curadoria antes de publicação.
 
-## Rodar localmente
+Monorepo:
+
+| Pasta | O quê |
+|---|---|
+| `web/` | Frontend Vite + React + TypeScript (demo jogável) |
+| `api/` | Backend Rails 8.1 API + PostgreSQL (esqueleto) |
+| `docs/` | Produto, arquitetura, auditoria e handoff |
+| `docker-compose.yml` | PostgreSQL + API para desenvolvimento |
+
+## Frontend (`web/`)
 
 Requer **Node.js 20+**.
 
 ```bash
+cd web
 npm install
-npm run dev
-```
-
-Abra o endereço mostrado pelo Vite, normalmente `http://localhost:5173`.
-
-```bash
+npm run dev        # http://localhost:5173
 npm run typecheck
-npm test        # testes do motor de partidas (Vitest)
+npm test           # testes do motor de partidas (Vitest)
 npm run build
 ```
 
-## Tecnologias
+## API (`api/`)
+
+Requer **Docker** com Compose; Ruby e Postgres não precisam estar instalados na máquina.
+
+```bash
+HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up    # API em http://localhost:3000 (health: /up)
+```
+
+- Portas configuráveis: `API_PORT` (padrão 3000) e `POSTGRES_PORT` (padrão 5433 no host).
+- Testes e verificações:
+
+```bash
+docker compose run --rm -e RAILS_ENV=test api bundle exec rspec
+docker compose run --rm api bin/rubocop
+docker compose run --rm api bin/brakeman --no-pager
+docker compose run --rm api bin/bundler-audit
+```
+
+A CI (`.github/workflows/ci.yml`) roda tudo isso, mais typecheck/testes/build do `web/`, em cada push e PR.
+
+## Tecnologias do frontend
 
 - React 19 + TypeScript + Vite
 - CSS responsivo com design tokens próprios (sem biblioteca de componentes)
@@ -57,7 +82,7 @@ npm run build
 ## Estrutura
 
 ```text
-src/
+web/src/
   App.tsx                # Fluxos, telas e controles do protótipo
   styles.css             # Identidade visual responsiva
   components/
@@ -67,7 +92,8 @@ src/
   lib/game.ts            # Máquina de estados e regras locais (funções puras)
   lib/game.test.ts       # Testes das regras (Vitest)
   assets/stadium.svg     # Ilustração original simplificada
-public/favicon.svg
+web/public/favicon.svg
+api/                     # Rails 8.1 API (esqueleto; specs em api/spec)
 docs/
   PRODUCT.md             # Regras fechadas, detalhes e próximos passos
   CLAUDE_HANDOFF.md      # Guia para continuar no Claude CLI

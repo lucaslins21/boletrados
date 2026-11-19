@@ -1,0 +1,7 @@
+# Imagem só para desenvolvimento local (docker-compose.yml na raiz). O Dockerfile de produção é o gerado pelo Rails.
+FROM ruby:3.4.13
+RUN apt-get update -qq && apt-get install -y --no-install-recommends postgresql-client && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+# Gems ficam em api/vendor/bundle (ignorado pelo git), para rodar com o UID do host sem arquivos de root.
+ENV BUNDLE_PATH=/app/vendor/bundle HOME=/tmp
+EXPOSE 3000

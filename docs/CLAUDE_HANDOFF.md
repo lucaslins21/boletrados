@@ -12,19 +12,19 @@ O repositório contém frontend Vite + React + TS jogável em modo **demo local*
 
 ## Primeiros passos
 
+Monorepo: frontend em `web/`, API Rails em `api/` (ver README).
+
 ```bash
-npm install
-npm run dev
-npm run typecheck
-npm test
-npm run build
+cd web && npm install && npm run dev && npm run typecheck && npm test && npm run build
+HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up                 # API + Postgres
+docker compose run --rm -e RAILS_ENV=test api bundle exec rspec
 ```
 
 ## O que fazer em seguida
 
 1. ~~Revisar acessibilidade e responsividade; testes de unidade do motor.~~ Feito na v0.2. Decidir as pendências listadas em `docs/AUDITORIA_v0.2.md`.
 2. Refinar os assets do sorteio (pular/reduzir animação já implementados). Fazer testes de UX de 15 segundos.
-3. Criar backend Rails API + PostgreSQL. A arquitetura está proposta em `docs/ARQUITETURA.md` (decisões de stack, login, prazos, avisos e monorepo já tomadas); revisar os "pontos ainda abertos" antes de codar.
+3. Backend Rails API + PostgreSQL conforme `docs/ARQUITETURA.md`. **Etapa 1 (monorepo + esqueleto `api/` + Docker Compose + CI) concluída**; a próxima é a etapa 2 (schema, seeds das 54 perguntas e port das regras para Ruby).
 4. Implementar Google/Facebook OAuth e convites por link/código, protegendo tokens e continuando o fluxo após login.
 5. Mover para o servidor o relógio autoritativo, sorteios, reserva de perguntas inéditas, mudanças de posse e concessão de troféus. Preferir endpoints idempotentes e transações.
 6. Criar um banco de perguntas curadas e painel de moderação. Não publicar fatos gerados por IA sem checagem.
