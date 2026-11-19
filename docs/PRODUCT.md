@@ -257,5 +257,6 @@ Não reabrir decisões fechadas. Preservar o histórico e o trabalho feito. Não
 | Dificultar cópia do texto | ✅ — **falta registrar eventos suspeitos** |
 | Identidade "Dia de jogo" na partida: sorteio com bolinha que abre, pergunta com resultado nas alternativas, escolha e conquista de troféu, vitória | ✅ |
 | "Dia de jogo" nas demais telas (home, convite, perfil, perguntas, moderação), com ícones próprios das categorias | ✅ (a demo `/demo` continua no visual antigo até ser removida) |
-| Logo e mascote definitivos | Pendente (marca provisória) |
+| Logo próprio (bolinha de sorteio com taça) e favicon | ✅ provisório-bom: falta verificação de marca e, se desejado, um mascote |
+| Home com as coleções de taças por partida, ilustração na entrada, carregamento animado, transições | ✅ |
 | Login Facebook, revisão comunitária, peso da dificuldade no sorteio | Futuro ou indefinido |

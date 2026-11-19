@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
-import { ArrowRight, Swords, Trophy } from 'lucide-react';
+import { ArrowRight, Swords } from 'lucide-react';
 import { Link, useParams } from 'react-router';
 import { getCategory } from '../data/questions';
 import { ApiError, api, type CategoryStat, type HeadToHead, type Profile } from './api';
 import { initials } from './format';
-import { CategoryBadge } from '../game/art';
+import { CategoryBadge, Trophy as TrophyArt } from '../game/art';
+import { Loading } from '../game/Decor';
 
 const pct = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
 
@@ -25,7 +26,7 @@ export function ProfilePage() {
 
   if (error) return <div className="main-card online-narrow"><h1 className="screen-title">Ops.</h1><p className="screen-subtitle">{error}</p>
     <Link to="/" className="button button--primary">Minhas partidas <ArrowRight size={17}/></Link></div>;
-  if (!profile) return <p className="online-loading" role="status">Carregando perfil…</p>;
+  if (!profile) return <Loading label="Carregando perfil…"/>;
 
   const { user, summary, is_me: isMe } = profile;
   return <div className="content-layout">
@@ -68,7 +69,7 @@ function CategoryMeter({ stat }: { stat: CategoryStat }) {
       {stat.answered > 0 && <span className="meter-fill" style={{ width: `${Math.max(accuracy, 2)}%` }}/>}
     </span>
     <span className="meter-figure">{stat.answered ? <><b>{accuracy}%</b> <small>{stat.correct}/{stat.answered}</small></> : <small>—</small>}</span>
-    {stat.trophies > 0 && <span className="meter-trophies" aria-label={`${stat.trophies} troféus`}><Trophy size={13} aria-hidden="true"/>{stat.trophies}</span>}
+    <span className="meter-trophies" aria-label={`${stat.trophies} troféus`}><TrophyArt id={stat.category} won={stat.trophies > 0} size={18}/>{stat.trophies > 0 ? stat.trophies : ''}</span>
   </li>;
 }
 

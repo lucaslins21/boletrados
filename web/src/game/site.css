@@ -78,3 +78,48 @@ body:has(.gd){background:#34AD50}
 .gd-site .feedback-burst{border-radius:24px;box-shadow:0 6px 0 #0001}
 .gd-site .feedback-burst--correct{background:#FFC531;color:#5C3B00;box-shadow:0 6px 0 #D99100}
 .gd-site .feedback-burst--wrong{background:#FDECEC;color:#C42B30;box-shadow:0 6px 0 #F5B5B8}
+
+/* Cabeçalho: link da página atual */
+.gd-site .online-nav-link{border-radius:12px;padding:6px 10px}
+.gd-site .online-nav-link.active{background:#ffffff33;box-shadow:inset 0 -3px 0 #FFC531}
+.gd-site .brand-link{display:inline-flex}
+
+/* Rodapé */
+.gd-site .gd-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.gd-site .gd-footer p{margin:0;font-weight:700}
+
+/* Entrada: ilustração do sorteio e coleção */
+.gd-hero-art{display:flex;flex-direction:column;align-items:center;gap:6px;margin:20px 0 6px;max-width:420px}
+.gd-hero-globe{width:min(62vw,260px)}
+.gd-hero-shelf{display:flex;gap:6px;margin-top:-6px;background:#ffffffd9;border-radius:18px;padding:10px 14px 8px;box-shadow:0 5px 0 #CBD8EA}
+
+/* Home: linha de partida com as duas coleções */
+.gd-site .match-row{padding:12px 14px;border:2px solid #E3EAF4;box-shadow:0 4px 0 #D7E2EF}
+.gd-site .match-row:hover{transform:translateY(-1px);background:#FBFDFF}
+.gd-site .match-row--my-turn{border-color:#22B357;background:linear-gradient(120deg,#E9F8EE,#fff 65%)}
+.match-row-top{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+.match-row-top strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.match-shelves{display:flex;align-items:center;gap:6px;margin:4px 0 2px;flex-wrap:wrap}
+.match-shelves i{font-style:normal;font-weight:900;color:#8A97B0;font-size:12px}
+.match-shelf{display:inline-flex;gap:1px;flex-shrink:0}
+.match-status{flex-shrink:0;font:900 11px 'Outfit',sans-serif;letter-spacing:.06em;border-radius:20px;padding:6px 10px;white-space:nowrap}
+.match-status--go{background:#22B357;color:#fff;box-shadow:0 3px 0 #168A41}
+.match-status--wait{background:#EEF4FF;color:#1F52BD}
+.match-status--win{background:#FFC531;color:#5C3B00;box-shadow:0 3px 0 #D99100}
+.match-status--loss{background:#F1F5FA;color:#6B7A96}
+
+/* Perfil: taça desenhada por categoria */
+.gd-site .meter-trophies{min-width:34px;justify-content:flex-start}
+.gd-site .meter-trophies svg{color:inherit}
+
+@media(max-width:800px){
+  .gd-site .gd-logo-text small{display:none}
+  /* cabeçalho compacto: logo menor e ícones mais próximos para caber em 360 px */
+  .gd-site .site-header-inner{gap:8px}
+  .gd-site .brand-link .gd-logo{font-size:19px!important}
+  .gd-site .brand-link .gd-logo-mark{width:34px;height:34px}
+  .gd-site .header-right{gap:2px}
+  .gd-site .online-nav-link{padding:6px 7px}
+  .match-shelves{flex-wrap:nowrap}
+  .gd-hero-art{margin:14px auto 4px}
+}

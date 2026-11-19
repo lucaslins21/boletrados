@@ -6,6 +6,7 @@ import { ApiError, api, type InvitePreview } from './api';
 import { LoginCard } from './LoginCard';
 import { initials } from './format';
 import { pendingInvite, useSession } from './session';
+import { Loading } from '../game/Decor';
 
 const STATUS_TEXT: Record<Exclude<InvitePreview['status'], 'open'>, string> = {
   expired: 'Este convite expirou. Peça um novo ao seu amigo.',
@@ -45,7 +46,7 @@ export function InvitePage() {
   return <div className="feedback-shell"><main className="main-card feedback-card">
     <div className="feedback-burst feedback-burst--correct" aria-hidden="true"><Swords size={46}/></div>
     <Pill tone="purple">CONVITE PARA X1</Pill>
-    {!invite && !error && <p className="online-loading" role="status">Carregando convite…</p>}
+    {!invite && !error && <Loading label="Carregando convite…"/>}
     {invite && <>
       <div className="invite-from"><span className="player-avatar player-avatar--0" aria-hidden="true">{initials(invite.from.display_name)}</span>
         <h1 className="screen-title"><b>{invite.from.display_name}</b> te desafiou!</h1></div>

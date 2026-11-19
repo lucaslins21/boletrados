@@ -6,6 +6,7 @@ import { ApiError, api, type QuestionFull, type QuestionInput } from '../api';
 import { QuestionForm } from './QuestionForm';
 import { StatusPill } from './StatusPill';
 import { CategoryBadge } from '../../game/art';
+import { Loading } from '../../game/Decor';
 
 const NOTICE_KEY = 'boletrados:submission-notice';
 
@@ -28,7 +29,7 @@ export function MySubmissionsPage() {
       <Link to="/perguntas/nova" className="button button--primary button--lg inline-button"><Plus size={19}/> Nova pergunta</Link>
       {notice && <Banner>{notice}</Banner>}
       {error && <p className="form-error" role="alert">{error}</p>}
-      {items === null && !error && <p className="online-loading" role="status">Carregando…</p>}
+      {items === null && !error && <Loading label="Carregando…"/>}
       {items?.length === 0 && <Banner icon={<PenLine size={17}/>}>Você ainda não enviou perguntas.</Banner>}
       <ul className="submission-list">{items?.map(q => <li key={q.id} className="submission-item">
         <div className="submission-top"><StatusPill status={q.status} label={q.status_label}/>
@@ -75,7 +76,7 @@ export function SubmissionFormPage() {
   };
 
   if (id && error) return <div className="main-card online-narrow"><p className="form-error">{error}</p><Link to="/perguntas" className="button button--primary">Voltar</Link></div>;
-  if (id && !existing) return <p className="online-loading" role="status">Carregando…</p>;
+  if (id && !existing) return <Loading label="Carregando…"/>;
   if (existing && !existing.editable) return <div className="main-card online-narrow"><h1 className="screen-title">Em análise.</h1>
     <p className="screen-subtitle">Esta pergunta já está com a moderação e não pode ser editada agora.</p><Link to="/perguntas" className="button button--primary">Voltar</Link></div>;
 

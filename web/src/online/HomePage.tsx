@@ -8,6 +8,9 @@ import { LoginCard } from './LoginCard';
 import { NotificationsCard } from './NotificationsCard';
 import { finishedText, initials, me, opponent, timeLeft } from './format';
 import { pendingInvite, useSession } from './session';
+import { HeroArt, Loading } from '../game/Decor';
+import { Trophy } from '../game/art';
+import { CATEGORY_ORDER } from '../game/theme';
 
 export function HomePage() {
   const { status } = useSession();
@@ -26,6 +29,7 @@ function Welcome() {
       <Pill tone="lime"><span className="tiny-pulse"/> X1 ONLINE ENTRE AMIGOS</Pill>
       <h1>Quem sabe de <em>futebol</em> merece um troféu.</h1>
       <p>Desafie um amigo por link ou código e jogue no seu tempo. Acerte perguntas, dispute categorias e conquiste os 6 troféus antes dele.</p>
+      <HeroArt/>
       <Link to="/demo" className="subtle-link"><Dumbbell size={16}/> Treinar na demo, sem login <ArrowRight size={16}/></Link>
     </div>
     <div className="main-card"><LoginCard subtitle="Sua conta guarda suas partidas e as perguntas que você já viu."/></div>
@@ -85,7 +89,7 @@ function MatchesHome() {
         </form>
       </div>
       {error && <p className="form-error" role="alert">{error}</p>}
-      {matches === null && !error && <p className="online-loading" role="status">Carregando partidas…</p>}
+      {matches === null && !error && <Loading label="Carregando partidas…"/>}
       {matches !== null && !groups.length && <Banner icon={<Swords size={17}/>}>Nenhuma partida ainda. Crie um desafio e mande o link para um amigo.</Banner>}
       {groups.map(group => <section key={group.title} className="match-group" aria-label={group.title}>
         <h2 className="match-group-title">{group.title} <span>{group.items.length}</span></h2>
@@ -113,16 +117,22 @@ function MatchRow({ match }: { match: ApiMatch }) {
     : match.status === 'finished' ? finishedText(match, user)
     : match.turn?.my_turn ? `Sua vez · prazo ${timeLeft(match.turn.deadline_at)}`
     : `Vez de ${other?.user.display_name} · prazo ${match.turn ? timeLeft(match.turn.deadline_at) : ''}`;
-  return <Link to={`/partidas/${match.id}`} className={`match-row ${match.turn?.my_turn && match.status === 'active' ? 'match-row--my-turn' : ''}`}>
+  const myTurn = match.status === 'active' && !!match.turn?.my_turn;
+  const iWon = match.status === 'finished' && match.winner_seat === match.my_seat;
+  const status = match.status === 'waiting_opponent' ? { label: 'CONVITE', tone: 'wait' }
+    : match.status === 'finished' ? { label: iWon ? 'VITÓRIA' : 'DERROTA', tone: iWon ? 'win' : 'loss' }
+    : myTurn ? { label: 'SUA VEZ', tone: 'go' } : { label: 'AGUARDANDO', tone: 'wait' };
+  const shelf = (won: readonly string[]) => <span className="match-shelf">{CATEGORY_ORDER.map(id => <Trophy key={id} id={id} won={won.includes(id)} size={13}/>)}</span>;
+  return <Link to={`/partidas/${match.id}`} className={`match-row ${myTurn ? 'match-row--my-turn' : ''}`}>
     <span className="player-avatar player-avatar--1" aria-hidden="true">{initials(other?.user.display_name ?? '?')}</span>
     <span className="match-row-main">
-      <strong>{other ? `vs ${other.user.display_name}` : 'Aguardando adversário'}</strong>
+      <span className="match-row-top"><strong>{other ? `vs ${other.user.display_name}` : 'Aguardando adversário'}</strong>
+        <span className={`match-status match-status--${status.tone}`}>{status.label}</span></span>
+      {match.status !== 'waiting_opponent' && <span className="match-shelves" aria-label={`Troféus: você ${mine?.trophies.length ?? 0}, adversário ${other?.trophies.length ?? 0}`}>
+        {shelf(mine?.trophies ?? [])}<i>×</i>{shelf(other?.trophies ?? [])}
+      </span>}
       <small>{detail}</small>
     </span>
-    {match.status !== 'waiting_opponent' && <span className="match-row-score" aria-label={`Troféus: você ${mine?.trophies.length ?? 0}, adversário ${other?.trophies.length ?? 0}`}>
-      {mine?.trophies.length ?? 0}<i>×</i>{other?.trophies.length ?? 0}
-    </span>}
-    <ArrowRight size={18} aria-hidden="true"/>
   </Link>;
 }
 

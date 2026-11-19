@@ -163,3 +163,21 @@ button.gd-cabinet-item:not(:disabled):active{transform:translateY(3px);box-shado
   .gd-rays,.gd-confetti i{animation:none}
   .gd-confetti{display:none}
 }
+
+/* Marca */
+.gd-logo{display:inline-flex;align-items:center;gap:.45em;line-height:1;text-decoration:none}
+.gd-logo-mark{flex-shrink:0;filter:drop-shadow(0 3px 0 #0E2A5A33)}
+.gd-logo-text{display:flex;flex-direction:column;gap:3px}
+.gd-logo-word{--o:.075em;font:900 1em/1 'Outfit',sans-serif;letter-spacing:-.02em;color:#fff;padding-bottom:.12em;
+  /* contorno e sombra proporcionais ao tamanho da letra (não "duplica" o nome em tamanhos pequenos) */
+  text-shadow:var(--o) 0 0 #13213D,calc(-1*var(--o)) 0 0 #13213D,0 var(--o) 0 #13213D,0 calc(-1*var(--o)) 0 #13213D,
+    var(--o) var(--o) 0 #13213D,calc(-1*var(--o)) var(--o) 0 #13213D,var(--o) calc(-1*var(--o)) 0 #13213D,calc(-1*var(--o)) calc(-1*var(--o)) 0 #13213D,
+    0 calc(2.2*var(--o)) 0 #13213D}
+.gd-logo-gold{color:#FFC531}
+.gd-logo-text small{font:800 11px 'DM Sans',sans-serif;letter-spacing:.02em;color:#fff;text-shadow:0 1px 0 #0E2A5A}
+
+/* Carregando */
+.gd-loader{display:flex;flex-direction:column;align-items:center;gap:6px;padding:48px 0}
+.gd-loader-shadow{width:40px;height:8px;border-radius:50%;background:#0E2A5A;display:block}
+.gd-loader p{margin:8px 0 0;font-weight:800;color:#fff;text-shadow:0 1px 0 #1F5FAF;font-size:14px}
+.main-card .gd-loader p,.gd-panel .gd-loader p{color:#6B7A96;text-shadow:none}

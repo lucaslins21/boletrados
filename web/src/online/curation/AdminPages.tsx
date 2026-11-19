@@ -9,6 +9,7 @@ import { useSession } from '../session';
 import { QuestionForm } from './QuestionForm';
 import { StatusPill } from './StatusPill';
 import { CategoryBadge } from '../../game/art';
+import { Loading } from '../../game/Decor';
 
 const TABS: { id: string; label: string; statuses: QuestionStatus[] }[] = [
   { id: 'queue', label: 'Fila', statuses: ['submitted', 'in_review'] },
@@ -61,7 +62,7 @@ function AdminQueue() {
         </select>
       </div>
       {error && <p className="form-error" role="alert">{error}</p>}
-      {!data && !error && <p className="online-loading" role="status">Carregando…</p>}
+      {!data && !error && <Loading label="Carregando…"/>}
       {data?.questions.length === 0 && <Banner>Nada por aqui.</Banner>}
       <ul className="match-list">{data?.questions.map(q => <li key={q.id}><QueueRow q={q}/></li>)}</ul>
     </main>
@@ -114,7 +115,7 @@ function AdminQuestionDetail() {
   };
 
   if (error && !data) return <div className="main-card online-narrow"><p className="form-error">{error}</p><Link to="/admin" className="button button--primary">Voltar</Link></div>;
-  if (!data) return <p className="online-loading" role="status">Carregando…</p>;
+  if (!data) return <Loading label="Carregando…"/>;
   const q = data.question;
   const canDecide = ['submitted', 'in_review', 'changes_requested'].includes(q.status);
 
