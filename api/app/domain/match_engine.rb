@@ -126,6 +126,35 @@ module MatchEngine
     pass_turn(state.with(consecutive_timeouts: timeouts), now: now)
   end
 
+  # Desistência: o adversário vence imediatamente.
+  def resign(state, seat)
+    return state if state.phase == :finished
+
+    state.with(phase: :finished, winner: other_seat(seat), finished_reason: :resigned, question: nil, feedback: nil, drawn_category: nil)
+  end
+
+  # Aplica prazos vencidos (pergunta de 15s e vez de 24h) até o estado ficar estável.
+  # Cada efeito usa o horário em que deveria ter acontecido, não o horário da consulta,
+  # para que um acerto atrasado não estenda o prazo do adversário.
+  # Devolve [estado, eventos], onde eventos é uma lista de [:question_timeout | :turn_expired, horário].
+  def settle(state, now:)
+    events = []
+    10.times do
+      if state.phase == :question && state.deadline && now > state.deadline + NETWORK_TOLERANCE
+        at = state.deadline + NETWORK_TOLERANCE
+        state = continue_after_feedback(forfeit_question(state), now: at)
+        events << [ :question_timeout, at ]
+      elsif !%i[finished question].include?(state.phase) && now >= state.turn_deadline
+        at = state.turn_deadline
+        state = expire_turn(state, now: at)
+        events << [ :turn_expired, at ]
+      else
+        break
+      end
+    end
+    [ state, events ]
+  end
+
   # --- internos ---
 
   def open_question(state, category:, context:, question:, now:)

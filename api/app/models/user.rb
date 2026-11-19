@@ -2,6 +2,12 @@ class User < ApplicationRecord
   has_many :identities, dependent: :destroy
   has_many :sessions, dependent: :destroy
   has_many :question_exposures, dependent: :destroy
+  has_many :match_players, dependent: :restrict_with_exception
+  has_many :matches, through: :match_players
+
+  # Partidas em andamento (convites pendentes não contam; ver docs/ARQUITETURA.md).
+  def active_matches_count = matches.where(status: "active").count
+  def pending_invites_count = Match.open_invites.where(created_by_id: id).count
 
   validates :display_name, presence: true, length: { maximum: 60 }
 

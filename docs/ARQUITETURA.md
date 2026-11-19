@@ -141,7 +141,8 @@ README.md            # como rodar tudo
 
 1. **LGPD**: política de privacidade, exclusão de conta e retenção de `match_events`/exposições antes de abrir ao público.
 2. **Provedor de e-mail** (Resend, Postmark, SES…) e **domínio**: dependem da hospedagem.
-3. **Peso de dificuldade** no sorteio de perguntas: continua indefinido (PRODUCT.md); no MVP, aleatório uniforme entre as inéditas.
+3. **Jogador sem nenhuma pergunta inédita** em todas as categorias: a partida fica na fase `empty` até ele desistir ou a vez estourar (24h). Com banco real é raro, mas falta definir a política.
+4. **Peso de dificuldade** no sorteio de perguntas: continua indefinido (PRODUCT.md); no MVP, aleatório uniforme entre as inéditas.
 
 ## Ordem de implementação sugerida
 
@@ -156,7 +157,16 @@ README.md            # como rodar tudo
    - `POST /auth/google`, `GET /me` e `DELETE /session`; tabelas `identities` e `sessions`.
    - `GoogleIdToken` valida o token com JWKS (com cache e nova busca limitada quando a chave rotaciona).
    - A tela de login com Google Identity Services entra na etapa 6. Falta o `GOOGLE_CLIENT_ID` real (variável de ambiente).
-4. Partidas, convites e o fluxo de vez (draw → question → answer) com idempotência e locks.
-5. Jobs de prazo (15s / 24h / W.O.).
+4. ~~Partidas, convites e o fluxo de vez (draw → question → answer) com idempotência e locks.~~ **Feito.** Diferenças em relação à proposta:
+   - O estado do `MatchEngine` fica serializado em `matches.state` (jsonb), com colunas derivadas para consulta (`current_user_id`, `turn_deadline_at`, `winner_id`, `finished_reason`). Histórico em `match_questions`, `trophies` e `match_events`.
+   - `POST /matches/:id/answer` já aplica a continuação (não existe fase "feedback" no servidor) e devolve `result` com a correção e a explicação.
+   - `POST /matches/:id/draw` também faz "começar a vez" (lobby → sorteio).
+   - Criador do convite começa jogando (assento 0).
+   - Desistência: `POST /matches/:id/resign` (`finished_reason = resigned`).
+5. ~~Jobs de prazo (15s / 24h / W.O.).~~ **Feito**:
+   - `MatchClockJob` é agendado para cada prazo e só chama `settle`, que é idempotente.
+   - Os prazos também são aplicados de forma preguiçosa a cada acesso à partida, então valem mesmo se um job se perder.
+   - Os efeitos usam o horário em que deveriam ter acontecido, sem estender o prazo do adversário.
+   - Para produção, falta configurar o worker do Solid Queue (`bin/jobs`) e a limpeza periódica de `idempotency_keys`, junto com a hospedagem.
 6. Frontend online: telas de partidas (em andamento, aguardando, encerradas) consumindo a API.
 7. Web Push + e-mail.

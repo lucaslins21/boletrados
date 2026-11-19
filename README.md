@@ -4,7 +4,7 @@
 
 Protótipo interativo, mobile-first, do **Boletrados**: quiz de futebol com partidas X1 assíncronas, sorteio de categorias com bolinhas e seis troféus para conquistar.
 
-> **Estado atual:** protótipo frontend local (`web/`), com dois jogadores simulados no mesmo navegador. A API (`api/`, Rails 8.1 + PostgreSQL) tem o schema de perguntas, os seeds e o motor de regras testado, mas **ainda não existem** login, convites, partidas entre aparelhos nem endpoints de jogo. A arquitetura planejada está em [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md). As perguntas são demonstrativas e precisam de curadoria antes de publicação.
+> **Estado atual:** protótipo frontend local (`web/`), com dois jogadores simulados no mesmo navegador. A API (`api/`, Rails 8.1 + PostgreSQL) já tem login Google, convites, partidas X1 com prazos e o motor de regras testado, mas **o frontend ainda não usa a API**: o jogo visível continua sendo a demo local. A arquitetura planejada está em [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md). As perguntas são demonstrativas e precisam de curadoria antes de publicação.
 
 Monorepo:
 
@@ -39,7 +39,15 @@ HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up    # API em http://localho
 - Portas configuráveis: `API_PORT` (padrão 3000) e `POSTGRES_PORT` (padrão 5433 no host).
 - `GOOGLE_CLIENT_ID`: Client ID OAuth do Google (tipo Web). Sem ele, `POST /auth/google` responde 401.
 - `ALLOWED_ORIGINS`: origens do frontend aceitas (CORS + CSRF), separadas por vírgula. Padrão: `http://localhost:5173`.
-- Endpoints atuais: `GET /up`, `POST /auth/google`, `GET /me`, `DELETE /session`.
+- Endpoints atuais:
+
+| Método e rota | O quê |
+|---|---|
+| `GET /up` | Health check |
+| `POST /auth/google` · `GET /me` · `DELETE /session` | Login Google, usuário atual, sair |
+| `GET /matches` · `POST /matches` · `GET /matches/:id` · `DELETE /matches/:id` | Listar, criar convite, ver partida, cancelar convite |
+| `GET /invites/:key` · `POST /invites/:key/accept` | Prévia pública e aceite (código `BOLA-XXXXXX` ou token do link) |
+| `POST /matches/:id/draw` · `question` · `answer` · `resign` | Ações da vez (aceitam `Idempotency-Key`) |
 - Testes e verificações:
 
 ```bash
