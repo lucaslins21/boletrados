@@ -11,7 +11,7 @@ module Auth
       user = User.where.missing(:identities).find_or_create_by!(display_name: name)
       end_session if current_session
       start_session_for(user)
-      render json: { user: UserSerializer.call(user) }
+      render json: { user: UserSerializer.me(user) }
     end
   end
 end

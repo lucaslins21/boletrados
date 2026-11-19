@@ -144,6 +144,26 @@ README.md            # como rodar tudo
 3. **Jogador sem nenhuma pergunta inédita** em todas as categorias: a partida fica na fase `empty` até ele desistir ou a vez estourar (24h). Com banco real é raro, mas falta definir a política.
 4. **Peso de dificuldade** no sorteio de perguntas: continua indefinido (PRODUCT.md); no MVP, aleatório uniforme entre as inéditas.
 
+## Curadoria (implementada)
+
+- **Status de `questions`**: `submitted` → `in_review` (quando um admin abre) → `published` / `changes_requested` / `rejected`, e depois `published` ⇄ `archived`. Só `published` entra no sorteio. O autor edita em `submitted` ou `changes_requested`, e cada edição reenvia a pergunta (`submitted`).
+- **Exposição**: `QuestionExposure.record!` é idempotente e registra:
+  - `authored` ao criar a pergunta;
+  - `reviewed` quando um admin a abre (`GET /admin/questions/:id`);
+  - `reviewed` também para as duplicatas exibidas ao admin.
+- **Dificuldade**: a pergunta guarda `initial_difficulty` e `difficulty` (`easy`/`medium`/`hard`) e os contadores `answers_count`, `correct_count` e `timeouts_count`. `MatchPlay` chama `Question#record_answer!` a cada pergunta resolvida e reclassifica com 50 ou mais respostas válidas (sem contar timeouts).
+- **Duplicatas**: `DuplicateFinder` combina `pg_trgm` (índice GIN no enunciado), mesma resposta correta e mesmos números.
+- **Auditoria e base para a revisão comunitária**:
+  - `question_reviews` guarda as decisões (`reviewer_kind` admin ou community);
+  - `question_versions` guarda um snapshot antes de cada edição.
+- **Imagens**: tabela `question_images` (bytea, até 512 KB, tipo conferido pelos *magic bytes*). `GET /question_images/:key` serve a imagem com chave aleatória, só para quem pode vê-la.
+- **Admin**: coluna `users.admin`, concedida por `bin/rails "admin:grant[EMAIL_OU_ID]"`. O namespace `/admin` responde 404 para quem não é admin.
+- **Endpoints**:
+  - `GET/POST /submissions` e `GET/PATCH /submissions/:id`;
+  - `POST /question_images`;
+  - `GET /admin/questions?status=queue|…&category=` e `GET/POST/PATCH /admin/questions(/:id)`;
+  - `POST /admin/questions/:id/(approve|reject|request_changes|archive|restore)`.
+
 ## Ordem de implementação sugerida
 
 1. ~~Monorepo: mover o frontend para `web/` e criar o esqueleto `api/` + Docker Compose + CI (typecheck, testes JS e RSpec).~~ **Feito**: Rails 8.1.4 / Ruby 3.4, RSpec, RuboCop, Brakeman, bundler-audit.

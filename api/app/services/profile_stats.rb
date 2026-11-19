@@ -11,7 +11,9 @@ class ProfileStats
     {
       played: played, wins: wins, losses: played - wins,
       in_progress: matches.where(status: "active").count,
-      trophies: Trophy.where(user: @user).count
+      trophies: Trophy.where(user: @user).count,
+      # Contribuições: perguntas do jogador aprovadas e publicadas.
+      contributions: Question.published.where(author: @user).count
     }
   end
 

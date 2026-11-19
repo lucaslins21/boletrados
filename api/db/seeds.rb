@@ -13,6 +13,7 @@ if !Rails.env.production? || ENV["SEED_DEMO_QUESTIONS"] == "1"
     Question.transaction do
       question = Question.find_or_initialize_by(external_ref: attrs.fetch("external_ref"))
       question.assign_attributes(attrs.slice("prompt", "options", "correct_index", "explanation").merge("status" => "published"))
+      question.published_at ||= Time.current
       wanted = attrs.fetch("categories").map { |slug| categories.fetch(slug) }
       question.question_categories.reject { |qc| wanted.include?(qc.category) }.each(&:mark_for_destruction)
       (wanted - question.question_categories.map(&:category)).each { |category| question.question_categories.build(category: category) }

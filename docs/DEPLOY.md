@@ -66,13 +66,27 @@ GitHub Actions (de hora em hora) ──► POST /internal/tick     cron-job.org 
 2. Em **Origens JavaScript autorizadas**, adicione a URL da Vercel (e `http://localhost:5173` para testes). Não é preciso URI de redirecionamento: o login usa popup.
 3. Copie o **Client ID**, que é público, para `GOOGLE_CLIENT_ID` (Render) e `VITE_GOOGLE_CLIENT_ID` (Vercel). O *client secret* não é usado.
 
-## 6. Conferência
+## 6. Tornar-se administrador (moderação)
+
+1. Entre no site com a sua conta Google pelo menos uma vez.
+2. O plano grátis do Render não tem Shell, então rode o comando **na sua máquina**, apontando para o banco do Neon. Use a mesma connection string direta, sem salvá-la em arquivo:
+
+```bash
+docker compose run --rm -e RAILS_ENV=production -e SECRET_KEY_BASE_DUMMY=1 \
+  -e DATABASE_URL='<connection string do Neon>' api bin/rails "admin:grant[seu-email@gmail.com]"
+```
+
+3. Recarregue o site: o link **Moderação** aparece no cabeçalho. Para listar ou remover admins, use `admin:list` e `admin:revoke[...]`.
+4. Quando houver perguntas curadas suficientes, remova `SEED_DEMO_QUESTIONS` do Render e arquive as demo pelo painel. Elas continuam no banco, mas fora do jogo.
+
+## 7. Conferência
 
 - [ ] `https://<vercel>/` abre a home e o botão do Google aparece.
 - [ ] Login com Google funciona e `GET /api/me` responde 200.
 - [ ] Criar desafio, abrir o link em outro navegador ou conta e aceitar.
 - [ ] Ativar avisos e receber o push quando a vez mudar.
 - [ ] **Actions → Tick** roda com sucesso.
+- [ ] Enviar uma pergunta em **Perguntas** e aprová-la em **Moderação**.
 
 ## Quando gastar o mínimo
 

@@ -8,7 +8,7 @@ module Auth
       user = User.from_google!(claims)
       end_session if current_session # troca de sessão no login (evita fixação de sessão)
       start_session_for(user)
-      render json: { user: UserSerializer.call(user) }
+      render json: { user: UserSerializer.me(user) }
     rescue GoogleIdToken::InvalidToken => e
       Rails.logger.info("[auth] token Google rejeitado: #{e.message}")
       render_error(:unauthorized, "Não foi possível validar o login com o Google.")

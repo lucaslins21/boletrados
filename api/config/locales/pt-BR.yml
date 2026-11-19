@@ -1,0 +1,28 @@
+pt-BR:
+  activerecord:
+    models:
+      question: pergunta
+    attributes:
+      question:
+        prompt: Enunciado
+        options: Alternativas
+        correct_index: Alternativa correta
+        explanation: Explicação
+        source_url: Fonte
+        initial_difficulty: Dificuldade
+        difficulty: Dificuldade
+        categories: Categorias
+        image: Imagem
+        status: Status
+    errors:
+      messages:
+        record_invalid: "A validação falhou: %{errors}"
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: "não pode ficar em branco"
+      too_long: "deve ter no máximo %{count} caracteres"
+      inclusion: "não é válido"
+      invalid: "não é válido"
+      taken: "já está em uso"
+      required: "é obrigatório"

@@ -41,7 +41,7 @@ export function ProfilePage() {
         <div className="kpi"><dt>Derrotas</dt><dd>{summary.losses}</dd></div>
         <div className="kpi"><dt>Troféus</dt><dd>{summary.trophies}</dd></div>
       </dl>
-      <p className="kpi-note">{summary.played ? `${pct(summary.wins, summary.played)}% de aproveitamento` : 'Nenhuma partida encerrada ainda'}{summary.in_progress ? ` · ${summary.in_progress} em andamento` : ''}</p>
+      <p className="kpi-note">{summary.played ? `${pct(summary.wins, summary.played)}% de aproveitamento` : 'Nenhuma partida encerrada ainda'}{summary.in_progress ? ` · ${summary.in_progress} em andamento` : ''}{summary.contributions ? ` · ${summary.contributions} pergunta${summary.contributions > 1 ? 's' : ''} aprovada${summary.contributions > 1 ? 's' : ''}` : ''}</p>
 
       <section aria-labelledby="by-category">
         <h2 id="by-category" className="match-group-title">Acerto por categoria</h2>

@@ -3,6 +3,6 @@ class MeController < ApplicationController
   before_action :authenticate!
 
   def show
-    render json: { user: UserSerializer.call(current_user) }
+    render json: { user: UserSerializer.me(current_user) }
   end
 end

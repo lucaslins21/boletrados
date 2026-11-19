@@ -51,7 +51,7 @@ RSpec.describe QuestionPicker do
   end
 
   it "só oferece perguntas publicadas" do
-    Question.where(id: ids_in("europeu")).update_all(status: "draft")
+    Question.where(id: ids_in("europeu")).update_all(status: "submitted")
     expect(described_class.new(user).pick!("europeu")).to be_nil
   end
 

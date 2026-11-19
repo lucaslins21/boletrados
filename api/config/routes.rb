@@ -11,6 +11,21 @@ Rails.application.routes.draw do
   get "me", to: "me#show"
   resources :profiles, only: :show
 
+  # Curadoria: envio de perguntas pelos usuários e moderação pelos administradores.
+  resources :submissions, only: %i[index show create update]
+  resources :question_images, only: %i[create show], param: :key
+  namespace :admin do
+    resources :questions, only: %i[index show create update] do
+      member do
+        post :approve
+        post :reject
+        post :request_changes
+        post :archive
+        post :restore
+      end
+    end
+  end
+
   resources :matches, only: %i[index show create destroy] do
     member do
       post :draw, to: "match_actions#draw"

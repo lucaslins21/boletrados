@@ -34,7 +34,7 @@ cd web && npm install && npm run dev                        # http://localhost:5
 
 Abra duas janelas (uma anônima), entre com nomes diferentes no **login de desenvolvimento**, crie um desafio em uma e aceite com o código na outra.
 
-Rotas do frontend: `/` (login e partidas), `/convite/:código-ou-token`, `/partidas/:id`, `/perfil`, `/jogadores/:id` e `/demo`.
+Rotas do frontend: `/` (login e partidas), `/convite/:código-ou-token`, `/partidas/:id`, `/perfil`, `/jogadores/:id`, `/perguntas` (enviar perguntas), `/admin` (moderação) e `/demo`.
 
 Se as portas 3000 ou 5173 estiverem ocupadas:
 
@@ -82,6 +82,8 @@ HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up    # API em http://localho
 | `POST /matches/:id/draw` · `question` · `answer` · `resign` | Ações da vez (aceitam `Idempotency-Key`) |
 | `GET /push/public_key` · `POST /push/subscriptions` · `DELETE /push/subscriptions` | Avisos Web Push do navegador |
 | `GET /profiles/me` · `GET /profiles/:id` | Perfil e estatísticas (só o próprio e de quem você já enfrentou) |
+| `GET/POST /submissions` · `GET/PATCH /submissions/:id` · `POST /question_images` | Envio de perguntas pelos usuários |
+| `/admin/questions` (+ `approve`, `reject`, `request_changes`, `archive`, `restore`) | Moderação (admins: `bin/rails "admin:grant[EMAIL_OU_ID]"`) |
 | `POST /internal/tick` | Prazos e lembretes de hora em hora (token `TICK_TOKEN`; ver `docs/DEPLOY.md`) |
 - Testes e verificações:
 

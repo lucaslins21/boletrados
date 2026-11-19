@@ -60,7 +60,7 @@ module MatchSerializer
 
     mq = match.match_questions.includes(:question).find(state.question.id)
     q = mq.question
-    { id: mq.id, prompt: q.prompt, options: q.options, image_url: q.image_url,
+    { id: mq.id, prompt: q.prompt, options: q.options, image_url: q.image&.path || q.image_url,
       category: mq.category_slug, context: mq.context, deadline_at: mq.deadline_at }
   end
 

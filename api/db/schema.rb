@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_19_140001) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_19_150004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "categories", force: :cascade do |t|
     t.string "slug", null: false
@@ -157,24 +158,72 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_140001) do
     t.check_constraint "source::text = ANY (ARRAY['play'::character varying::text, 'authored'::character varying::text, 'reviewed'::character varying::text])", name: "question_exposures_source_values"
   end
 
+  create_table "question_images", force: :cascade do |t|
+    t.bigint "uploader_id", null: false
+    t.string "key", null: false
+    t.string "content_type", null: false
+    t.integer "byte_size", null: false
+    t.string "checksum", null: false
+    t.binary "data", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_question_images_on_key", unique: true
+    t.index ["uploader_id"], name: "index_question_images_on_uploader_id"
+    t.check_constraint "byte_size > 0 AND byte_size <= 524288", name: "question_images_byte_size_range"
+    t.check_constraint "content_type::text = ANY (ARRAY['image/jpeg'::character varying, 'image/png'::character varying, 'image/webp'::character varying]::text[])", name: "question_images_content_type_values"
+  end
+
+  create_table "question_reviews", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.bigint "reviewer_id", null: false
+    t.string "reviewer_kind", default: "admin", null: false
+    t.string "decision", null: false
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.index ["question_id"], name: "index_question_reviews_on_question_id"
+    t.index ["reviewer_id"], name: "index_question_reviews_on_reviewer_id"
+    t.check_constraint "decision::text = ANY (ARRAY['approve'::character varying, 'reject'::character varying, 'request_changes'::character varying, 'archive'::character varying, 'restore'::character varying, 'edit'::character varying]::text[])", name: "question_reviews_decision_values"
+    t.check_constraint "reviewer_kind::text = ANY (ARRAY['admin'::character varying, 'community'::character varying]::text[])", name: "question_reviews_kind_values"
+  end
+
+  create_table "question_versions", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.bigint "editor_id", null: false
+    t.jsonb "snapshot", null: false
+    t.datetime "created_at", null: false
+    t.index ["editor_id"], name: "index_question_versions_on_editor_id"
+    t.index ["question_id"], name: "index_question_versions_on_question_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.text "prompt", null: false
     t.string "options", null: false, array: true
     t.integer "correct_index", limit: 2, null: false
     t.text "explanation", null: false
     t.string "image_url"
-    t.string "status", default: "draft", null: false
-    t.integer "difficulty", limit: 2
+    t.string "status", default: "submitted", null: false
     t.string "source_url"
     t.string "external_ref"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "initial_difficulty", default: "medium", null: false
+    t.string "difficulty", default: "medium", null: false
+    t.integer "answers_count", default: 0, null: false
+    t.integer "correct_count", default: 0, null: false
+    t.integer "timeouts_count", default: 0, null: false
+    t.bigint "author_id"
+    t.bigint "image_id"
+    t.datetime "submitted_at"
+    t.datetime "published_at"
+    t.index ["author_id"], name: "index_questions_on_author_id"
     t.index ["external_ref"], name: "index_questions_on_external_ref", unique: true
+    t.index ["image_id"], name: "index_questions_on_image_id"
+    t.index ["prompt"], name: "index_questions_on_prompt_trgm", opclass: :gin_trgm_ops, using: :gin
     t.index ["status"], name: "index_questions_on_status"
     t.check_constraint "cardinality(options) = 4", name: "questions_four_options"
     t.check_constraint "correct_index >= 0 AND correct_index <= 3", name: "questions_correct_index_range"
-    t.check_constraint "difficulty IS NULL OR difficulty >= 1 AND difficulty <= 5", name: "questions_difficulty_range"
-    t.check_constraint "status::text = ANY (ARRAY['draft'::character varying::text, 'published'::character varying::text, 'retired'::character varying::text])", name: "questions_status_values"
+    t.check_constraint "difficulty::text = ANY (ARRAY['easy'::character varying, 'medium'::character varying, 'hard'::character varying]::text[])", name: "questions_difficulty_values"
+    t.check_constraint "initial_difficulty::text = ANY (ARRAY['easy'::character varying, 'medium'::character varying, 'hard'::character varying]::text[])", name: "questions_initial_difficulty_values"
+    t.check_constraint "status::text = ANY (ARRAY['submitted'::character varying, 'in_review'::character varying, 'changes_requested'::character varying, 'rejected'::character varying, 'published'::character varying, 'archived'::character varying]::text[])", name: "questions_status_values"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -207,6 +256,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_140001) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin", default: false, null: false
   end
 
   add_foreign_key "idempotency_keys", "users", on_delete: :cascade
@@ -227,6 +277,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_140001) do
   add_foreign_key "question_exposures", "matches", on_delete: :nullify
   add_foreign_key "question_exposures", "questions"
   add_foreign_key "question_exposures", "users"
+  add_foreign_key "question_images", "users", column: "uploader_id"
+  add_foreign_key "question_reviews", "questions", on_delete: :cascade
+  add_foreign_key "question_reviews", "users", column: "reviewer_id"
+  add_foreign_key "question_versions", "questions", on_delete: :cascade
+  add_foreign_key "question_versions", "users", column: "editor_id"
+  add_foreign_key "questions", "question_images", column: "image_id"
+  add_foreign_key "questions", "users", column: "author_id"
   add_foreign_key "sessions", "users", on_delete: :cascade
   add_foreign_key "trophies", "categories"
   add_foreign_key "trophies", "matches", on_delete: :cascade

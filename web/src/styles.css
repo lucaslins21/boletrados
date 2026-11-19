@@ -13,3 +13,7 @@
 .mobile-dock.mobile-dock--hidden{display:none}
 @media(hover:none),(max-width:800px){.keyboard-hint{display:none}}
 .app-shell{overflow:clip}
+
+.no-copy{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+/* Imagem de pergunta (escudos, estádios): mostrar inteira, sem cortar nem esticar */
+.question-image{object-fit:contain!important;background:#0f1828;image-rendering:auto}

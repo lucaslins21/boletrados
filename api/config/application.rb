@@ -41,6 +41,8 @@ module Api
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.time_zone = "America/Sao_Paulo"
+    config.i18n.default_locale = :"pt-BR"
+    config.i18n.available_locales = [ :"pt-BR", :en ]
 
     # Sessão por cookie próprio (httpOnly). Em modo API o middleware de cookies precisa ser adicionado.
     config.middleware.use ActionDispatch::Cookies

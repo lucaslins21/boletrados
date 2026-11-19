@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router';
 import { DrawBowl } from '../components/DrawBowl';
 import { Banner, FeedbackCard, Modal, Pill, QuestionCard, TrophyGrid } from '../components/ui';
 import { getCategory, type CategoryId } from '../data/questions';
-import { ApiError, api, type ApiMatch, type MatchPlayer, type QuestionResult } from './api';
+import { ApiError, api, apiUrl, type ApiMatch, type MatchPlayer, type QuestionResult } from './api';
 import { InviteShareModal } from './HomePage';
 import { finishedText, initials, me, opponent, opponentName, timeLeft } from './format';
 import { useSession } from './session';
@@ -132,7 +132,7 @@ export function MatchPage() {
       case 'question': {
         const q = match.question;
         if (!q) return null;
-        return <QuestionCard questionKey={String(q.id)} prompt={q.prompt} options={q.options} image={q.image_url}
+        return <QuestionCard questionKey={String(q.id)} prompt={q.prompt} options={q.options} image={q.image_url ? apiUrl(q.image_url) : null}
           categoryId={q.category} isTrophy={q.context === 'trophy'} progressLabel={`ACERTO ${turn.streak + 1} DE 3`}
           deadline={Date.parse(q.deadline_at) - offset} onAnswer={i => void answer(i)} disabled={busy}
           onExpire={() => { window.setTimeout(() => void showResultFor(q.id), SERVER_TOLERANCE_MS); }}/>;

@@ -4,7 +4,7 @@ import type { CategoryId } from '../data/questions';
 const BASE = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
 
 export type Seat = 0 | 1;
-export type ApiUser = { id: number; display_name: string; avatar_url: string | null };
+export type ApiUser = { id: number; display_name: string; avatar_url: string | null; admin?: boolean };
 export type MatchPlayer = { seat: Seat; user: ApiUser; trophies: CategoryId[]; attempts: number; correct_answers: number };
 export type TurnPhase = 'lobby' | 'draw' | 'question' | 'trophy' | 'empty' | 'finished';
 export type MatchTurn = {
@@ -36,11 +36,39 @@ export type HeadToHead = {
 };
 export type Profile = {
   user: ApiUser; is_me: boolean;
-  summary: { played: number; wins: number; losses: number; in_progress: number; trophies: number };
+  summary: { played: number; wins: number; losses: number; in_progress: number; trophies: number; contributions: number };
   categories: CategoryStat[];
   head_to_head: HeadToHead | null;
   rivals: { user: ApiUser; played: number; wins: number; losses: number }[] | null;
 };
+export type Difficulty = 'easy' | 'medium' | 'hard';
+export type QuestionStatus = 'submitted' | 'in_review' | 'changes_requested' | 'rejected' | 'published' | 'archived';
+/** Pergunta completa (com a resposta): só para o autor ou para administradores. */
+export type QuestionFull = {
+  id: number; status: QuestionStatus; status_label: string;
+  prompt: string; options: string[]; correct_index: number; categories: CategoryId[];
+  initial_difficulty: Difficulty; difficulty: Difficulty; source_url: string | null; explanation: string;
+  image: { key: string; path: string } | null;
+  submitted_at: string | null; published_at: string | null; updated_at: string;
+  editable: boolean; feedback: string | null;
+  // só para administradores:
+  author?: ApiUser | null; external_ref?: string | null;
+  stats?: { answers: number; correct: number; timeouts: number };
+  reviews?: { decision: string; notes: string | null; reviewer: string; at: string }[];
+  versions_count?: number;
+};
+export type QuestionInput = {
+  prompt: string; options: string[]; correct_index: number; categories: CategoryId[];
+  initial_difficulty: Difficulty; source_url: string; explanation: string; image_key: string | null;
+};
+export type QuestionPreview = {
+  id: number; status: QuestionStatus; status_label: string; categories: CategoryId[]; prompt_preview: string;
+  has_image: boolean; difficulty: Difficulty; author: string | null; submitted_at: string | null; published_at: string | null;
+};
+export type DuplicateCandidate = { id: number; status: QuestionStatus; prompt: string; correct_option: string; score: number; same_answer: boolean; same_numbers: boolean };
+export type AdminQuestion = { question: QuestionFull; duplicates: DuplicateCandidate[] };
+export type AdminAction = 'approve' | 'reject' | 'request_changes' | 'archive' | 'restore';
+
 export type InvitePreview = { from: ApiUser; status: 'open' | 'expired' | 'cancelled' | 'accepted'; expires_at: string };
 
 export class ApiError extends Error {
@@ -100,10 +128,41 @@ export const api = {
 
   profile: (id: 'me' | number | string) => request<{ profile: Profile }>('GET', `/profiles/${id}`),
 
+  submissions: () => request<{ submissions: QuestionFull[] }>('GET', '/submissions'),
+  submission: (id: number | string) => request<{ submission: QuestionFull }>('GET', `/submissions/${id}`),
+  createSubmission: (input: QuestionInput) => request<{ submission: QuestionFull; possible_duplicates: number }>('POST', '/submissions', input, { idempotent: true }),
+  updateSubmission: (id: number, input: QuestionInput) => request<{ submission: QuestionFull; possible_duplicates: number }>('PATCH', `/submissions/${id}`, input),
+  uploadImage,
+
+  adminQuestions: (params: { status: string; category?: string }) =>
+    request<{ questions: QuestionPreview[]; counts: Partial<Record<QuestionStatus, number>>; published_by_category: Partial<Record<CategoryId, number>> }>(
+      'GET', `/admin/questions?${new URLSearchParams(Object.entries(params).filter(([, v]) => v) as [string, string][])}`),
+  adminQuestion: (id: number | string) => request<AdminQuestion>('GET', `/admin/questions/${id}`),
+  adminCreate: (input: QuestionInput & { publish: boolean }) => request<AdminQuestion>('POST', '/admin/questions', input, { idempotent: true }),
+  adminUpdate: (id: number, input: QuestionInput) => request<AdminQuestion>('PATCH', `/admin/questions/${id}`, input),
+  adminAction: (id: number, action: AdminAction, notes?: string) => request<AdminQuestion>('POST', `/admin/questions/${id}/${action}`, notes ? { notes } : {}),
+
   pushPublicKey: () => request<{ public_key: string }>('GET', '/push/public_key'),
   savePushSubscription: (subscription: PushSubscriptionJSON) => request<null>('POST', '/push/subscriptions', subscription),
   deletePushSubscription: (endpoint: string) => request<null>('DELETE', '/push/subscriptions', { endpoint }),
 };
+
+/** URL absoluta de um recurso da API (ex.: imagem de pergunta "/question_images/…"), respeitando o proxy /api. */
+export const apiUrl = (path: string) => (/^https?:\/\//.test(path) ? path : `${BASE}${path}`);
+
+async function uploadImage(file: Blob, filename = 'imagem.jpg') {
+  const form = new FormData();
+  form.append('file', file, filename);
+  let response: Response;
+  try {
+    response = await fetch(`${BASE}/question_images`, { method: 'POST', body: form, credentials: 'include', headers: { Accept: 'application/json' } });
+  } catch {
+    throw new ApiError(0, 'Sem conexão com o servidor.');
+  }
+  const data = await response.json().catch(() => null) as { image?: { key: string; path: string }; error?: string } | null;
+  if (!response.ok || !data?.image) throw new ApiError(response.status, data?.error ?? `Erro ${response.status}`, data);
+  return data.image;
+}
 
 /** Link de convite para compartilhar (o token só é conhecido logo após criar o convite). */
 export const inviteUrl = (token: string) => `${window.location.origin}/convite/${token}`;

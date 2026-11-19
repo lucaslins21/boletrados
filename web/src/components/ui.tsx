@@ -114,7 +114,9 @@ export function QuestionCard({ questionKey, prompt, options, image, categoryId, 
   const pct = Math.max(0, Math.min(100, (remaining / (QUESTION_SECONDS * 1000)) * 100));
   // Leitores de tela: anunciar só marcos, não cada segundo.
   const announcement = sec <= 5 ? 'Restam 5 segundos' : sec <= 10 ? 'Restam 10 segundos' : '';
-  return <div className="question-wrap"><main className="main-card question-card" style={{ '--category-color': category.color } as CSSProperties}>
+  // Dificulta copiar o enunciado para buscar fora (não impede screenshots nem outro aparelho).
+  const block = (event: { preventDefault: () => void }) => event.preventDefault();
+  return <div className="question-wrap"><main className="main-card question-card no-copy" onCopy={block} onCut={block} onContextMenu={block} onDragStart={block} style={{ '--category-color': category.color } as CSSProperties}>
     <div className="question-top"><span className="question-category"><CategoryIcon id={category.id} size="sm"/>{category.label}</span><span className="question-label">{isTrophy ? <><Trophy size={15}/> PERGUNTA DO TROFÉU</> : progressLabel}</span></div>
     <div className="timer-track" role="progressbar" aria-label="Tempo restante" aria-valuemin={0} aria-valuemax={QUESTION_SECONDS} aria-valuenow={sec} aria-valuetext={`${sec} segundos`}><motion.div className={`timer-fill ${sec <= 5 ? 'timer-fill--danger' : ''}`} animate={{ width: `${pct}%` }} transition={{ duration: 0.075, ease: 'linear' }}/></div>
     <div className="question-meta"><Pill tone={isTrophy ? 'orange' : 'purple'}>{isTrophy ? '🏆 Vale um troféu!' : '⚽ Valendo a posse'}</Pill><div className={`countdown ${sec <= 5 ? 'countdown--danger' : ''}`} aria-hidden="true"><Clock3 size={18}/><b>{sec.toString().padStart(2, '0')}s</b></div></div>

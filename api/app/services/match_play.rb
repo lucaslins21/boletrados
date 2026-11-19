@@ -139,6 +139,7 @@ class MatchPlay
   def close_match_question!(id, selected_index:, correct:, timed_out:, trophy_won:, at:)
     mq = match.match_questions.find(id)
     mq.update!(answered_at: timed_out ? nil : at, selected_index: selected_index, correct: correct, timed_out: timed_out, trophy_won: trophy_won)
+    mq.question.record_answer!(correct: correct, timed_out: timed_out)
     mq
   end
 

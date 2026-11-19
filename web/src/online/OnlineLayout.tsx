@@ -1,10 +1,11 @@
 import { MotionConfig } from 'framer-motion';
-import { Dumbbell, Home, LogOut, UserRound } from 'lucide-react';
+import { Home, LogOut, PenLine, ShieldCheck, UserRound } from 'lucide-react';
 import { Link, Outlet } from 'react-router';
 import { Brand } from '../components/Brand';
 import { Pill } from '../components/ui';
 import { useSession } from './session';
 import './online.css';
+import './curation/curation.css';
 
 export function OnlineLayout() {
   const { status, user, signOut, retry } = useSession();
@@ -13,9 +14,10 @@ export function OnlineLayout() {
       <Link to="/" className="brand-link" aria-label="Boletrados — início"><Brand small/></Link>
       <div className="header-right">
         <Link to="/" className="online-nav-link" aria-label="Início"><Home size={16}/><span>Início</span></Link>
-        <Link to="/demo" className="online-nav-link" aria-label="Demo"><Dumbbell size={16}/><span>Demo</span></Link>
         {user && <>
+          <Link to="/perguntas" className="online-nav-link" aria-label="Perguntas"><PenLine size={16}/><span>Perguntas</span></Link>
           <Link to="/perfil" className="online-nav-link" aria-label="Perfil"><UserRound size={16}/><span>Perfil</span></Link>
+          {user.admin && <Link to="/admin" className="online-nav-link" aria-label="Moderação"><ShieldCheck size={16}/><span>Moderação</span></Link>}
           <span className="online-user"><Pill tone="lime">{user.display_name}</Pill></span>
           <button className="online-nav-link" aria-label="Sair" onClick={() => void signOut()}><LogOut size={16}/><span>Sair</span></button>
         </>}
