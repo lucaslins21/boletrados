@@ -17,10 +17,8 @@ import { SessionProvider } from './online/session';
  *  /perguntas     suas perguntas enviadas (nova, editar quando devolvida)
  *  /admin         moderação (só administradores)
  *  /privacidade, /termos  política de privacidade (LGPD) e termos de uso (públicas)
- *  /demo          demo local (dois jogadores no mesmo aparelho) — será removida no lançamento do online
  */
 // Páginas carregadas sob demanda: deixam a primeira abertura (home e partida) mais leve no celular.
-const DemoApp = lazy(() => import('./demo/DemoApp'));
 const ProfilePage = lazy(() => import('./online/ProfilePage').then(m => ({ default: m.ProfilePage })));
 const MySubmissionsPage = lazy(() => import('./online/curation/SubmissionPages').then(m => ({ default: m.MySubmissionsPage })));
 const SubmissionFormPage = lazy(() => import('./online/curation/SubmissionPages').then(m => ({ default: m.SubmissionFormPage })));
@@ -37,7 +35,6 @@ const ArtGallery = import.meta.env.DEV ? lazy(() => import('./game/ArtGallery'))
 export default function App() {
   return <BrowserRouter>
     <Routes>
-      <Route path="/demo" element={page(<DemoApp/>)}/>
       {ArtGallery && <Route path="/_arte" element={<Suspense fallback={null}><ArtGallery/></Suspense>}/>}
       <Route element={<SessionProvider><OnlineLayout/></SessionProvider>}>
         <Route index element={<HomePage/>}/>

@@ -16,12 +16,12 @@
 | Categoria esgotada | Re-sorteio automático entre as categorias com inéditas (decidido; ver PRODUCT.md) |
 | Sair com pergunta aberta | Conta como timeout (decidido; ver PRODUCT.md) |
 | Tolerância de rede no prazo de 15s | **1 segundo** no servidor; o cliente mostra 15s (decidido) |
-| Modo demo local | **Removido** quando o X1 online for lançado (decidido) |
+| Modo demo local | **Removido** em novembro de 2026, no lançamento do online |
 | Partidas simultâneas | **Até 3** partidas em andamento por jogador (decidido) |
 
 ## Princípio central
 
-O **servidor é a fonte da verdade**. O cliente nunca decide sorteio, pergunta, correção, prazo ou troféu, e nunca recebe a alternativa correta antes de responder. O servidor terá uma implementação em Ruby das regras, com testes que espelham `game.test.ts`. O motor `web/src/lib/game.ts` serve à demo até o lançamento do online; depois, **o modo demo é removido** e as regras ficam só no servidor.
+O **servidor é a fonte da verdade**. O cliente nunca decide sorteio, pergunta, correção, prazo ou troféu, e nunca recebe a alternativa correta antes de responder. As regras ficam só no servidor (`MatchEngine`, em Ruby, com testes RSpec); o motor local da antiga demo foi removido.
 
 ## Componentes
 
@@ -130,7 +130,7 @@ Toda ação que altera estado:
 ## Monorepo
 
 ```text
-web/                 # frontend atual (movido da raiz), modo demo + modo online
+web/                 # frontend (site e partidas online)
 api/                 # Rails 8 API
 docker-compose.yml   # postgres + api para desenvolvimento
 docs/
@@ -171,7 +171,7 @@ README.md            # como rodar tudo
    - Tabelas de conteúdo: `users`, `categories`, `questions`, `question_categories`, `question_exposures`, com check constraints e unicidade no banco.
    - `MatchEngine` (`api/app/domain/match_engine.rb`): regras puras, já com tolerância de 1s, 24h e W.O.
    - `QuestionPicker` (`api/app/services/question_picker.rb`): escolhe e expõe na mesma transação, com nova tentativa em caso de corrida.
-   - Seeds gerados por `npm run export:questions` (em `web/`) → `api/db/seeds/demo_questions.json`, carregados só fora de produção.
+   - Perguntas demonstrativas em `api/db/seeds/demo_questions.json`, carregadas fora de produção (ou com `SEED_DEMO_QUESTIONS=1`).
    - As tabelas de partida (`matches`, `match_players`, `match_questions`, `trophies`, `match_events`) ficam para a etapa 4, junto com os endpoints.
 3. ~~Login Google + sessões.~~ **Feito (backend)**:
    - `POST /auth/google`, `GET /me` e `DELETE /session`; tabelas `identities` e `sessions`.
@@ -189,8 +189,8 @@ README.md            # como rodar tudo
    - Os efeitos usam o horário em que deveriam ter acontecido, sem estender o prazo do adversário.
    - Para produção, falta configurar o worker do Solid Queue (`bin/jobs`) e a limpeza periódica de `idempotency_keys`, junto com a hospedagem.
 6. ~~Frontend online: telas de partidas (em andamento, aguardando, encerradas) consumindo a API.~~ **Feito**:
-   - Rotas com React Router: `/`, `/convite/:key`, `/partidas/:id`, e a demo em `/demo`.
-   - Componentes visuais compartilhados com a demo.
+   - Rotas com React Router: `/`, `/convite/:key`, `/partidas/:id` e as demais telas do site.
+   - Componentes visuais próprios do jogo (`web/src/game/`).
    - Cronômetro sincronizado pelo `server_time`; atualização automática a cada 8 s na vez do adversário.
    - Testado ponta a ponta com dois navegadores.
    - Login de desenvolvimento (`POST /auth/dev`) só em development/test; botão do Google via Google Identity Services quando `VITE_GOOGLE_CLIENT_ID` está definido.

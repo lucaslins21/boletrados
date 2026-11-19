@@ -70,26 +70,30 @@ No desktop (≥ 1024px), a coluna da partida tem 680px, o enunciado 26px e as al
 | `DrawStage` | `game/MatchScreens.tsx` | Globo + bolinha que sai, abre e revela |
 | `QuestionStage`, `ResultSheet` | `game/MatchScreens.tsx` | Pergunta (cronômetro em anel, resultado nas alternativas) |
 | `TrophyPick`, `TrophyCelebration`, `MatchEnd` | `game/MatchScreens.tsx` | Escolha, conquista e fim de jogo |
-| `CategoryBadge`, `CategoryGlyph`, `Trophy`, `DrawBall`, `StadiumScene`, `Rays` | `game/art.tsx` | Ilustrações SVG |
+| `CategoryBadge`, `CategoryGlyph`, `Trophy`, `DrawBall`, `SoccerBall`, `StadiumScene`, `Rays` | `game/art.tsx` | Ilustrações SVG |
 | `Mascot` | `game/Mascot.tsx` | Mascote (5 estados) |
-| `Logo`, `LogoMark`, `Wordmark` | `game/Logo.tsx` | Marca (v2). `arc` curva o nome na versão de destaque da entrada |
+| `Logo`, `LogoMark`, `Wordmark` | `game/Logo.tsx` | Marca (v3, rosto do mascote). `arc` curva o nome na versão de destaque da entrada |
 | `Loading`, `HeroArt` | `game/Decor.tsx` | Carregamento e ilustração da entrada |
 | botões `.gd-btn` (`--gold`, `--blue`, `--white`, `--sm`, `--wide`) | `game/game.css` | Ações do jogo |
+
+### Estilo cartoon (regra comum das ilustrações)
+
+Contorno de tinta `#13213D` (a mesma do mascote), cor chapada, profundidade sólida embaixo (cópia deslocada na cor escura) e um brilho branco no alto. Símbolos sobre cor são brancos com contorno de tinta (`paint-order: stroke`). O cinza dos estados bloqueados usa contorno `#8D9BB4`, mais claro, para não competir com o que já foi conquistado.
 
 ## 4. Inventário de assets
 
 | Asset | Situação | Observação |
 |---|---|---|
-| Logo e favicon | ✅ SVG (v2) | Emblema: aro dourado, céu e gramado, bolinha aberta revelando a taça. Nome com contorno, profundidade e brilho (BOLE branco, TRADOS dourado). Falta a verificação de marca |
-| Ícones das 6 categorias | ✅ SVG, moldura de escudo | Versões colorida e monocromática |
-| 6 troféus | ✅ SVG, um formato por categoria | Estados bloqueado (silhueta) e conquistado |
-| Bolinhas de sorteio | ✅ SVG | Abrem em duas metades |
+| Logo e favicon | ✅ SVG (v3) | Emblema: o rosto do mascote (bola com olhos grandes e sorrisão, luva acenando, estrela dourada). Nome com contorno, profundidade e brilho (BOLE branco, TRADOS dourado). O favicon é o rosto simplificado. Falta a verificação de marca |
+| Ícones das 6 categorias | ✅ SVG, moldura de escudo | Símbolo branco com contorno de tinta. Escudos = silhueta de escudo de clube com estrela; Estádios = estádio de frente com refletores. Versões colorida e monocromática |
+| 6 troféus | ✅ SVG, um formato por categoria | Emblema = o mesmo escudo da categoria. Estados bloqueado (cinza) e conquistado |
+| Bolinhas de sorteio | ✅ SVG | Contorno de tinta, abrem em duas metades |
+| Bola de futebol (carregando) | ✅ SVG (`SoccerBall`) | Quica e gira |
 | Globo do sorteio | ✅ CSS + SVG | |
 | Cenário de estádio | ✅ SVG + CSS | Durante as perguntas a arquibancada e o gramado se apagam (`GameFrame calm`), sem blur, para não pesar no celular |
 | Mascote (5 estados) | ✅ SVG animado (`game/Mascot.tsx`) | Entrada, home vazia, resultado, espera, conquista, fim de jogo e mensagens. Ver §5; a versão ilustrada "premium" é opcional (briefing em §6) |
 | Efeitos: raios, confete | ✅ SVG + CSS | |
 | Sons | ✅ Web Audio | Sintetizados, sem arquivos |
-| Legado da demo (`Brand`, `DrawBowl`, `TrophyGrid`, `styles.css` escuro) | Só em `/demo` | Remover junto com a demo no lançamento |
 
 ## 5. Mascote
 

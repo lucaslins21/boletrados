@@ -8,8 +8,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "export:questions": "vite-node scripts/export-demo-questions.ts"
+    "test": "vitest run"
   },
   "dependencies": {
     "framer-motion": "^12.23.0",

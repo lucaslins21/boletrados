@@ -1,14 +1,16 @@
 /** Peças decorativas do site: carregando, ilustração da entrada. */
 import { motion } from 'framer-motion';
-import { DrawBall, Trophy } from './art';
+import { DrawBall, SoccerBall, Trophy } from './art';
 import { Mascot } from './Mascot';
 import { CATEGORY_ORDER } from './theme';
 
-/** "Carregando…" com uma bolinha quicando. */
+/** "Carregando…" com uma bola de futebol quicando e girando. */
 export function Loading({ label = 'Carregando…' }: { label?: string }) {
   return <div className="gd-loader" role="status" aria-live="polite">
     <motion.div animate={{ y: [0, -28, 0], scaleY: [0.9, 1, 0.9] }} transition={{ duration: 0.75, repeat: Infinity, ease: 'easeInOut' }}>
-      <DrawBall id="brasileiro" size={46}/>
+      <motion.div animate={{ rotate: 360 }} transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}>
+        <SoccerBall size={46}/>
+      </motion.div>
     </motion.div>
     <motion.span className="gd-loader-shadow" animate={{ scaleX: [1, 0.6, 1], opacity: [0.35, 0.18, 0.35] }} transition={{ duration: 0.75, repeat: Infinity, ease: 'easeInOut' }}/>
     <p>{label}</p>

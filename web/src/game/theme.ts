@@ -1,5 +1,5 @@
 /** Identidade "Dia de jogo": cores das categorias (validadas para daltonismo) e rótulos. */
-import type { CategoryId } from '../data/questions';
+import type { CategoryId } from './categories';
 
 export const CATEGORY_THEME: Record<CategoryId, { color: string; dark: string; label: string; short: string }> = {
   brasileiro: { color: '#22B357', dark: '#178A41', label: 'Futebol Brasileiro', short: 'Brasileiro' },

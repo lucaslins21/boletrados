@@ -1,6 +1,6 @@
 /** /_arte — galeria das ilustrações (só em desenvolvimento) para revisar o visual. */
 import type { ReactNode } from 'react';
-import { CategoryBadge, DrawBall, Trophy } from './art';
+import { CategoryBadge, DrawBall, SoccerBall, Trophy } from './art';
 import { Mascot, type MascotMood } from './Mascot';
 import { Logo, LogoMark } from './Logo';
 import { CATEGORY_ORDER, CATEGORY_THEME } from './theme';
@@ -25,6 +25,9 @@ export default function ArtGallery({ extra }: { extra?: ReactNode }) {
             <Logo size={44}/>
             <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}><LogoMark size={64}/><LogoMark size={32}/><LogoMark size={16}/></div>
           </div>
+        </Row>
+        <Row title="CARREGANDO — BOLA DE FUTEBOL">
+          <div style={{ display: 'flex', gap: 18, alignItems: 'center' }}><SoccerBall size={72}/><SoccerBall size={46}/><SoccerBall size={24}/></div>
         </Row>
         <Row title="ÍCONES DAS CATEGORIAS — COLORIDO">
           {CATEGORY_ORDER.map(id => <div key={id} style={{ display: 'grid', justifyItems: 'center', gap: 4 }}><CategoryBadge id={id} size={52}/><small>{CATEGORY_THEME[id].short}</small></div>)}

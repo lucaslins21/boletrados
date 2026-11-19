@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { ArrowRight, Swords } from 'lucide-react';
 import { Link, useParams } from 'react-router';
-import { getCategory } from '../data/questions';
+import { getCategory } from '../game/categories';
+import { CATEGORY_THEME } from '../game/theme';
 import { ApiError, api, type CategoryStat, type HeadToHead, type Profile } from './api';
 import { CategoryBadge, Trophy as TrophyArt } from '../game/art';
 import { Loading } from '../game/Decor';
@@ -64,7 +65,7 @@ function CategoryMeter({ stat }: { stat: CategoryStat }) {
   const valueText = stat.answered ? `${accuracy}% de acerto, ${stat.correct} de ${stat.answered} perguntas` : 'nenhuma pergunta ainda';
   return <li className="meter-row" title={`${cat.label}: ${valueText}`}>
     <span className="meter-name"><CategoryBadge id={stat.category} size={26}/>{cat.short}</span>
-    <span className="meter-track" style={{ '--meter-color': cat.color } as CSSProperties}
+    <span className="meter-track" style={{ '--meter-color': CATEGORY_THEME[stat.category].color } as CSSProperties}
       role="meter" aria-label={cat.label} aria-valuemin={0} aria-valuemax={100} aria-valuenow={accuracy} aria-valuetext={valueText}>
       {stat.answered > 0 && <span className="meter-fill" style={{ width: `${Math.max(accuracy, 2)}%` }}/>}
     </span>

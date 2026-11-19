@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
-import { ArrowRight, Check, Copy, Dumbbell, KeyRound, Plus, Share2 } from 'lucide-react';
+import { Check, Copy, KeyRound, Plus, Share2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 import { Banner, Modal, Pill } from '../components/ui';
 import { ApiError, api, inviteUrl, type ApiMatch } from './api';
@@ -34,7 +34,6 @@ function Welcome() {
       <h1>Quem sabe de <em>futebol</em> merece um troféu.</h1>
       <p>Desafie um amigo por link ou código e jogue no seu tempo. Acerte perguntas, dispute categorias e conquiste os 6 troféus antes dele.</p>
       <HeroArt/>
-      <Link to="/demo" className="subtle-link"><Dumbbell size={16}/> Treinar na demo, sem login <ArrowRight size={16}/></Link>
     </div>
     <div className="main-card"><LoginCard subtitle="Sua conta guarda suas partidas e as perguntas que você já viu."/></div>
   </section>;
@@ -109,8 +108,6 @@ function MatchesHome() {
       <div className="side-rule"><span className="rule-number">03</span><p>Três acertos seguidos valem uma disputa de troféu.</p></div>
       <div className="divider"/>
       <NotificationsCard/>
-      <div className="divider"/>
-      <Link to="/demo" className="text-action"><Dumbbell size={15}/> Treinar na demo</Link>
     </aside>
     {shared && <InviteShareModal token={shared.token} code={shared.code} onClose={() => setShared(null)}/>}
   </div>;

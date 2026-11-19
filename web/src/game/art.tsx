@@ -1,35 +1,47 @@
 /**
- * Ilustrações próprias em SVG (identidade "Dia de jogo"): ícones das categorias, taça, bolinha de sorteio
- * e cenário de estádio. Vetores simples, chapados e animáveis — nada de imagens de terceiros.
+ * Ilustrações próprias em SVG (identidade "Dia de jogo", estilo cartoon): ícones das categorias, troféus,
+ * bolinhas de sorteio, bola de futebol e cenário de estádio. Regra visual comum: contorno de tinta (INK),
+ * cor chapada, profundidade sólida embaixo e um brilho no alto. Nada de imagens de terceiros.
  */
 import { useId } from 'react';
-import type { CategoryId } from '../data/questions';
+import type { CategoryId } from './categories';
 import { CATEGORY_THEME } from './theme';
 
-function star(cx: number, cy: number, r: number) {
-  const points = Array.from({ length: 10 }, (_, i) => {
-    const radius = i % 2 === 0 ? r : r * 0.45;
+/** Tinta dos contornos (mesma do mascote e do logo). */
+export const INK = '#13213D';
+
+function starPoints(cx: number, cy: number, r: number, inner = 0.45) {
+  return Array.from({ length: 10 }, (_, i) => {
+    const radius = i % 2 === 0 ? r : r * inner;
     const angle = (Math.PI / 5) * i - Math.PI / 2;
-    return `${(cx + radius * Math.cos(angle)).toFixed(2)},${(cy + radius * Math.sin(angle)).toFixed(2)}`;
+    return [cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)] as const;
   });
-  return points.join(' ');
 }
+const star = (cx: number, cy: number, r: number) => starPoints(cx, cy, r).map(([x, y]) => `${x.toFixed(2)},${y.toFixed(2)}`).join(' ');
+const starPath = (cx: number, cy: number, r: number) => `M${starPoints(cx, cy, r).map(([x, y]) => `${x.toFixed(2)} ${y.toFixed(2)}`).join('L')}Z`;
+
+/** Silhueta de escudo de clube (topo com ressalto central), usada no ícone e no troféu de Escudos. */
+const CREST = 'M7 8h9l4-4h8l4 4h9l2 3v11c0 11.5-7.6 18.5-18 22C13.6 40.5 6 33.5 6 22V11Z';
 
 /** Ícone da categoria desenhado num quadro 48×48 (preenchimento = currentColor). */
 export function GlyphPaths({ id }: { id: CategoryId }) {
   switch (id) {
     case 'brasileiro': // losango com círculo vazado
-      return <path fillRule="evenodd" d="M24 6 43 24 24 42 5 24Z M24 16a8 8 0 1 0 0 16a8 8 0 1 0 0-16Z"/>;
-    case 'europeu': // arco de estrelas
-      return <g>{[[10, 26], [17, 16], [24, 12], [31, 16], [38, 26]].map(([x, y]) => <polygon key={`${x}-${y}`} points={star(x, y, 5.6)}/>)}<rect x="9" y="33" width="30" height="5" rx="2.5"/></g>;
+      return <path fillRule="evenodd" d="M24 5 43 24 24 43 5 24Z M24 16a8 8 0 1 0 0 16a8 8 0 1 0 0-16Z"/>;
+    case 'europeu': // arco de estrelas sobre uma faixa
+      return <g>{[[9, 27], [16.5, 16], [24, 11.5], [31.5, 16], [39, 27]].map(([x, y]) => <polygon key={`${x}-${y}`} points={star(x, y, 6.2)}/>)}<rect x="9" y="34" width="30" height="6" rx="3"/></g>;
     case 'sulamericano': // cordilheira e sol
-      return <g><circle cx="35" cy="13" r="5"/><path d="M3 40 17 15l8 13 5-7 15 19Z"/></g>;
+      return <g><circle cx="35" cy="12" r="5.5"/><path d="M3 41 17 15l8 13 5-7 15 20Z"/></g>;
     case 'selecoes': // camisa
-      return <path d="M17 7 9 11 3 20l6 5 3-3v19h24V22l3 3 6-5-6-9-8-4c-1.5 3.6-4 5.5-7 5.5S18.5 10.6 17 7Z"/>;
-    case 'escudos': // brasão: chevron com estrela (a moldura de todos os ícones já é um escudo)
-      return <g><polygon points={star(24, 11, 6.5)}/><path d="M5 40 24 21l19 19-6 4-13-13-13 13Z"/></g>;
-    case 'estadios': // estádio visto de cima: arquibancada oval e gramado com meio-campo
-      return <g><path fillRule="evenodd" d="M24 7c11.6 0 21 7.6 21 17s-9.4 17-21 17S3 33.4 3 24 12.4 7 24 7Z M14 17h20v14H14Z"/><rect x="23" y="17" width="2" height="14"/><circle cx="24" cy="24" r="3"/></g>;
+      return <path d="M17 6 9 10 3 19l6 6 3-3v20h24V22l3 3 6-6-6-9-8-4c-1.5 3.6-4 5.5-7 5.5S18.5 9.6 17 6Z"/>;
+    case 'escudos': // silhueta de escudo de clube com estrela vazada
+      return <path fillRule="evenodd" d={`${CREST} ${starPath(24, 21, 8.5)}`}/>;
+    case 'estadios': // estádio de frente: arquibancada em arco, dois refletores e o portão de entrada
+      return <g>
+        <path fillRule="evenodd" d="M4 27c6-6 13-9 20-9s14 3 20 9v15H4Z M19 42v-6.5a5 5 0 0 1 10 0V42Z M9 29.5c4.5-3.8 9.5-5.6 15-5.6s10.5 1.8 15 5.6v2.6c-4.5-3.4-9.5-5-15-5s-10.5 1.6-15 5Z"/>
+        <rect x="5" y="9" width="3.4" height="17"/><rect x="39.6" y="9" width="3.4" height="17"/>
+        <rect x="2" y="5" width="9.4" height="6" rx="1.5"/><rect x="36.6" y="5" width="9.4" height="6" rx="1.5"/>
+      </g>;
   }
 }
 
@@ -39,140 +51,183 @@ export function CategoryGlyph({ id, size = 24, color = 'currentColor', title }: 
   </svg>;
 }
 
-const SHIELD = 'M24 2 44 7.5V25c0 14.5-9.5 23.5-20 27C13.5 48.5 4 39.5 4 25V7.5Z';
+const SHIELD = 'M24 3 44 8.5V26c0 14-9.5 22.5-20 26C13.5 48.5 4 40 4 26V8.5Z';
+
+/** Conteúdo do escudo da categoria no quadro 48×56 (reaproveitado no ícone e no emblema dos troféus). */
+function BadgeArt({ id, fill, depth, glyph, ink, outline = 3 }: { id: CategoryId; fill: string; depth: string; glyph: string; ink: string; outline?: number }) {
+  return <>
+    <path d={SHIELD} transform="translate(0 3.5)" fill={depth} stroke={ink} strokeWidth={outline} strokeLinejoin="round"/>
+    <path d={SHIELD} fill={fill} stroke={ink} strokeWidth={outline} strokeLinejoin="round"/>
+    <path d="M24 7 40.5 11.5v5C33 13.5 21 13 7.5 16.5v-5Z" fill="#fff" opacity=".28"/>
+    <svg x="10" y="12" width="28" height="28" viewBox="0 0 48 48">
+      <g fill={glyph} stroke={ink} strokeWidth="5" strokeLinejoin="round" paintOrder="stroke"><GlyphPaths id={id}/></g>
+    </svg>
+  </>;
+}
 
 /**
- * Ícone da categoria: símbolo dentro de uma moldura de escudo (estrutura uniforme para as seis).
+ * Ícone da categoria: símbolo branco com contorno dentro de um escudo colorido (estrutura uniforme para as seis).
  * `variant="mono"` desenha só contorno e símbolo em currentColor (textos, estados desabilitados, impressão).
  */
 export function CategoryBadge({ id, size = 40, variant = 'color', title }: { id: CategoryId; size?: number; variant?: 'color' | 'mono'; title?: string }) {
   const theme = CATEGORY_THEME[id];
-  const mono = variant === 'mono';
-  return <svg className="gd-badge" width={size} height={size * 1.12} viewBox="0 0 48 56" role={title ? 'img' : undefined} aria-label={title} aria-hidden={title ? undefined : true}>
-    {!mono && <path d={SHIELD} transform="translate(0 3)" fill={theme.dark}/>}
-    <path d={SHIELD} fill={mono ? 'none' : theme.color} stroke={mono ? 'currentColor' : '#fff'} strokeWidth={mono ? 3 : 2.5} strokeLinejoin="round"/>
-    {!mono && <path d="M24 5.5 40.5 10v6C33 13 22 12.5 7.5 16v-6Z" fill="#fff" opacity=".18"/>}
-    <svg x="11" y="12" width="26" height="26" viewBox="0 0 48 48" fill={mono ? 'currentColor' : '#fff'}><GlyphPaths id={id}/></svg>
+  const a11y = { role: title ? 'img' : undefined, 'aria-label': title, 'aria-hidden': title ? undefined : true } as const;
+  if (variant === 'mono') {
+    return <svg className="gd-badge" width={size} height={size * 1.17} viewBox="-2 -2 52 60" {...a11y}>
+      <path d={SHIELD} fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round"/>
+      <svg x="11" y="13" width="26" height="26" viewBox="0 0 48 48" fill="currentColor"><GlyphPaths id={id}/></svg>
+    </svg>;
+  }
+  return <svg className="gd-badge" width={size} height={size * 1.17} viewBox="-2 -2 52 60" {...a11y}>
+    <BadgeArt id={id} fill={theme.color} depth={theme.dark} glyph="#fff" ink={INK}/>
   </svg>;
 }
 
 /**
- * Troféu da categoria. Seis formatos próprios (uma família: mesma base, dourado e emblema na cor da categoria),
- * para serem reconhecíveis até no placar em tamanho pequeno. Cinza (silhueta) enquanto não conquistado.
- * Formatos originais — não reproduzem troféus de competições reais.
+ * Troféu da categoria. Seis formatos próprios (uma família: contorno de tinta, ouro chapado com brilho,
+ * a mesma base e o escudo da categoria como emblema), reconhecíveis até no placar em tamanho pequeno.
+ * Bloqueado: silhueta cinza. Formatos originais — não reproduzem troféus de competições reais.
  */
 export function Trophy({ id, won, size = 56 }: { id: CategoryId; won: boolean; size?: number }) {
-  const uid = useId().replace(/:/g, '');
   const theme = CATEGORY_THEME[id];
-  const gold = won ? `url(#gold-${uid})` : '#C5D2E3';
-  const edge = won ? '#C98A00' : '#AEBDD1';
-  const accent = won ? theme.color : '#B4C2D5';
-  const accentEdge = won ? theme.dark : '#A3B3C9';
-  const stroke = { stroke: edge, strokeWidth: 2, strokeLinejoin: 'round' as const };
-  const emblem = (cx: number, cy: number, r = 9) => <>
-    <circle cx={cx} cy={cy} r={r} fill={accent} stroke={accentEdge} strokeWidth="2"/>
-    <svg x={cx - r * 0.8} y={cy - r * 0.8} width={r * 1.6} height={r * 1.6} viewBox="0 0 48 48" fill={won ? '#fff' : '#D9E2EE'}><GlyphPaths id={id}/></svg>
-  </>;
-  const shine = (d: string) => (won ? <path d={d} fill="#fff" opacity=".45"/> : null);
+  const ink = won ? INK : '#8D9BB4';
+  const gold = won ? '#FFC531' : '#D3DDEA';
+  const goldDark = won ? '#E39B00' : '#BCC9DA';
+  const shineColor = won ? '#FFF1B3' : '#E8EEF6';
+  const line = { stroke: ink, strokeWidth: 2.6, strokeLinejoin: 'round' as const, strokeLinecap: 'round' as const };
+  /** Escudo da categoria como emblema (o mesmo ícone das categorias). */
+  const emblem = (cx: number, cy: number, w = 17) => <svg x={cx - w / 2} y={cy - w * 0.6} width={w} height={w * 1.17} viewBox="-2 -2 52 60">
+    <BadgeArt id={id} fill={won ? theme.color : '#C3CEDD'} depth={won ? theme.dark : '#A9B7CB'} glyph={won ? '#fff' : '#EEF2F8'} ink={ink} outline={4}/>
+  </svg>;
+  const shine = (d: string) => <path d={d} fill={shineColor} opacity={won ? 0.9 : 0.7}/>;
 
   const top = (() => {
     switch (id) {
       case 'brasileiro': // taça clássica com alças
         return <>
-          <path d="M17 13H9.5C7 13 5.6 15.4 6.3 19c1.2 6 5.4 10 11 11" fill="none" stroke={edge} strokeWidth="4" strokeLinecap="round"/>
-          <path d="M47 13h7.5c2.5 0 3.9 2.4 3.2 6-1.2 6-5.4 10-11 11" fill="none" stroke={edge} strokeWidth="4" strokeLinecap="round"/>
-          <path d="M15 6h34v16c0 11.6-7.6 20-17 20S15 33.6 15 22Z" fill={gold} {...stroke}/>
+          <path d="M17 13H9.5C7 13 5.6 15.4 6.3 19c1.2 6 5.4 10 11 11M47 13h7.5c2.5 0 3.9 2.4 3.2 6-1.2 6-5.4 10-11 11" fill="none" stroke={ink} strokeWidth="7" strokeLinecap="round"/>
+          <path d="M17 13H9.5C7 13 5.6 15.4 6.3 19c1.2 6 5.4 10 11 11M47 13h7.5c2.5 0 3.9 2.4 3.2 6-1.2 6-5.4 10-11 11" fill="none" stroke={gold} strokeWidth="2.6" strokeLinecap="round"/>
+          <path d="M15 6h34v16c0 11.6-7.6 20-17 20S15 33.6 15 22Z" fill={gold} {...line}/>
+          <path d="M49 6v16c0 11.6-7.6 20-17 20 6-3 9-10 9-20V6Z" fill={goldDark} opacity=".55"/>
           {shine('M20 9h4v13c0 6 2 10.5 5 13-5.5-1-9-6.2-9-13Z')}
-          <rect x="28" y="41" width="8" height="8" fill={gold} {...stroke}/>
+          <rect x="28" y="41" width="8" height="8" fill={gold} {...line}/>
           {emblem(32, 21)}
         </>;
       case 'europeu': // cálice alto, sem alças, com estrela no topo
         return <>
-          <polygon points={star(32, 6.5, 5.5)} fill={gold} {...stroke}/>
-          <path d="M17 12h30l-3.5 16c-1.6 7.2-5.8 11-11.5 11s-9.9-3.8-11.5-11Z" fill={gold} {...stroke}/>
-          {shine('M22 15h4l2 12c.7 4.4 2.3 7.6 4.5 9.4-4.5-.6-7.6-4-8.8-9.4Z')}
-          <path d="M29 38h6l1 11h-8Z" fill={gold} {...stroke}/>
-          {emblem(32, 23, 8)}
+          <polygon points={star(32, 7, 6.5)} fill={gold} {...line}/>
+          <path d="M16 13h32l-3.6 15.5C42.7 36 38 40 32 40s-10.7-4-12.4-11.5Z" fill={gold} {...line}/>
+          <path d="M48 13l-3.6 15.5C42.7 36 38 40 32 40c4.6-2.4 7.2-6.6 8.4-12.5L43 13Z" fill={goldDark} opacity=".55"/>
+          {shine('M21 16h4l2 11.5c.7 4.4 2.3 7.4 4.5 9.4-4.5-.6-7.6-4-8.8-9.4Z')}
+          <path d="M29 39h6l1 10h-8Z" fill={gold} {...line}/>
+          {emblem(32, 25, 15)}
         </>;
       case 'sulamericano': // bacia larga sobre pedestal
         return <>
-          <path d="M6 15h52c0 12-11 21-26 21S6 27 6 15Z" fill={gold} {...stroke}/>
-          <ellipse cx="32" cy="15" rx="26" ry="4.5" fill={won ? '#FFE47A' : '#D3DEEB'} {...stroke}/>
-          {shine('M12 19h5c1.5 5 5 9 10 11.5C19.5 30 14 26 12 19Z')}
-          <path d="M27 35h10l-2 14h-6Z" fill={gold} {...stroke}/>
-          {emblem(32, 25, 7.5)}
+          <path d="M5 15h54c0 12.5-11.5 21.5-27 21.5S5 27.5 5 15Z" fill={gold} {...line}/>
+          <path d="M59 15c0 12.5-11.5 21.5-27 21.5 13-2.5 20-10 21-21.5Z" fill={goldDark} opacity=".55"/>
+          <ellipse cx="32" cy="15" rx="27" ry="5" fill={won ? '#FFE07A' : '#E1E8F1'} {...line}/>
+          {shine('M11 20h5c1.5 5 5 9 10 11.5C18.5 30.5 13 26.5 11 20Z')}
+          <path d="M27 35h10l-2 14h-6Z" fill={gold} {...line}/>
+          {emblem(32, 26, 14)}
         </>;
-      case 'selecoes': // bola sobre três hastes (não reproduz o troféu da Copa)
+      case 'selecoes': // bola dourada sobre três hastes (não reproduz o troféu da Copa)
         return <>
-          <path d="M23 49c-5-8-3.5-15 4-19M41 49c5-8 3.5-15-4-19M32 49V33" fill="none" stroke={edge} strokeWidth="5" strokeLinecap="round"/>
-          <path d="M23 49c-5-8-3.5-15 4-19M41 49c5-8 3.5-15-4-19M32 49V33" fill="none" stroke={won ? '#FFD54A' : '#C5D2E3'} strokeWidth="2.6" strokeLinecap="round"/>
-          <circle cx="32" cy="19" r="15" fill={gold} {...stroke}/>
-          {won && <ellipse cx="26" cy="10.5" rx="5" ry="2.8" fill="#fff" opacity=".5" transform="rotate(-25 26 10.5)"/>}
-          {emblem(32, 20, 8.5)}
+          <path d="M23 49c-5-8-3.5-15 4-19M41 49c5-8 3.5-15-4-19M32 49V33" fill="none" stroke={ink} strokeWidth="7.5" strokeLinecap="round"/>
+          <path d="M23 49c-5-8-3.5-15 4-19M41 49c5-8 3.5-15-4-19M32 49V33" fill="none" stroke={gold} strokeWidth="3" strokeLinecap="round"/>
+          <circle cx="32" cy="19" r="15.5" fill={gold} {...line}/>
+          <path d="M45 11a15.5 15.5 0 0 1-20 22.6c9 0 16-6.5 16-15.6 0-2.6-.6-5-1.6-7.1Z" fill={goldDark} opacity=".55"/>
+          <ellipse cx="25.5" cy="10.5" rx="5" ry="2.8" fill={shineColor} transform="rotate(-25 25.5 10.5)"/>
+          {emblem(32, 20, 15)}
         </>;
-      case 'escudos': // brasão sobre pedestal
+      case 'escudos': // grande escudo de clube (mesma silhueta do ícone da categoria) sobre pedestal
         return <>
-          <path d="M32 3 50 8.5V21c0 13-8 21.5-18 25C22 42.5 14 34 14 21V8.5Z" fill={gold} {...stroke}/>
-          {shine('M19 12l5-1.6V22c0 7 2.4 12.4 6 15.8C23.6 35.4 19 29.6 19 21Z')}
-          <rect x="28.5" y="44" width="7" height="5" fill={gold} {...stroke}/>
-          {emblem(32, 22, 8.5)}
+          <svg x="10" y="1" width="44" height="44" viewBox="0 0 48 48">
+            <path d={CREST} fill={gold} stroke={ink} strokeWidth="2.6" strokeLinejoin="round"/>
+            <path d="M42 11v11c0 11.5-7.6 18.5-18 22 7-4.5 11-11 11-22V8h5Z" fill={goldDark} opacity=".55"/>
+            <path d="M10 11h5v11c0 6.5 2 12 5.5 16C14 34.5 10 29 10 22Z" fill={shineColor} opacity={won ? 0.9 : 0.7}/>
+          </svg>
+          <rect x="28.5" y="44" width="7" height="5" fill={gold} {...line}/>
+          {emblem(32, 23, 15)}
         </>;
       case 'estadios': // coroa de louros: dois ramos que sobem pelos lados, abertos no topo
         return <>
           {[-1, 1].map(side => <g key={side}>
-            <path d={side < 0 ? 'M30 44C17 41 11 31 12.5 16' : 'M34 44C47 41 53 31 51.5 16'} fill="none" stroke={edge} strokeWidth="2.4" strokeLinecap="round"/>
+            <path d={side < 0 ? 'M30 44C17 41 11 31 12.5 16' : 'M34 44C47 41 53 31 51.5 16'} fill="none" stroke={ink} strokeWidth="3" strokeLinecap="round"/>
             {Array.from({ length: 5 }, (_, i) => {
               const deg = 250 - i * 28; // de baixo (250°) até perto do topo (138°), sem fechar o círculo
               const rad = (deg * Math.PI) / 180;
               const x = (32 + (side < 0 ? 1 : -1) * 17 * Math.cos(rad)).toFixed(2);
               const y = (27 - 17 * Math.sin(rad)).toFixed(2);
-              // folha tangente ao ramo, levemente inclinada para fora (cara de louro, não de pétala)
-              const angle = side < 0 ? -deg + 20 : deg - 180 - 20;
-              return <ellipse key={i} cx={x} cy={y} rx="3.2" ry="6.8" fill={gold} stroke={edge} strokeWidth="1.5" transform={`rotate(${angle.toFixed(1)} ${x} ${y})`}/>;
+              const angle = side < 0 ? -deg + 20 : deg - 180 - 20; // folha tangente ao ramo, inclinada para fora
+              return <ellipse key={i} cx={x} cy={y} rx="3.4" ry="7" fill={gold} stroke={ink} strokeWidth="2" transform={`rotate(${angle.toFixed(1)} ${x} ${y})`}/>;
             })}
           </g>)}
-          <rect x="28.5" y="40" width="7" height="9" fill={gold} {...stroke}/>
-          {emblem(32, 25, 9)}
+          <rect x="28.5" y="40" width="7" height="9" fill={gold} {...line}/>
+          {emblem(32, 26, 17)}
         </>;
     }
   })();
 
-  return <svg width={size} height={size * 1.12} viewBox="0 0 64 72" aria-hidden="true" className={won ? 'gd-trophy gd-trophy--won' : 'gd-trophy'}>
-    <defs>
-      <linearGradient id={`gold-${uid}`} x1="0" x2="1" y1="0" y2="1">
-        <stop offset="0" stopColor="#FFE47A"/><stop offset=".55" stopColor="#FFC531"/><stop offset="1" stopColor="#F2A100"/>
-      </linearGradient>
-    </defs>
+  return <svg width={size} height={size * 1.12} viewBox="0 0 64 72" aria-hidden="true" className={won ? 'gd-trophy gd-trophy--won' : 'gd-trophy'} style={{ overflow: 'visible' }}>
     {top}
-    <path d="M19 49h26l2.5 8h-31Z" fill={gold} {...stroke}/>
-    <rect x="12" y="57" width="40" height="11" rx="3" fill={accent} stroke={accentEdge} strokeWidth="2"/>
+    <path d="M18 49h28l2.5 8h-33Z" fill={gold} {...line}/>
+    <rect x="11" y="60" width="42" height="10" rx="3" fill={ink}/>
+    <rect x="11" y="57" width="42" height="10" rx="3" fill={won ? theme.color : '#C3CEDD'} {...line}/>
+    <path d="M14 60h36" stroke="#fff" strokeOpacity=".35" strokeWidth="2" strokeLinecap="round"/>
   </svg>;
 }
 
 /**
- * Bolinha de sorteio (como as das cerimônias: esfera de plástico em duas metades).
- * Esfera inteira na cor da categoria, ícone branco na frente e emenda discreta. `open` levanta a metade de cima.
+ * Bolinha de sorteio (como as das cerimônias: esfera de plástico em duas metades), em estilo cartoon:
+ * contorno de tinta, cor chapada com brilho e o ícone da categoria em branco. `open` levanta a metade de cima.
  */
 export function DrawBall({ id, size = 64, open = false, hidden = false }: { id: CategoryId; size?: number; open?: boolean; hidden?: boolean }) {
-  const uid = useId().replace(/:/g, '');
   const theme = CATEGORY_THEME[id];
-  const fill = `url(#ball-${uid})`;
+  const half = { stroke: INK, strokeWidth: 4, strokeLinejoin: 'round' as const };
   return <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden="true" className="gd-ball" style={{ overflow: 'visible', opacity: hidden ? 0 : 1 }}>
-    <defs>
-      <radialGradient id={`ball-${uid}`} gradientUnits="userSpaceOnUse" cx="36" cy="30" r="78">
-        <stop offset="0" stopColor="#fff" stopOpacity=".55"/><stop offset=".25" stopColor={theme.color}/><stop offset="1" stopColor={theme.dark}/>
-      </radialGradient>
-    </defs>
-    {/* metade de baixo */}
-    <path d="M6 50a44 44 0 0 0 88 0Z" fill={fill}/>
-    {open && <ellipse cx="50" cy="50" rx="44" ry="9" fill={theme.dark}/>}
+    {/* metade de baixo, com sombra própria no lado direito */}
+    <path d="M6 50a44 44 0 0 0 88 0Z" fill={theme.color} {...half}/>
+    <path d="M94 50a44 44 0 0 1-60 41c26 1 43-16 46-41Z" fill={theme.dark} opacity=".5"/>
+    {open && <ellipse cx="50" cy="50" rx="44" ry="9" fill={theme.dark} {...half}/>}
     {/* metade de cima (abre) */}
     <g style={{ transform: open ? 'translate(-4px,-34px) rotate(-26deg)' : 'none', transformOrigin: '6px 50px', transition: 'transform .45s cubic-bezier(.3,1.6,.5,1)' }}>
-      <path d="M6 50a44 44 0 0 1 88 0Z" fill={fill}/>
-      {open && <ellipse cx="50" cy="50" rx="44" ry="7" fill={theme.dark}/>}
+      <path d="M6 50a44 44 0 0 1 88 0Z" fill={theme.color} {...half}/>
+      <ellipse cx="32" cy="24" rx="13" ry="6.5" fill="#fff" opacity=".55" transform="rotate(-30 32 24)"/>
+      {open && <ellipse cx="50" cy="50" rx="44" ry="7" fill={theme.dark} {...half}/>}
     </g>
-    {!open && <path d="M6 50a44 9 0 0 0 88 0" fill="none" stroke={theme.dark} strokeWidth="2.2" opacity=".6"/>}
-    {!open && <svg x="29" y="29" width="42" height="42" viewBox="0 0 48 48" fill="#fff" opacity=".96"><GlyphPaths id={id}/></svg>}
+    {!open && <path d="M6 50a44 9 0 0 0 88 0" fill="none" stroke={INK} strokeWidth="2.6" opacity=".55"/>}
+    {!open && <svg x="27" y="27" width="46" height="46" viewBox="0 0 48 48">
+      <g fill="#fff" stroke={INK} strokeWidth="4.5" strokeLinejoin="round" paintOrder="stroke"><GlyphPaths id={id}/></g>
+    </svg>}
+  </svg>;
+}
+
+/** Bola de futebol clássica (gomos pretos e brancos) em estilo cartoon. Usada no "carregando". */
+export function SoccerBall({ size = 48 }: { size?: number }) {
+  const uid = useId().replace(/:/g, '');
+  const pent = (cx: number, cy: number, r: number, rot: number) => Array.from({ length: 5 }, (_, i) => {
+    const a = ((rot + i * 72) * Math.PI) / 180;
+    return `${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)}`;
+  }).join(' ');
+  // gomo central + cinco gomos que "saem" pela borda, ligados por costuras
+  const outer = [-90, -18, 54, 126, 198].map(deg => {
+    const a = (deg * Math.PI) / 180;
+    return { x: 50 + 40 * Math.cos(a), y: 50 + 40 * Math.sin(a), rot: deg + 180 - 90 };
+  });
+  return <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden="true" className="gd-soccer-ball">
+    <defs><clipPath id={`sb-${uid}`}><circle cx="50" cy="50" r="44"/></clipPath></defs>
+    <circle cx="50" cy="50" r="44" fill="#fff"/>
+    <g clipPath={`url(#sb-${uid})`}>
+      <path d="M94 50a44 44 0 0 1-70 35.5C55 92 86 76 90 40Z" fill="#D5DEEA"/>
+      <g stroke={INK} strokeWidth="3" strokeLinecap="round">
+        {outer.map((o, i) => <line key={i} x1={50 + 15 * Math.cos(((-90 + i * 72) * Math.PI) / 180)} y1={50 + 15 * Math.sin(((-90 + i * 72) * Math.PI) / 180)} x2={o.x} y2={o.y}/>)}
+      </g>
+      <polygon points={pent(50, 50, 15, -90)} fill={INK}/>
+      {outer.map((o, i) => <polygon key={i} points={pent(o.x, o.y, 14, o.rot)} fill={INK}/>)}
+    </g>
+    <circle cx="50" cy="50" r="44" fill="none" stroke={INK} strokeWidth="5"/>
+    <ellipse cx="33" cy="25" rx="10" ry="5" fill="#fff" opacity=".9" transform="rotate(-32 33 25)"/>
   </svg>;
 }
 

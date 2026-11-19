@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ChangeEvent, FormEvent, ReactNode } from 'react';
 import { Check, ImagePlus, Send, Trash2 } from 'lucide-react';
-import { CATEGORIES, type CategoryId } from '../../data/questions';
+import { CATEGORIES, type CategoryId } from '../../game/categories';
 import { ApiError, api, apiUrl, type Difficulty, type QuestionInput } from '../api';
 import { CategoryBadge } from '../../game/art';
 

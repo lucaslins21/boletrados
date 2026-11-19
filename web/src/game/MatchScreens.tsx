@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, Check, Clock3, Flag, Share2, Volume2, VolumeX, X } from 'lucide-react';
 import { Link } from 'react-router';
-import type { CategoryId } from '../data/questions';
+import type { CategoryId } from './categories';
 import { useCountdown, QUESTION_SECONDS } from '../components/ui';
 import type { ApiMatch, MatchPlayer, OpenQuestion, QuestionResult } from '../online/api';
 import { timeLeft } from '../online/format';

@@ -1,15 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
-  <defs>
-    <linearGradient id="r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE98A"/><stop offset=".5" stop-color="#FFC531"/><stop offset="1" stop-color="#E99A00"/></linearGradient>
-    <linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5BB8F7"/><stop offset=".62" stop-color="#2F6FED"/><stop offset=".63" stop-color="#2AAE53"/><stop offset="1" stop-color="#168A41"/></linearGradient>
-    <linearGradient id="c" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#FFE47A"/><stop offset=".55" stop-color="#FFC531"/><stop offset="1" stop-color="#F2A100"/></linearGradient>
-  </defs>
-  <circle cx="40" cy="40" r="38" fill="url(#r)" stroke="#13213D" stroke-width="3"/>
-  <circle cx="40" cy="40" r="29" fill="url(#s)" stroke="#13213D" stroke-width="2.5"/>
-  <path d="M24 54a16 16 0 0 0 32 0Z" fill="#22B357" stroke="#13213D" stroke-width="2.6"/>
-  <g transform="translate(40 50) scale(1.3) translate(-40 -47)">
-    <path d="M30.5 26h19v8.5c0 6.5-4.2 11-9.5 11s-9.5-4.5-9.5-11Z" fill="url(#c)" stroke="#13213D" stroke-width="2.2"/>
-    <path d="M30.5 28.5h-3.4c-1.6 0-2.3 1.4-1.8 3.3.7 2.9 2.9 4.9 5.8 5.4M49.5 28.5h3.4c1.6 0 2.3 1.4 1.8 3.3-.7 2.9-2.9 4.9-5.8 5.4" fill="none" stroke="#13213D" stroke-width="2.2" stroke-linecap="round"/>
-    <rect x="37.5" y="45" width="5" height="4" fill="url(#c)" stroke="#13213D" stroke-width="1.8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 4 74 76">
+  <!-- Rosto do mascote (versão simplificada do LogoMark para o ícone da aba) -->
+  <defs><clipPath id="c"><circle cx="38" cy="42" r="33"/></clipPath></defs>
+  <circle cx="38" cy="45.5" r="33" fill="#13213D"/>
+  <circle cx="38" cy="42" r="33" fill="#fff"/>
+  <g clip-path="url(#c)" fill="#1B2640">
+    <polygon points="38,3 46.6,9.2 43.3,19.3 32.7,19.3 29.4,9.2"/>
+    <polygon points="-1.4,27.4 7.9,30.4 8.1,40.1 -1.1,43.3 -6.9,35.4"/>
+    <polygon points="77.4,27.4 82.9,35.4 77.1,43.3 67.9,40.1 68.1,30.4"/>
   </g>
+  <circle cx="38" cy="42" r="33" fill="none" stroke="#13213D" stroke-width="4"/>
+  <g fill="#fff" stroke="#13213D" stroke-width="2.8"><ellipse cx="27" cy="38" rx="8.5" ry="10"/><ellipse cx="49" cy="38" rx="8.5" ry="10"/></g>
+  <g fill="#13213D"><circle cx="28" cy="38.5" r="5"/><circle cx="50" cy="38.5" r="5"/></g>
+  <path d="M24 52h28q-1.4 15-14 15T24 52Z" fill="#13213D"/>
+  <path d="M28 53h20v3H28Z" fill="#fff"/>
+  <ellipse cx="38" cy="62.5" rx="6.5" ry="3.2" fill="#F26B7A"/>
 </svg>

@@ -3,7 +3,7 @@ import { useReducedMotion } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useParams } from 'react-router';
 import { Modal } from '../components/ui';
-import type { CategoryId } from '../data/questions';
+import type { CategoryId } from '../game/categories';
 import {
   BottomBar, DrawStage, GameFrame, InviteWait, MatchEnd, OpponentWait, QuestionStage, ResultSheet, Scoreboard,
   StageMessage, TrophyCelebration, TrophyPick, type DrawPhase,

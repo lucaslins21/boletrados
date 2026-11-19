@@ -1,5 +1,5 @@
 /** Cliente da API do Boletrados (api/). Sessão por cookie httpOnly: todas as chamadas usam credentials: 'include'. */
-import type { CategoryId } from '../data/questions';
+import type { CategoryId } from '../game/categories';
 
 const BASE = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
 

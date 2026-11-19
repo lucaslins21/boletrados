@@ -36,7 +36,7 @@ docker compose run --rm -e RAILS_ENV=test api bundle exec rspec
 
    **`docs/PRODUCT.md` v1.0 é a referência de produto** (decisões fechadas; a seção 21 mostra o que está implementado e o que falta).
 
-   Próximos passos, para o lançamento: seguir `docs/DEPLOY.md` (contas Vercel, Render e Neon e as chaves), criar o `GOOGLE_CLIENT_ID`, configurar o worker do Solid Queue, fazer a curadoria das perguntas e remover a demo. Se mudar `web/src/data/questions.ts`, rode `npm run export:questions` para atualizar o seed.
+   Próximos passos, para o lançamento: seguir `docs/DEPLOY.md` (contas Vercel, Render e Neon e as chaves), criar o `GOOGLE_CLIENT_ID`, configurar o worker do Solid Queue, fazer a curadoria das perguntas e remover a demo. As perguntas demonstrativas ficam em `api/db/seeds/demo_questions.json` (a demo local e o export foram removidos em novembro de 2026).
 4. ~~Implementar Google/Facebook OAuth e convites por link/código, protegendo tokens e continuando o fluxo após login.~~ Feito para o Google (etapas 3, 4 e 6); o Facebook fica para depois do MVP.
 5. ~~Mover para o servidor o relógio autoritativo, sorteios, reserva de perguntas inéditas, mudanças de posse e concessão de troféus. Preferir endpoints idempotentes e transações.~~ Feito (etapas 2, 4 e 5).
 6. Criar um banco de perguntas curadas e painel de moderação. Não publicar fatos gerados por IA sem checagem.

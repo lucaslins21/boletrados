@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { Archive, ArrowLeft, ArrowRight, Check, CornerUpLeft, ExternalLink, Eye, ImageIcon, PenLine, Plus, RotateCcw, ShieldAlert, X } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { Banner, Modal, Pill } from '../../components/ui';
-import { CATEGORIES, getCategory, type CategoryId } from '../../data/questions';
+import { CATEGORIES, getCategory, type CategoryId } from '../../game/categories';
 import { ApiError, api, apiUrl, type AdminAction, type AdminQuestion, type QuestionPreview, type QuestionStatus } from '../api';
 import { useSession } from '../session';
 import { QuestionForm } from './QuestionForm';
