@@ -2,7 +2,7 @@
 
 Escopo: bugs de fluxo, regras, temporizador, acessibilidade e responsividade da demo local. Nenhuma mudança de identidade visual nem de backend.
 
-Verificação: `npm run typecheck`, `npm test` (24 testes), `npm run build` e smoke test em Chrome headless (390×844 e 1366×860) sem erros de console.
+Verificação: `npm run typecheck`, `npm test` (30 testes), `npm run build` e smoke test em Chrome headless (390×844 e 1366×860) sem erros de console.
 
 ## Bugs corrigidos
 
@@ -29,10 +29,13 @@ Verificação: `npm run typecheck`, `npm test` (24 testes), `npm run build` e sm
   - Emojis decorativos com `aria-hidden`, ilustrações com `role="img"` e resultado do sorteio anunciado.
 - **Feedback**: mostra a resposta marcada (riscada) além da correta e usa o nome do adversário ("a bola é de …").
 
-## Pendências e propostas (não implementadas — precisam de decisão)
+## Decisões tomadas (2026-11-19)
 
-1. **Conteúdo**: `demo-019` (Libertadores 2016) e `demo-027` (país do campeão de 2016) são sobre o mesmo fato; uma pergunta entrega a outra. Trocar ou remover uma delas na curadoria.
-2. **Categoria esgotada no sorteio**: na demo, com 9 perguntas por categoria, o sorteio pode cair repetidamente em categoria sem inéditas (tela "Acabaram as inéditas" → novo sorteio). O PRODUCT.md manda manter todas as bolas elegíveis, então a política para banco esgotado precisa ser definida (re-sortear automaticamente? avisar?).
-3. **Sair no meio da pergunta**: na demo, voltar ao início durante a pergunta descarta a partida sem registrar erro (a exposição fica registrada). No multiplayer real, sair ou fechar a aba deve contar como timeout no servidor, o que entra na definição de abandono/W.O.
-4. **Bundle**: o JS tem ~409 kB (128 kB gzip), principalmente Motion + React. Dá para avaliar `LazyMotion` quando houver mais telas.
-5. **Testes de UX dos 15s** (item 2 do handoff) ainda precisam de jogadores reais.
+1. **`demo-019` / `demo-027`** (ambas sobre a Libertadores 2016): **manter as duas** na demo. Fica para a curadoria real.
+2. **Categoria esgotada**: **re-sorteio automático**. `drawCategory` sorteia só entre as categorias com inéditas para o jogador ativo, e a tela de sorteio avisa quais estão fora. Se todas esgotarem, vai para "Acabaram as inéditas" e só oferece nova demo.
+3. **Sair com pergunta aberta**: **conta como timeout**. "Início" não descarta mais a partida: `leaveToHome` encerra a pergunta como tempo esgotado e pausa a partida, e a home mostra "Continuar partida" / "Nova partida". No mobile, a pergunta não tem botão de saída (o dock fica oculto e o "Início" do cabeçalho só aparece no desktop); fechar a aba também resulta em timeout, porque o prazo salvo não pausa.
+
+## Pendências
+
+1. **Bundle**: o JS tem ~409 kB (128 kB gzip), principalmente Motion + React. Dá para avaliar `LazyMotion` quando houver mais telas.
+2. **Testes de UX dos 15s** (item 2 do handoff) ainda precisam de jogadores reais.

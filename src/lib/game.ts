@@ -32,6 +32,8 @@ export type Game = {
   feedback: Feedback | null;
   turnNumber: number;
   winner: PlayerIndex | null;
+  /** Fase para onde a partida volta quando o jogador sai para a tela inicial e depois continua. */
+  resumePhase: Phase | null;
 };
 
 /** Regras configuráveis da v1 (ver docs/PRODUCT.md). */
@@ -56,7 +58,7 @@ export function createGame(seenIds: [string[], string[]] = [[], []]): Game {
     trophies: [[], []], streak: 0, seenIds: [seenIds[0].slice(), seenIds[1].slice()],
     attempts: [0, 0], correctAnswers: [0, 0], drawnCategory: null,
     selectedCategory: null, questionId: null, context: 'normal',
-    deadline: null, feedback: null, turnNumber: 1, winner: null,
+    deadline: null, feedback: null, turnNumber: 1, winner: null, resumePhase: null,
   };
 }
 
@@ -76,15 +78,34 @@ export function enterDraw(game: Game): Game {
   return { ...game, phase: 'draw', drawnCategory: null };
 }
 
-/** Sorteia a categoria uma única vez por pergunta normal. Chamadas repetidas não trocam o resultado. */
-export function drawCategory(game: Game, rng: Rng = Math.random): Game {
-  if (game.phase !== 'draw' || game.drawnCategory) return game;
-  return { ...game, drawnCategory: randomlyDrawCategory(rng) };
-}
-
 export function availableQuestions(game: Game, category: CategoryId, pool: readonly Question[] = QUESTIONS): Question[] {
   const seen = new Set(game.seenIds[game.activePlayer]);
   return pool.filter(question => question.categoryIds.includes(category) && !seen.has(question.id));
+}
+
+/** Categorias sem nenhuma pergunta inédita para o jogador ativo. */
+export function exhaustedCategories(game: Game, pool: readonly Question[] = QUESTIONS): CategoryId[] {
+  return CATEGORY_IDS.filter(id => availableQuestions(game, id, pool).length === 0);
+}
+
+/** Categorias que podem sair no sorteio normal: todas as que ainda têm inéditas (troféus conquistados não excluem). */
+export function drawableCategories(game: Game, pool: readonly Question[] = QUESTIONS): CategoryId[] {
+  const exhausted = exhaustedCategories(game, pool);
+  return CATEGORY_IDS.filter(id => !exhausted.includes(id));
+}
+
+/**
+ * Sorteia a categoria uma única vez por pergunta normal; chamadas repetidas não trocam o resultado.
+ * Categorias esgotadas para o jogador são re-sorteadas automaticamente (equivale a sortear entre as elegíveis).
+ * Se nenhuma tiver inéditas, vai para a fase "empty".
+ */
+export function drawCategory(game: Game, rng: Rng = Math.random, pool: readonly Question[] = QUESTIONS): Game {
+  if (game.phase !== 'draw' || game.drawnCategory) return game;
+  const eligible = drawableCategories(game, pool);
+  if (!eligible.length) {
+    return { ...game, phase: 'empty', context: 'normal', selectedCategory: null, drawnCategory: null, deadline: null };
+  }
+  return { ...game, drawnCategory: eligible[Math.floor(rng() * eligible.length)] };
 }
 
 export function chooseQuestion(
@@ -182,7 +203,31 @@ export function continueAfterFeedback(game: Game): Game {
 /** Sem perguntas inéditas: volta ao sorteio (normal) ou à escolha do troféu, sem perder a vez. */
 export function recoverFromEmpty(game: Game): Game {
   if (game.phase !== 'empty') return game;
+  // Sem nenhuma categoria com inéditas, voltar ao sorteio só repetiria a tela.
+  if (game.context === 'normal' && drawableCategories(game).length === 0) return game;
   return { ...game, phase: game.context === 'trophy' ? 'trophy' : 'draw', selectedCategory: null, deadline: null, drawnCategory: null };
+}
+
+/** Sair com uma pergunta aberta equivale a deixar o tempo esgotar: zera a sequência e passa a vez. */
+export function forfeitQuestion(game: Game): Game {
+  if (game.phase !== 'question' || game.deadline === null) return game;
+  return answerQuestion(game, null, Math.max(game.deadline, Date.now()));
+}
+
+export function hasMatchInProgress(game: Game): boolean {
+  return game.phase === 'home' && game.resumePhase !== null && game.resumePhase !== 'finished' && game.resumePhase !== 'home';
+}
+
+/** Vai para a tela inicial mantendo a partida salva. Uma pergunta aberta é encerrada como tempo esgotado. */
+export function leaveToHome(game: Game): Game {
+  if (game.phase === 'home') return game;
+  const settled = forfeitQuestion(game);
+  return { ...settled, phase: 'home', resumePhase: settled.phase };
+}
+
+export function resumeGame(game: Game): Game {
+  if (!hasMatchInProgress(game)) return game;
+  return { ...game, phase: game.resumePhase!, resumePhase: null };
 }
 
 const isPair = (value: unknown, check: (item: unknown) => boolean) =>
@@ -207,8 +252,9 @@ export function restoreGame(value: unknown): Game | null {
     isPair(data.correctAnswers, item => typeof item === 'number') &&
     typeof data.streak === 'number' && typeof data.turnNumber === 'number';
   if (!valid) return null;
-  const game = { ...createGame(), ...data, drawnCategory: (data.drawnCategory ?? null) } as Game;
+  const game = { ...createGame(), ...data, drawnCategory: (data.drawnCategory ?? null), resumePhase: (data.resumePhase ?? null) } as Game;
   if (game.drawnCategory !== null && !CATEGORY_IDS.includes(game.drawnCategory)) game.drawnCategory = null;
+  if (game.resumePhase !== null && (!PHASES.includes(game.resumePhase) || game.resumePhase === 'question')) game.resumePhase = null;
   // Uma pergunta em andamento que não existe mais no banco travaria a tela.
   if (game.phase === 'question' && (!getCurrentQuestion(game) || game.deadline === null)) return null;
   if (game.phase === 'feedback' && !game.feedback) return null;

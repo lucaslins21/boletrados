@@ -27,7 +27,9 @@ Uma questão pode pertencer a múltiplas categorias, desde que o enquadramento s
 - Acerto decisivo: concede troféu, zera sequência normal e mantém a posse para sorteio da próxima pergunta. Erro decisivo: não concede troféu, zera a sequência, passa a vez.
 - Vence imediatamente quem obtiver todos os **6 troféus**. O adversário pode possuir troféus das mesmas categorias.
 - Uma pergunta já exposta a um usuário (inclusive em revisão, envio próprio, outra categoria ou outra partida) nunca mais deve ser mostrada em jogos a ele.
-- A regra de continuação após ganhar troféu foi escolhida para a v1, mas deve ser fácil de configurar futuramente.
+- A regra de continuação após ganhar troféu foi escolhida para a v1, mas deve ser fácil de configurar futuramente (`RULES.keepPossessionAfterTrophy`).
+- **Categoria sem inéditas (decidido em 2026-11-19):** se o jogador já viu todas as perguntas de uma categoria, ela é re-sorteada automaticamente, ou seja, o sorteio considera só as categorias com inéditas para aquele jogador, e a tela avisa quais estão esgotadas. Se todas esgotarem, a partida mostra "acabaram as inéditas". Isso é independente dos troféus: categorias conquistadas continuam elegíveis.
+- **Sair com pergunta aberta (decidido em 2026-11-19):** equivale a tempo esgotado: zera a sequência e passa a vez. O prazo não pausa; fechar a aba e voltar depois do prazo resulta em timeout. No servidor, a resposta só é aceita dentro do deadline.
 
 ## Login, convites, estatísticas (planejado)
 

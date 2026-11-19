@@ -43,6 +43,8 @@ npm run build
 7. Acertar a pergunta decisiva concede o troféu, zera a sequência e **mantém a vez**. Errar passa a vez.
 8. Cada jogador coleciona seus próprios seis troféus; **vence quem conquistar os seis primeiro**.
 9. Uma pergunta pode estar em mais de uma categoria, mas **não pode ser repetida para o mesmo jogador**. Na demo, o histórico persiste por jogador fictício no navegador.
+10. Categoria sem perguntas inéditas para o jogador é **re-sorteada automaticamente**.
+11. **Sair com uma pergunta aberta conta como tempo esgotado** (a vez passa). A partida fica salva e pode ser continuada pela tela inicial.
 
 ## Conteúdo e moderação (planejamento, não implementado)
 

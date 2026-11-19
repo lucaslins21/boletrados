@@ -2,9 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { CATEGORIES, QUESTIONS, type CategoryId } from '../data/questions';
 import {
   RULES, answerQuestion, availableQuestions, chooseQuestion, continueAfterFeedback, createGame,
-  drawCategory, enterDraw, getCurrentQuestion, recoverFromEmpty, restoreGame, startDrawnQuestion,
-  startTrophyQuestion, type Game,
+  drawCategory, drawableCategories, enterDraw, exhaustedCategories, getCurrentQuestion, hasMatchInProgress,
+  leaveToHome, recoverFromEmpty, restoreGame, resumeGame, startDrawnQuestion, startTrophyQuestion, type Game,
 } from './game';
+
+const idsOf = (category: CategoryId) => QUESTIONS.filter(q => q.categoryIds.includes(category)).map(q => q.id);
 
 const NOW = 1_000_000;
 const first = () => 0; // rng determinístico: sempre o primeiro item
@@ -61,6 +63,53 @@ describe('sorteio', () => {
     const asked = startDrawnQuestion(drawCategory(inDraw(), first), first, NOW);
     expect(asked.phase).toBe('question');
     expect(asked.drawnCategory).toBeNull();
+  });
+});
+
+describe('categoria esgotada', () => {
+  it('re-sorteia automaticamente: categorias sem inéditas nunca saem', () => {
+    const game: Game = { ...inDraw(), seenIds: [idsOf('escudos'), []] };
+    expect(exhaustedCategories(game)).toEqual(['escudos']);
+    const drawn = CATEGORIES.map((_, i) => drawCategory(game, () => i / CATEGORIES.length).drawnCategory);
+    expect(drawn).not.toContain('escudos');
+    expect(new Set(drawn).size).toBe(5);
+  });
+
+  it('o esgotamento é por jogador', () => {
+    const game: Game = { ...inDraw(), activePlayer: 1, seenIds: [idsOf('escudos'), []] };
+    expect(drawableCategories(game)).toHaveLength(6);
+  });
+
+  it('sem nenhuma inédita, vai para "empty" e não volta ao sorteio', () => {
+    const game: Game = { ...inDraw(), seenIds: [QUESTIONS.map(q => q.id), []] };
+    const empty = drawCategory(game, first);
+    expect(empty).toMatchObject({ phase: 'empty', context: 'normal', selectedCategory: null });
+    expect(recoverFromEmpty(empty)).toBe(empty);
+  });
+});
+
+describe('sair da partida', () => {
+  it('sair com pergunta aberta conta como tempo esgotado e passa a vez ao continuar', () => {
+    const asked = chooseQuestion({ ...inDraw(), streak: 2 }, 'europeu', 'normal', first, NOW);
+    const home = leaveToHome(asked);
+    expect(home.phase).toBe('home');
+    expect(hasMatchInProgress(home)).toBe(true);
+    const resumed = resumeGame(home);
+    expect(resumed.phase).toBe('feedback');
+    expect(resumed.feedback).toMatchObject({ correct: false, timedOut: true, selectedIndex: null });
+    expect(continueAfterFeedback(resumed)).toMatchObject({ phase: 'lobby', activePlayer: 1, streak: 0 });
+  });
+
+  it('sair em outras fases apenas pausa a partida', () => {
+    const drawn = drawCategory(inDraw(), first);
+    const resumed = resumeGame(leaveToHome(drawn));
+    expect(resumed).toMatchObject({ phase: 'draw', drawnCategory: drawn.drawnCategory, resumePhase: null });
+  });
+
+  it('partida encerrada não pode ser continuada', () => {
+    const home = leaveToHome({ ...createGame(), phase: 'finished', winner: 0 });
+    expect(hasMatchInProgress(home)).toBe(false);
+    expect(resumeGame(home)).toBe(home);
   });
 });
 
