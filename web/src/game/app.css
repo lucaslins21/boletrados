@@ -114,7 +114,6 @@
 .app-main .profile-head{align-items:center}
 .app-main .home-empty{display:flex;align-items:center;gap:12px;text-align:left}
 .app-main .home-empty p{margin:0;font-size:15px;line-height:1.45;color:var(--bt-ink-2)}
-.app-main .aside-panel{display:block}
 
 /* Contas conectadas (perfil) */
 .accounts{margin-top:var(--bt-space-6)}

@@ -1,5 +1,5 @@
 /* "Dia de jogo" nas páginas do site (home, convite, perfil, perguntas, moderação).
-   Ajusta, só dentro de .gd-site, as classes compartilhadas com a demo (styles.css continua escuro para /demo). */
+   Ajusta, dentro de .gd-site, as classes de interface de styles.css para o visual "Dia de jogo". */
 .gd-site{background:transparent}
 .gd-site .site-header{background:#ffffff26;border-bottom:1px solid #ffffff40;backdrop-filter:blur(10px)}
 .gd-site .brand{color:#fff;text-shadow:0 2px 0 var(--bt-sky-deep)}
