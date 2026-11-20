@@ -75,7 +75,7 @@ GitHub Actions (de hora em hora) ──► POST /internal/tick     cron-job.org 
    - Instruções de exclusão de dados: `https://boletrados.vercel.app/privacidade#exclusao`
    - **Domínios do app**: `boletrados.vercel.app`
    - Em **+ Adicionar plataforma › Site**, URL do site: `https://boletrados.vercel.app/`
-3. Em **Login do Facebook › Configurações**: ligue **Login com o SDK do JavaScript** e adicione `boletrados.vercel.app` em **Domínios permitidos para o SDK do JavaScript**. Permissões usadas: `public_profile` e `email` (não precisam de revisão do app).
+3. Em **Login do Facebook › Configurações**: ligue **Login com o SDK do JavaScript** e adicione `boletrados.vercel.app` em **Domínios permitidos para o SDK do JavaScript**. Permissão usada: só `public_profile` (nome e foto). O e-mail não é pedido: exigiria avaliação da Meta e o jogo não precisa dele.
 4. Copie o **ID do app** (público) e a **Chave secreta do app** (**segredo**):
    - Render: `FACEBOOK_APP_ID` e `FACEBOOK_APP_SECRET`;
    - Vercel: `VITE_FACEBOOK_APP_ID` (tipo Configuração) e **Redeploy**.

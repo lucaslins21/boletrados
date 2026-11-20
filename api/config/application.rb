@@ -53,10 +53,10 @@ module Api
     config.action_dispatch.ip_spoofing_check = false
 
     # Client ID OAuth do Google (público). Sem ele, POST /auth/google responde 401.
-    config.x.google_client_id = ENV["GOOGLE_CLIENT_ID"]
+    config.x.google_client_id = ENV["GOOGLE_CLIENT_ID"]&.strip.presence
     # App do Facebook Login. O App ID é público; o App Secret é segredo. Sem eles, POST /auth/facebook responde 401.
-    config.x.facebook_app_id = ENV["FACEBOOK_APP_ID"]
-    config.x.facebook_app_secret = ENV["FACEBOOK_APP_SECRET"]
+    config.x.facebook_app_id = ENV["FACEBOOK_APP_ID"]&.strip.presence # strip: espaço/quebra de linha colados junto invalidam a chave
+    config.x.facebook_app_secret = ENV["FACEBOOK_APP_SECRET"]&.strip.presence
     config.x.facebook_graph_version = ENV.fetch("FACEBOOK_GRAPH_VERSION", "v26.0")
     # Origens do frontend autorizadas para CORS e para requisições que alteram estado (proteção CSRF).
     config.x.allowed_origins = ENV.fetch("ALLOWED_ORIGINS", "http://localhost:5173").split(",").map(&:strip)

@@ -28,7 +28,7 @@ export function PrivacyPage() {
 
     <h2>O que coletamos</h2>
     <ul>
-      <li><strong>Da sua conta Google ou Facebook</strong>, quando você entra: nome, e-mail (se a conta tiver um), foto de perfil e um identificador da conta. Não recebemos sua senha, seus amigos, suas publicações nem outros dados dessas contas.</li>
+      <li><strong>Da sua conta Google ou Facebook</strong>, quando você entra: nome, foto de perfil, um identificador da conta e, no Google, o e-mail. Não recebemos sua senha, seus amigos, suas publicações nem outros dados dessas contas.</li>
       <li><strong>Do jogo</strong>: partidas, respostas, acertos, troféus, convites e as perguntas que você já viu, para que elas não se repitam.</li>
       <li><strong>Perguntas que você envia</strong>: enunciado, alternativas, fonte, explicação e o histórico da moderação.</li>
       <li><strong>Sessão</strong>: um cookie de login (httpOnly, válido por até 30 dias), o endereço IP e o navegador usados para entrar. Servem para manter você conectado e evitar abuso, como excesso de tentativas.</li>

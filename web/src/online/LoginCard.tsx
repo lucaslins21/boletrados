@@ -74,7 +74,7 @@ function FacebookButton({ onError }: { onError: (message: string) => void }) {
     window.FB?.login(response => {
       const token = response.authResponse?.accessToken;
       if (token) finish(api.facebookLogin(token));
-    }, { scope: 'public_profile,email' });
+    }, { scope: 'public_profile' }); // só nome e foto: o e-mail exigiria avaliação da Meta e o jogo não precisa dele
   };
   return <button type="button" className="login-btn login-btn--facebook" onClick={login} disabled={!ready}>
     <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#fff"/><path fill="#1877F2" d="M16.7 15.5 17.2 12h-3.4V9.8c0-1 .5-1.9 2-1.9h1.5v-3s-1.4-.2-2.7-.2c-2.8 0-4.6 1.7-4.6 4.7V12H7v3.5h3V24a12 12 0 0 0 3.8 0v-8.5Z"/></svg>
