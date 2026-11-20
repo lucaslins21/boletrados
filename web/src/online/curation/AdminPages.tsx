@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { Archive, ArrowLeft, ArrowRight, Check, CornerUpLeft, ExternalLink, Eye, ImageIcon, PenLine, Plus, RotateCcw, ShieldAlert, X } from 'lucide-react';
+import { Archive, ArrowLeft, ArrowRight, Check, CornerUpLeft, ExternalLink, Eye, ImageIcon, PenLine, Plus, RotateCcw, X } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { Banner, Modal, Pill } from '../../components/ui';
 import { CATEGORIES, getCategory, type CategoryId } from '../../game/categories';
@@ -49,9 +49,8 @@ function AdminQueue() {
   const count = (statuses: QuestionStatus[]) => statuses.reduce((sum, s) => sum + (data?.counts[s] ?? 0), 0);
   return <div className="content-layout">
     <main className="main-card">
-      <div className="eyebrow eyebrow--green"><ShieldAlert size={14}/> MODERAÇÃO</div>
-      <h1 className="screen-title">Curadoria de perguntas</h1>
-      <Banner icon={<Eye size={17}/>}>Abrir uma pergunta conta como “vista”: você nunca a receberá numa partida. A lista mostra só o começo do enunciado.</Banner>
+      <h1 className="screen-title">Moderação</h1>
+      <Banner icon={<Eye size={17}/>}>Abrir uma pergunta conta como vista: ela não aparece mais nas suas partidas.</Banner>
       <div className="admin-toolbar">
         <div className="tabs" role="tablist">{TABS.map(t => <button key={t.id} role="tab" aria-selected={tab === t.id} className={tab === t.id ? 'tab tab--on' : 'tab'} onClick={() => setTab(t.id)}>
           {t.label}{data && <span>{count(t.statuses)}</span>}</button>)}</div>

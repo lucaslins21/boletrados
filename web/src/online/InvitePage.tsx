@@ -53,7 +53,7 @@ export function InvitePage() {
       {invite.status === 'open' && !own && status === 'authenticated' &&
         <button className="button button--primary button--lg button--full" onClick={accept} disabled={busy}>Aceitar desafio <ArrowRight size={19}/></button>}
       {invite.status === 'open' && status === 'anonymous' &&
-        <LoginCard title="Entre para aceitar" subtitle="Depois do login, é só confirmar o desafio."/>}
+        <LoginCard title="Entre para aceitar"/>}
     </>}
     {error && <p className="form-error" role="alert">{error}</p>}
     <Link to="/" className="subtle-link">Ir para minhas partidas <ArrowRight size={16}/></Link>

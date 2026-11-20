@@ -29,12 +29,12 @@ export function ProfilePage() {
     <Link to="/" className="button button--primary">Minhas partidas <ArrowRight size={17}/></Link></div>;
   if (!profile) return <Loading label="Carregando perfil…"/>;
 
-  const { user, summary, is_me: isMe } = profile;
+  const { user, summary } = profile;
   return <div className="content-layout">
     <main className="main-card profile-card">
       <div className="profile-head">
         <Avatar user={user} className="player-avatar player-avatar--0 profile-avatar"/>
-        <div><p className="eyebrow eyebrow--green">{isMe ? 'SEU PERFIL' : 'PERFIL DO ADVERSÁRIO'}</p><h1 className="screen-title">{user.display_name}</h1></div>
+        <h1 className="screen-title">{user.display_name}</h1>
       </div>
 
       <dl className="kpi-row">

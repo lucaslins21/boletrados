@@ -13,24 +13,28 @@ class User < ApplicationRecord
 
   validates :display_name, presence: true, length: { maximum: 60 }
 
-  # Encontra o usuário pela identidade Google (sub) ou cria conta nova.
-  # Nunca vincula por e-mail: dois "sub" diferentes com o mesmo e-mail são contas diferentes.
-  def self.from_google!(claims)
-    identity = Identity.find_by(provider: "google", uid: claims.sub)
+  def self.from_google!(claims) = from_provider!("google", claims)
+
+  # Encontra o usuário pela identidade (provedor + id da conta) ou cria conta nova.
+  # Nunca vincula por e-mail: contas Google e Facebook com o mesmo e-mail são contas diferentes no jogo.
+  def self.from_provider!(provider, claims)
+    raise ArgumentError, "provedor desconhecido: #{provider}" unless Identity::PROVIDERS.include?(provider)
+
+    identity = Identity.find_by(provider: provider, uid: claims.sub)
     return identity.user.tap { |user| user.refresh_avatar!(claims.picture) } if identity
 
     transaction do
       user = create!(display_name: display_name_from(claims), avatar_url: claims.picture,
                      email: claims.email_verified ? claims.email : nil)
-      user.identities.create!(provider: "google", uid: claims.sub, email: claims.email)
+      user.identities.create!(provider: provider, uid: claims.sub, email: claims.email)
       user
     end
   rescue ActiveRecord::RecordNotUnique
-    # Primeiro login simultâneo com a mesma conta Google: a outra requisição criou a identidade.
-    Identity.find_by!(provider: "google", uid: claims.sub).user
+    # Primeiro login simultâneo com a mesma conta: a outra requisição criou a identidade.
+    Identity.find_by!(provider: provider, uid: claims.sub).user
   end
 
-  # A foto acompanha a conta Google: atualiza a cada login (o nome de exibição não muda sozinho).
+  # A foto acompanha a conta de login: atualiza a cada login (o nome de exibição não muda sozinho).
   def refresh_avatar!(url)
     update!(avatar_url: url) if url.present? && url != avatar_url
   end

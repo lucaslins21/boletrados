@@ -66,6 +66,23 @@ GitHub Actions (de hora em hora) ──► POST /internal/tick     cron-job.org 
 2. Em **Origens JavaScript autorizadas**, adicione a URL da Vercel (e `http://localhost:5173` para testes). Não é preciso URI de redirecionamento: o login usa popup.
 3. Copie o **Client ID**, que é público, para `GOOGLE_CLIENT_ID` (Render) e `VITE_GOOGLE_CLIENT_ID` (Vercel). O *client secret* não é usado.
 
+## 5b. Login com Facebook
+
+1. Em <https://developers.facebook.com/apps>, **Criar app** → caso de uso **"Autenticar e solicitar dados de usuários com o Login do Facebook"** → tipo **Consumidor**. Nome: `Boletrados`.
+2. Em **Configurações do app › Básico**: preencha e-mail de contato, ícone (1024×1024), categoria (Jogos), e os links:
+   - Política de Privacidade: `https://boletrados.vercel.app/privacidade`
+   - Termos de Serviço: `https://boletrados.vercel.app/termos`
+   - Instruções de exclusão de dados: `https://boletrados.vercel.app/privacidade#exclusao`
+   - **Domínios do app**: `boletrados.vercel.app`
+   - Em **+ Adicionar plataforma › Site**, URL do site: `https://boletrados.vercel.app/`
+3. Em **Login do Facebook › Configurações**: ligue **Login com o SDK do JavaScript** e adicione `boletrados.vercel.app` em **Domínios permitidos para o SDK do JavaScript**. Permissões usadas: `public_profile` e `email` (não precisam de revisão do app).
+4. Copie o **ID do app** (público) e a **Chave secreta do app** (**segredo**):
+   - Render: `FACEBOOK_APP_ID` e `FACEBOOK_APP_SECRET`;
+   - Vercel: `VITE_FACEBOOK_APP_ID` (tipo Configuração) e **Redeploy**.
+5. Mude o app de **Desenvolvimento** para **Ao vivo** (no topo do painel). Em desenvolvimento, só quem tem função no app consegue entrar.
+
+Contas Google e Facebook da mesma pessoa viram contas diferentes no jogo (o login nunca vincula por e-mail).
+
 ## 6. Tornar-se administrador (moderação)
 
 1. Entre no site com a sua conta Google pelo menos uma vez.

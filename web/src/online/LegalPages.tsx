@@ -6,11 +6,10 @@ import type React from 'react';
 export const CONTACT_EMAIL = 'lucas.lemos61@gmail.com';
 const UPDATED = '19 de novembro de 2026';
 
-function LegalShell({ eyebrow, title, children }: { eyebrow: string; title: string; children: React.ReactNode }) {
+function LegalShell({ title, children }: { title: string; children: React.ReactNode }) {
   return <div className="legal-wrap">
     <main className="main-card legal-page">
       <Link to="/" className="subtle-link"><ArrowLeft size={16} aria-hidden="true"/> Início</Link>
-      <p className="eyebrow">{eyebrow}</p>
       <h1 className="screen-title">{title}</h1>
       <p className="legal-updated">Última atualização: {UPDATED}</p>
       <div className="legal-body">{children}</div>
@@ -21,7 +20,7 @@ function LegalShell({ eyebrow, title, children }: { eyebrow: string; title: stri
 const Mail = () => <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>;
 
 export function PrivacyPage() {
-  return <LegalShell eyebrow="PRIVACIDADE" title="Política de Privacidade">
+  return <LegalShell title="Política de Privacidade">
     <p>O Boletrados é um jogo casual de perguntas sobre futebol, mantido por um desenvolvedor independente como projeto pessoal e sem fins comerciais. Esta política explica, em linguagem simples, quais dados usamos, para quê e como você controla isso, de acordo com a Lei Geral de Proteção de Dados (Lei 13.709/2018).</p>
 
     <h2>Quem cuida dos seus dados</h2>
@@ -29,7 +28,7 @@ export function PrivacyPage() {
 
     <h2>O que coletamos</h2>
     <ul>
-      <li><strong>Da sua conta Google</strong>, quando você entra: nome, e-mail, foto de perfil e um identificador da conta. Não recebemos sua senha nem acesso a outros dados do Google.</li>
+      <li><strong>Da sua conta Google ou Facebook</strong>, quando você entra: nome, e-mail (se a conta tiver um), foto de perfil e um identificador da conta. Não recebemos sua senha, seus amigos, suas publicações nem outros dados dessas contas.</li>
       <li><strong>Do jogo</strong>: partidas, respostas, acertos, troféus, convites e as perguntas que você já viu, para que elas não se repitam.</li>
       <li><strong>Perguntas que você envia</strong>: enunciado, alternativas, fonte, explicação e o histórico da moderação.</li>
       <li><strong>Sessão</strong>: um cookie de login (httpOnly, válido por até 30 dias), o endereço IP e o navegador usados para entrar. Servem para manter você conectado e evitar abuso, como excesso de tentativas.</li>
@@ -51,6 +50,7 @@ export function PrivacyPage() {
     <p>Usamos serviços de terceiros para funcionar, que tratam os dados apenas para isso:</p>
     <ul>
       <li><strong>Google</strong>: login, fontes do site e exibição da sua foto de perfil.</li>
+      <li><strong>Meta (Facebook)</strong>: login e exibição da sua foto de perfil, se você entrar com Facebook.</li>
       <li><strong>Vercel</strong>: hospedagem do site.</li>
       <li><strong>Render</strong>: servidor do jogo.</li>
       <li><strong>Neon</strong>: banco de dados.</li>
@@ -63,6 +63,10 @@ export function PrivacyPage() {
 
     <h2>Seus direitos</h2>
     <p>Você pode pedir a qualquer momento: confirmação e acesso aos seus dados, correção, exclusão da conta e dos dados, portabilidade, informações sobre compartilhamento e revogação do consentimento. Basta escrever para <Mail/> a partir do e-mail da sua conta. Respondemos em até 15 dias. Você também pode reclamar à Autoridade Nacional de Proteção de Dados (ANPD).</p>
+
+    <h2 id="exclusao">Como excluir seus dados</h2>
+    <p>Para apagar sua conta e todos os seus dados pessoais, escreva para <Mail/> com o assunto "Excluir conta", a partir do e-mail da sua conta ou informando o nome que aparece no jogo. Fazemos a exclusão em até 15 dias e confirmamos por e-mail.</p>
+    <p>Se você entrou com Facebook, também pode remover o Boletrados em Configurações e privacidade › Configurações › Apps e sites, no Facebook. Isso corta o acesso do jogo à sua conta; o pedido por e-mail apaga os dados que já estão com a gente.</p>
 
     <h2>Segurança</h2>
     <p>As conexões usam HTTPS, o cookie de sessão não pode ser lido por scripts e guardamos apenas um resumo criptográfico do token de login. Nenhum sistema é infalível: se houver um incidente que possa trazer risco a você, avisaremos.</p>
@@ -77,7 +81,7 @@ export function PrivacyPage() {
 }
 
 export function TermsPage() {
-  return <LegalShell eyebrow="TERMOS" title="Termos de Uso">
+  return <LegalShell title="Termos de Uso">
     <p>Ao usar o Boletrados, você concorda com estes termos. Eles são curtos de propósito.</p>
 
     <h2>O serviço</h2>

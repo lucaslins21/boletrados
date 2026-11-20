@@ -34,6 +34,10 @@ services:
         sync: false # ex.: https://boletrados.vercel.app
       - key: GOOGLE_CLIENT_ID
         sync: false
+      - key: FACEBOOK_APP_ID
+        sync: false # App ID do Facebook Login (público)
+      - key: FACEBOOK_APP_SECRET
+        sync: false # segredo do app do Facebook
       - key: VAPID_PUBLIC_KEY
         sync: false
       - key: VAPID_PRIVATE_KEY

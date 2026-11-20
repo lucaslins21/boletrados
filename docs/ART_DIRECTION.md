@@ -76,6 +76,10 @@ No desktop (≥ 1024px), a coluna da partida tem 680px, o enunciado 26px e as al
 | `Loading`, `HeroArt` | `game/Decor.tsx` | Carregamento e ilustração da entrada |
 | botões `.gd-btn` (`--gold`, `--blue`, `--white`, `--sm`, `--wide`) | `game/game.css` | Ações do jogo |
 
+### Formato de app (navegação e texto)
+
+O site é um app: uma coluna do tamanho de um celular (centralizada no desktop, `game/app.css`), barra superior com o jogador e barra de abas (Perguntas, Perfil, Início, Regras, Mais). **A entrada e a home cabem numa tela, sem rolagem.** Cada tela tem uma ação principal clara e quase nenhum texto explicativo: nada de rótulo em caixa alta acima do título, subtítulo explicando a tela ou bloco "como funciona" (as regras ficam na aba Regras, os avisos e links no Mais).
+
 ### Estilo cartoon (regra comum das ilustrações)
 
 Contorno de tinta `#13213D` (a mesma do mascote), cor chapada, profundidade sólida embaixo (cópia deslocada na cor escura) e um brilho branco no alto. Símbolos sobre cor são brancos com contorno de tinta (`paint-order: stroke`). O cinza dos estados bloqueados usa contorno `#8D9BB4`, mais claro, para não competir com o que já foi conquistado.

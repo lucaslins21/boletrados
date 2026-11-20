@@ -1,18 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
-import { Check, Copy, KeyRound, Plus, Share2 } from 'lucide-react';
+import { Check, Copy, KeyRound, Share2 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router';
-import { Banner, Modal, Pill } from '../components/ui';
+import { Banner, Modal } from '../components/ui';
 import { ApiError, api, inviteUrl, type ApiMatch } from './api';
-import { LoginCard } from './LoginCard';
-import { NotificationsCard } from './NotificationsCard';
-import { finishedText, me, opponent, timeLeft } from './format';
+import { LoginButtons } from './LoginCard';
+import { me, opponent, timeLeft } from './format';
 import { pendingInvite, useSession } from './session';
 import { HeroArt, Loading } from '../game/Decor';
 import { Mascot } from '../game/Mascot';
-import { Logo } from '../game/Logo';
-import { Trophy } from '../game/art';
-import { CATEGORY_ORDER } from '../game/theme';
+import { Wordmark } from '../game/Logo';
 import { Avatar } from '../game/Avatar';
 
 export function HomePage() {
@@ -27,16 +25,21 @@ export function HomePage() {
 }
 
 function Welcome() {
-  return <section className="online-welcome">
-    <div className="online-welcome-copy">
-      <Logo size={92} arc/>
-      <Pill tone="lime"><span className="tiny-pulse"/> X1 ONLINE ENTRE AMIGOS</Pill>
-      <h1>Quem sabe de <em>futebol</em> merece um troféu.</h1>
-      <p>Desafie um amigo por link ou código e jogue no seu tempo. Acerte perguntas, dispute categorias e conquiste os 6 troféus antes dele.</p>
-      <HeroArt/>
+  return <section className="welcome">
+    <div className="welcome-brand">
+      <Wordmark height={58} arc/>
+      <p>Quem sabe de bola, joga</p>
     </div>
-    <div className="main-card"><LoginCard subtitle="Sua conta guarda suas partidas e as perguntas que você já viu."/></div>
+    <div className="welcome-art"><HeroArt shelf={false}/></div>
+    <LoginButtons/>
   </section>;
+}
+
+/** Ordem da fileira: sua vez, vez do adversário, convites e encerradas (as mais recentes). */
+function sortMatches(list: ApiMatch[]) {
+  const rank = (m: ApiMatch) => m.status === 'active' ? (m.turn?.my_turn ? 0 : 1) : m.status === 'waiting_opponent' ? 2 : 3;
+  let finished = 0;
+  return [...list].sort((a, b) => rank(a) - rank(b) || b.id - a.id).filter(m => m.status !== 'finished' || ++finished <= 6);
 }
 
 function MatchesHome() {
@@ -45,7 +48,7 @@ function MatchesHome() {
   const [error, setError] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [shared, setShared] = useState<{ token: string; code: string } | null>(null);
-  const [code, setCode] = useState('');
+  const [askCode, setAskCode] = useState(false);
 
   const load = useCallback(() => {
     api.matches().then(({ matches }) => { setMatches(matches); setError(null); })
@@ -64,79 +67,66 @@ function MatchesHome() {
       .catch((e: unknown) => setError(e instanceof ApiError ? e.message : 'Não foi possível criar o convite.'))
       .finally(() => setCreating(false));
   };
-  const joinByCode = (event: FormEvent) => {
-    event.preventDefault();
-    const clean = code.trim().toUpperCase();
-    if (clean) navigate(`/convite/${encodeURIComponent(clean.startsWith('BOLA-') ? clean : `BOLA-${clean}`)}`);
-  };
 
-  const list = matches ?? [];
-  const groups = [
-    { title: 'Sua vez', items: list.filter(m => m.status === 'active' && m.turn?.my_turn) },
-    { title: 'Vez do adversário', items: list.filter(m => m.status === 'active' && !m.turn?.my_turn) },
-    { title: 'Convites aguardando', items: list.filter(m => m.status === 'waiting_opponent') },
-    { title: 'Encerradas', items: list.filter(m => m.status === 'finished') },
-  ].filter(group => group.items.length);
+  const list = sortMatches(matches ?? []);
+  const myTurn = list.filter(m => m.status === 'active' && m.turn?.my_turn).length;
+  const bubble = matches === null ? null : myTurn ? `É a sua vez em ${myTurn === 1 ? '1 partida' : `${myTurn} partidas`}!` : list.length ? 'Bora mais um X1?' : 'Desafia um amigo aí!';
 
-  return <div className="content-layout">
-    <main className="main-card">
-      <div className="eyebrow eyebrow--green"><span className="tiny-pulse"/> SEUS X1</div>
-      <h1 className="screen-title">Quem você vai desafiar hoje?</h1>
-      <p className="screen-subtitle">Até 3 partidas em andamento. Cada vez tem 24 horas para ser jogada.</p>
-      <div className="online-actions">
-        <button className="button button--primary button--lg" onClick={createInvite} disabled={creating}><Plus size={19}/> Novo desafio</button>
-        <form className="code-form" onSubmit={joinByCode}>
-          <label htmlFor="invite-code" className="sr-only">Código do convite</label>
-          <input id="invite-code" className="text-input" value={code} onChange={e => setCode(e.target.value)} placeholder="BOLA-XXXXXX" autoComplete="off" autoCapitalize="characters"/>
-          <button className="button button--ghost" disabled={!code.trim()}><KeyRound size={17}/> Entrar</button>
-        </form>
+  return <div className="home">
+    <div className="home-stage">
+      {bubble && <motion.p key={bubble} className="home-bubble" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>{bubble}</motion.p>}
+      <Mascot mood="happy" size={118}/>
+    </div>
+    <button className="home-play" onClick={createInvite} disabled={creating}>{creating ? 'Criando…' : 'Desafiar amigo'}</button>
+    {error && <p className="form-error home-error" role="alert">{error}</p>}
+    <section className="home-matches" aria-label="Suas partidas">
+      <div className="home-matches-head"><h2>Suas partidas</h2>{myTurn > 0 && <span className="home-badge">{myTurn} sua vez</span>}</div>
+      <div className="match-strip">
+        <button className="match-card match-card--code" onClick={() => setAskCode(true)}><KeyRound size={30}/><span>Tenho um código</span></button>
+        {matches === null && !error && <div className="match-card match-card--loading"><Loading label=""/></div>}
+        {list.map(m => <MatchCard key={m.id} match={m}/>)}
       </div>
-      {error && <p className="form-error" role="alert">{error}</p>}
-      {matches === null && !error && <Loading label="Carregando partidas…"/>}
-      {matches !== null && !groups.length && <div className="home-empty">
-        <Mascot mood="happy" size={86}/>
-        <p><b>Bora estrear?</b> Crie um desafio e mande o link para um amigo.</p>
-      </div>}
-      {groups.map(group => <section key={group.title} className="match-group" aria-label={group.title}>
-        <h2 className="match-group-title">{group.title} <span>{group.items.length}</span></h2>
-        <ul className="match-list">{group.items.map(m => <li key={m.id}><MatchRow match={m}/></li>)}</ul>
-      </section>)}
-    </main>
-    <aside className="aside-panel"><p className="eyebrow">COMO FUNCIONA</p><h3>Um desafio. Seis troféus.</h3>
-      <div className="side-rule"><span className="rule-number">01</span><p>Crie um desafio e mande o link ou o código.</p></div>
-      <div className="side-rule"><span className="rule-number">02</span><p>Acertou? Continue. Errou? A vez passa.</p></div>
-      <div className="side-rule"><span className="rule-number">03</span><p>Três acertos seguidos valem uma disputa de troféu.</p></div>
-      <div className="divider"/>
-      <NotificationsCard/>
-    </aside>
+    </section>
     {shared && <InviteShareModal token={shared.token} code={shared.code} onClose={() => setShared(null)}/>}
+    {askCode && <CodeModal onClose={() => setAskCode(false)} onSubmit={code => navigate(`/convite/${encodeURIComponent(code)}`)}/>}
   </div>;
 }
 
-function MatchRow({ match }: { match: ApiMatch }) {
+function CodeModal({ onClose, onSubmit }: { onClose: () => void; onSubmit: (code: string) => void }) {
+  const [code, setCode] = useState('');
+  const submit = (event: FormEvent) => {
+    event.preventDefault();
+    const clean = code.trim().toUpperCase();
+    if (clean) onSubmit(clean.startsWith('BOLA-') ? clean : `BOLA-${clean}`);
+  };
+  return <Modal label="Entrar com código" onClose={onClose} className="modal-card--sheet">
+    <h2>Código do convite</h2>
+    <form className="code-form" onSubmit={submit}>
+      <label htmlFor="invite-code" className="sr-only">Código do convite</label>
+      <input id="invite-code" className="text-input" value={code} onChange={e => setCode(e.target.value)} placeholder="BOLA-XXXXXX" autoComplete="off" autoCapitalize="characters" autoFocus/>
+      <button className="button button--primary" disabled={!code.trim()}>Entrar</button>
+    </form>
+  </Modal>;
+}
+
+/** Cartão de partida na fileira: adversário, placar de troféus e situação. */
+function MatchCard({ match }: { match: ApiMatch }) {
   const mine = me(match);
   const other = opponent(match);
-  const { user } = useSession();
-  const detail = match.status === 'waiting_opponent' ? `Código ${match.invite?.code ?? ''} · expira ${match.invite ? timeLeft(match.invite.expires_at) : ''}`
-    : match.status === 'finished' ? finishedText(match, user)
-    : match.turn?.my_turn ? `Sua vez · prazo ${timeLeft(match.turn.deadline_at)}`
-    : `Vez de ${other?.user.display_name} · prazo ${match.turn ? timeLeft(match.turn.deadline_at) : ''}`;
   const myTurn = match.status === 'active' && !!match.turn?.my_turn;
   const iWon = match.status === 'finished' && match.winner_seat === match.my_seat;
-  const status = match.status === 'waiting_opponent' ? { label: 'CONVITE', tone: 'wait' }
-    : match.status === 'finished' ? { label: iWon ? 'VITÓRIA' : 'DERROTA', tone: iWon ? 'win' : 'loss' }
-    : myTurn ? { label: 'SUA VEZ', tone: 'go' } : { label: 'AGUARDANDO', tone: 'wait' };
-  const shelf = (won: readonly string[]) => <span className="match-shelf">{CATEGORY_ORDER.map(id => <Trophy key={id} id={id} won={won.includes(id)} size={13}/>)}</span>;
-  return <Link to={`/partidas/${match.id}`} className={`match-row ${myTurn ? 'match-row--my-turn' : ''}`}>
-    <Avatar user={other?.user} className="player-avatar player-avatar--1"/>
-    <span className="match-row-main">
-      <span className="match-row-top"><strong>{other ? `vs ${other.user.display_name}` : 'Aguardando adversário'}</strong>
-        <span className={`match-status match-status--${status.tone}`}>{status.label}</span></span>
-      {match.status !== 'waiting_opponent' && <span className="match-shelves" aria-label={`Troféus: você ${mine?.trophies.length ?? 0}, adversário ${other?.trophies.length ?? 0}`}>
-        {shelf(mine?.trophies ?? [])}<i>×</i>{shelf(other?.trophies ?? [])}
-      </span>}
-      <small>{detail}</small>
+  const foot = match.status === 'waiting_opponent' ? { text: match.invite?.code ?? 'Convite', tone: 'wait' }
+    : match.status === 'finished' ? { text: iWon ? 'Vitória' : 'Derrota', tone: iWon ? 'win' : 'loss' }
+    : myTurn ? { text: 'Sua vez', tone: 'go' }
+    : { text: match.turn ? `Rival · ${timeLeft(match.turn.deadline_at).replace('em ', '')}` : 'Vez do rival', tone: 'wait' };
+  const label = other ? `Partida contra ${other.user.display_name}: ${foot.text}` : `Convite ${match.invite?.code ?? ''}`;
+  return <Link to={`/partidas/${match.id}`} className={`match-card ${myTurn ? 'match-card--go' : ''}`} aria-label={label}>
+    <span className="match-card-avatar">
+      <Avatar user={other?.user ?? { display_name: '?' }} className="player-avatar"/>
+      {other && <span className="match-card-score">{mine?.trophies.length ?? 0}-{other.trophies.length}</span>}
     </span>
+    <span className="match-card-name">{other?.user.display_name ?? 'Aguardando'}</span>
+    <span className={`match-card-foot match-card-foot--${foot.tone}`}>{foot.text}</span>
   </Link>;
 }
 
@@ -149,9 +139,8 @@ export function InviteShareModal({ token, code, onClose }: { token: string | nul
   };
   const share = () => { void navigator.share?.({ title: 'Boletrados', text: message, url: link ?? undefined }).catch(() => undefined); };
   return <Modal label="Convite criado" onClose={onClose}>
-    <Pill tone="lime">DESAFIO CRIADO</Pill>
-    <h2>Agora é só chamar o amigo.</h2>
-    <p>Mande o link ou o código. O convite vale por 7 dias e a partida começa quando ele aceitar.</p>
+    <h2>Chame seu amigo</h2>
+    <p>O convite vale por 7 dias.</p>
     <div className="invite-preview"><span>CÓDIGO</span><strong>{code}</strong>
       <button className="icon-button" onClick={() => copy(code, 'code')} aria-label="Copiar código">{copied === 'code' ? <Check size={18}/> : <Copy size={18}/>}</button></div>
     {link && <div className="share-buttons">

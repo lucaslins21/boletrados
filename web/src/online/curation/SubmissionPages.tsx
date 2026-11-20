@@ -7,6 +7,7 @@ import { QuestionForm } from './QuestionForm';
 import { StatusPill } from './StatusPill';
 import { CategoryBadge } from '../../game/art';
 import { Loading } from '../../game/Decor';
+import { Mascot } from '../../game/Mascot';
 
 const NOTICE_KEY = 'boletrados:submission-notice';
 
@@ -23,14 +24,12 @@ export function MySubmissionsPage() {
 
   return <div className="content-layout">
     <main className="main-card">
-      <div className="eyebrow eyebrow--green"><span className="tiny-pulse"/> SUAS PERGUNTAS</div>
-      <h1 className="screen-title">Ajude a encher o banco.</h1>
-      <p className="screen-subtitle">Envie perguntas de futebol. Depois da aprovação da moderação, elas entram nas partidas de todo mundo, menos nas suas.</p>
+      <h1 className="screen-title">Suas perguntas</h1>
       <Link to="/perguntas/nova" className="button button--primary button--lg inline-button"><Plus size={19}/> Nova pergunta</Link>
       {notice && <Banner>{notice}</Banner>}
       {error && <p className="form-error" role="alert">{error}</p>}
       {items === null && !error && <Loading label="Carregando…"/>}
-      {items?.length === 0 && <Banner icon={<PenLine size={17}/>}>Você ainda não enviou perguntas.</Banner>}
+      {items?.length === 0 && <div className="home-empty"><Mascot mood="thinking" size={72}/><p>Aprovada pela moderação, sua pergunta entra no jogo de todo mundo (menos no seu).</p></div>}
       <ul className="submission-list">{items?.map(q => <li key={q.id} className="submission-item">
         <div className="submission-top"><StatusPill status={q.status} label={q.status_label}/>
           <span className="submission-cats">{q.categories.map(c => <CategoryBadge key={c} id={c} size={26}/>)}</span></div>
@@ -41,11 +40,6 @@ export function MySubmissionsPage() {
         {q.editable && <Link to={`/perguntas/${q.id}/editar`} className="text-action"><PenLine size={14}/> {q.status === 'changes_requested' ? 'Corrigir e reenviar' : 'Editar'} <ArrowRight size={14}/></Link>}
       </li>)}</ul>
     </main>
-    <aside className="aside-panel"><p className="eyebrow">COMO FUNCIONA</p><h3>Da sua ideia para o jogo.</h3>
-      <div className="side-rule"><span className="rule-number">01</span><p>Escreva enunciado, quatro alternativas, fonte e explicação.</p></div>
-      <div className="side-rule"><span className="rule-number">02</span><p>A moderação confere os fatos e pode pedir ajustes.</p></div>
-      <div className="side-rule"><span className="rule-number">03</span><p>Aprovada, ela entra no sorteio. Você nunca recebe as suas próprias perguntas.</p></div>
-    </aside>
   </div>;
 }
 
@@ -78,12 +72,11 @@ export function SubmissionFormPage() {
   if (id && error) return <div className="main-card online-narrow"><p className="form-error">{error}</p><Link to="/perguntas" className="button button--primary">Voltar</Link></div>;
   if (id && !existing) return <Loading label="Carregando…"/>;
   if (existing && !existing.editable) return <div className="main-card online-narrow"><h1 className="screen-title">Em análise.</h1>
-    <p className="screen-subtitle">Esta pergunta já está com a moderação e não pode ser editada agora.</p><Link to="/perguntas" className="button button--primary">Voltar</Link></div>;
+    <p>Já está com a moderação e não pode ser editada agora.</p><Link to="/perguntas" className="button button--primary">Voltar</Link></div>;
 
   return <div className="content-layout content-layout--form">
     <main className="main-card">
-      <div className="eyebrow eyebrow--green">{existing ? 'CORRIGIR PERGUNTA' : 'NOVA PERGUNTA'}</div>
-      <h1 className="screen-title">{existing ? 'Ajuste e reenvie.' : 'Mande a sua.'}</h1>
+      <h1 className="screen-title">{existing ? 'Corrigir pergunta' : 'Nova pergunta'}</h1>
       {existing?.feedback && <Banner icon={<MessageSquareWarning size={17}/>}>Moderação: {existing.feedback}</Banner>}
       <QuestionForm
         initial={existing ? toInput(existing) : undefined}

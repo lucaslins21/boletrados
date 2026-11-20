@@ -110,6 +110,7 @@ export const api = {
   me: () => request<{ user: ApiUser }>('GET', '/me'),
   devLogin: (displayName: string) => request<{ user: ApiUser }>('POST', '/auth/dev', { display_name: displayName }),
   googleLogin: (credential: string) => request<{ user: ApiUser }>('POST', '/auth/google', { credential }),
+  facebookLogin: (accessToken: string) => request<{ user: ApiUser }>('POST', '/auth/facebook', { access_token: accessToken }),
   logout: () => request<null>('DELETE', '/session'),
 
   matches: () => request<{ matches: ApiMatch[] }>('GET', '/matches'),

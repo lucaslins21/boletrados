@@ -28,6 +28,8 @@ services:
       RAILS_ENV: development
       # Client ID OAuth do Google (público). Sem ele, o login responde 401.
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      FACEBOOK_APP_ID: ${FACEBOOK_APP_ID:-}
+      FACEBOOK_APP_SECRET: ${FACEBOOK_APP_SECRET:-}
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:5173}
       FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
       # Web Push: gere com `docker compose run --rm api bin/rails push:vapid_keys`. Sem elas, os avisos push ficam desligados.

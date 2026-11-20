@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   namespace :auth do
     post "google", to: "google#create"
+    post "facebook", to: "facebook#create"
     # Login de desenvolvimento: a rota só existe em development/test.
     post "dev", to: "dev#create" if Rails.env.local?
   end
