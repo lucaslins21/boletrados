@@ -5,7 +5,7 @@ import { CATEGORIES, getCategory } from '../game/categories';
 
 const ana: ApiUser = { id: 1, display_name: 'Ana Souza', avatar_url: null };
 const bia: ApiUser = { id: 2, display_name: 'Bia', avatar_url: 'https://example.com/b.png' };
-const player = (seat: 0 | 1, user: ApiUser): MatchPlayer => ({ seat, user, trophies: [], attempts: 0, correct_answers: 0 });
+const player = (seat: 0 | 1, user: ApiUser): MatchPlayer => ({ seat, user, trophies: [], attempts: 0, correct_answers: 0, streak: 0 });
 
 function match(overrides: Partial<ApiMatch> = {}): ApiMatch {
   return {

@@ -246,7 +246,9 @@ export function ResultSheet({ result, opponentName, streakAfter, onContinue }: {
   const good = result.correct;
   const title = result.trophy_won ? 'Troféu conquistado!' : good ? 'Boa! Acertou.' : result.timed_out ? 'Tempo esgotado!' : 'Errou!';
   const next = good
-    ? (result.trophy_won ? 'Você continua com a vez.' : streakAfter >= 3 ? 'Três seguidas! Hora de disputar um troféu.' : `Sequência: ${streakAfter}/3. Você continua.`)
+    ? (result.trophy_won ? 'Você continua com a vez.' : streakAfter >= 3 ? 'Três acertos! Hora de disputar um troféu.' : `Sequência: ${streakAfter}/3. Você continua.`)
+    : result.context === 'trophy' ? `A sequência zerou e a vez passa para ${opponentName}.`
+    : streakAfter > 0 ? `A vez passa para ${opponentName}. Seus ${streakAfter} ${streakAfter === 1 ? 'acerto fica guardado' : 'acertos ficam guardados'}.`
     : `A vez passa para ${opponentName}.`;
   return <motion.section className="gd-sheet" initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ type: 'spring', stiffness: 240, damping: 22 }} aria-live="polite">
     <div className="gd-sheet-head">
@@ -259,7 +261,7 @@ export function ResultSheet({ result, opponentName, streakAfter, onContinue }: {
   </motion.section>;
 }
 
-/** Escolha do troféu depois de três acertos seguidos. */
+/** Escolha do troféu depois de três acertos (somados entre as vezes). */
 export function TrophyPick({ trophies, busy, onPick }: { trophies: CategoryId[]; busy: boolean; onPick: (id: CategoryId) => void }) {
   return <motion.section className="gd-panel" initial={{ scale: 0.92, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
     <span className="gd-kicker">TRÊS ACERTOS SEGUIDOS!</span>

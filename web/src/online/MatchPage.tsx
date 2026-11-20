@@ -101,7 +101,7 @@ export function MatchPage() {
   const showResultFor = useCallback(async (question: OpenQuestion) => {
     const next = await load();
     const last = next?.last_result;
-    if (last?.match_question_id === question.id) setAnswered({ question, result: last, streakAfter: next?.turn?.streak ?? 0 });
+    if (last?.match_question_id === question.id) setAnswered({ question, result: last, streakAfter: (next && me(next)?.streak) ?? 0 });
   }, [load]);
 
   if (missing) return <GameFrame title="PARTIDA"><StageMessage title="Partida não encontrada" text="Ela não existe ou você não participa dela."/></GameFrame>;
@@ -134,7 +134,7 @@ export function MatchPage() {
     const question = match.question;
     const response = await act(() => api.answer(match.id, index));
     if (response) {
-      setAnswered({ question, result: response.result, streakAfter: response.match.turn?.streak ?? 0 });
+      setAnswered({ question, result: response.result, streakAfter: me(response.match)?.streak ?? 0 });
       if (response.result.trophy_won) setCelebrating(response.result.category);
     } else {
       void showResultFor(question); // provavelmente o prazo acabou no servidor
@@ -147,7 +147,8 @@ export function MatchPage() {
     if (answered) {
       return <>
         <QuestionStage question={answered.question} imageUrl={answered.question.image_url ? apiUrl(answered.question.image_url) : null}
-          streak={turn?.streak ?? 0} deadline={0} busy result={answered.result} onAnswer={() => undefined} onExpire={() => undefined}/>
+          // "ACERTO n/3" da pergunta respondida: a sequência de antes da resposta (acerto normal somou 1).
+          streak={answered.result.correct && answered.result.context === 'normal' ? Math.max(0, answered.streakAfter - 1) : answered.streakAfter} deadline={0} busy result={answered.result} onAnswer={() => undefined} onExpire={() => undefined}/>
         {!celebrating && <ResultSheet result={answered.result} opponentName={opponentName(match)} streakAfter={answered.streakAfter} onContinue={continueAfterResult}/>}
       </>;
     }
@@ -188,7 +189,8 @@ export function MatchPage() {
   const title = match.status === 'waiting_opponent' ? 'CONVITE' : match.status === 'finished' ? 'FIM DE JOGO' : `POSSE ${String(turn?.number ?? 1).padStart(2, '0')}`;
   const subtitle = match.status !== 'active' || !turn ? undefined
     : myTurn ? `SUA VEZ · PRAZO ${timeLeft(turn.deadline_at).toUpperCase()}` : `VEZ DE ${opponentName(match).toUpperCase()}`;
-  const streak = answered ? answered.streakAfter : turn?.streak ?? 0;
+  // Sequência do próprio jogador: fica guardada entre as vezes (só a pergunta do troféu zera).
+  const streak = answered ? answered.streakAfter : me(match)?.streak ?? 0;
 
   return <>
     <GameFrame title={title} subtitle={subtitle} calm={!!answered || (myTurn && turn?.phase === 'question')}>
@@ -196,7 +198,7 @@ export function MatchPage() {
         <button aria-label="Fechar aviso" onClick={() => { setError(null); setNotice(null); }}><X size={16}/></button></div>}
       {match.status !== 'waiting_opponent' && <Scoreboard match={match}/>}
       {content}
-      {match.status === 'active' && <BottomBar streak={Math.min(streak, 3)} showStreak={myTurn || !!answered}
+      {match.status === 'active' && <BottomBar streak={Math.min(streak, 3)} showStreak
         onResign={!answered && turn?.phase !== 'question' ? () => setConfirmResign(true) : undefined}/>}
     </GameFrame>
     {celebrating && <TrophyCelebration category={celebrating} onContinue={() => setCelebrating(null)}/>}

@@ -1,6 +1,9 @@
 # Motor de regras do X1, em funções puras: recebe um estado e devolve um novo estado, sem banco nem relógio.
-# Espelha web/src/lib/game.ts (modo demo) e acrescenta as regras do servidor (docs/ARQUITETURA.md):
-# tolerância de rede no prazo da pergunta, prazo de 24h por vez e W.O. após 3 estouros seguidos.
+# Inclui a tolerância de rede no prazo da pergunta, o prazo de 24h por vez e o W.O. após 3 estouros seguidos.
+#
+# Sequência de acertos (docs/PRODUCT.md §6): é de cada jogador e sobrevive à troca de vez. Errar ou estourar o
+# tempo numa pergunta normal passa a vez mas mantém os acertos; só a pergunta do troféu (acertando ou errando)
+# zera a sequência. `streak` é a do jogador da vez; `saved_streaks` guarda a de cada assento entre as vezes.
 #
 # Quem chama (serviços/controllers) é responsável por: escolher a pergunta (QuestionPicker), informar as
 # categorias elegíveis, persistir o estado e agendar os jobs de prazo.
@@ -19,7 +22,7 @@ module MatchEngine
   Feedback = Data.define(:correct, :selected_index, :correct_index, :context, :category, :trophy_won, :timed_out)
 
   State = Data.define(
-    :phase, :active_seat, :trophies, :streak, :attempts, :correct_answers, :consecutive_timeouts,
+    :phase, :active_seat, :trophies, :streak, :saved_streaks, :attempts, :correct_answers, :consecutive_timeouts,
     :drawn_category, :selected_category, :context, :question, :deadline, :feedback,
     :turn_number, :turn_deadline, :winner, :finished_reason
   )
@@ -28,7 +31,7 @@ module MatchEngine
 
   def new_match(now:)
     State.new(
-      phase: :lobby, active_seat: 0, trophies: [ [], [] ], streak: 0, attempts: [ 0, 0 ], correct_answers: [ 0, 0 ],
+      phase: :lobby, active_seat: 0, trophies: [ [], [] ], streak: 0, saved_streaks: [ 0, 0 ], attempts: [ 0, 0 ], correct_answers: [ 0, 0 ],
       consecutive_timeouts: [ 0, 0 ], drawn_category: nil, selected_category: nil, context: :normal, question: nil,
       deadline: nil, feedback: nil, turn_number: 1, turn_deadline: now + TURN_DURATION, winner: nil, finished_reason: nil
     )
@@ -90,11 +93,12 @@ module MatchEngine
     return state unless state.phase == :feedback && state.feedback
 
     feedback = state.feedback
-    return pass_turn(state, now: now) unless feedback.correct
+    # Erro na pergunta normal mantém os acertos; erro na pergunta do troféu zera.
+    return pass_turn(state, now: now, keep_streak: feedback.context != :trophy) unless feedback.correct
 
     if feedback.trophy_won
       return state.with(phase: :finished, winner: state.active_seat, finished_reason: :six_trophies, streak: 0, question: nil, feedback: nil) if winning_feedback?(state)
-      return pass_turn(state, now: now) unless KEEP_POSSESSION_AFTER_TROPHY
+      return pass_turn(state.with(streak: 0), now: now) unless KEEP_POSSESSION_AFTER_TROPHY
 
       return state.with(phase: :draw, streak: 0, question: nil, feedback: nil, drawn_category: nil)
     end
@@ -190,12 +194,21 @@ module MatchEngine
     )
   end
 
-  def pass_turn(state, now:)
+  # Passa a vez guardando a sequência de quem sai (ou zerando, se `keep_streak` for falso) e trazendo a de quem entra.
+  # Quem volta com 3 acertos guardados (ex.: estourou as 24h na escolha do troféu) começa direto na escolha do troféu.
+  def pass_turn(state, now:, keep_streak: true)
+    seat = state.active_seat
+    nxt = other_seat(seat)
+    saved = replace(state.saved_streaks, seat, keep_streak ? state.streak : 0)
     state.with(
-      phase: :lobby, active_seat: other_seat(state.active_seat), streak: 0, turn_number: state.turn_number + 1,
-      turn_deadline: now + TURN_DURATION, question: nil, selected_category: nil, feedback: nil, drawn_category: nil
+      phase: saved[nxt] >= STREAK_FOR_TROPHY ? :trophy : :lobby, active_seat: nxt, streak: saved[nxt], saved_streaks: saved,
+      turn_number: state.turn_number + 1, turn_deadline: now + TURN_DURATION,
+      question: nil, selected_category: nil, feedback: nil, drawn_category: nil
     )
   end
+
+  # Sequência de um assento, esteja ele com a vez ou não.
+  def streak_of(state, seat) = seat == state.active_seat ? state.streak : state.saved_streaks[seat]
 
   def replace(pair, index, value)
     copy = pair.dup

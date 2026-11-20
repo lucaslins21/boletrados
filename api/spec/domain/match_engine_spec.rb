@@ -114,11 +114,11 @@ RSpec.describe MatchEngine do
   end
 
   describe "sair com pergunta aberta" do
-    it "conta como tempo esgotado e passa a vez" do
+    it "conta como tempo esgotado e passa a vez, guardando os acertos do jogador" do
       asked = described_class.start_normal_question(in_draw.with(drawn_category: "europeu", streak: 2), question: question, now: now)
       forfeited = described_class.forfeit_question(asked)
       expect(forfeited.feedback).to have_attributes(correct: false, timed_out: true, selected_index: nil)
-      expect(described_class.continue_after_feedback(forfeited, now: now)).to have_attributes(phase: :lobby, active_seat: 1, streak: 0)
+      expect(described_class.continue_after_feedback(forfeited, now: now)).to have_attributes(phase: :lobby, active_seat: 1, streak: 0, saved_streaks: [ 2, 0 ])
     end
 
     it "não faz nada fora de uma pergunta" do
@@ -133,11 +133,25 @@ RSpec.describe MatchEngine do
       expect(state).to have_attributes(phase: :draw, streak: 1, active_seat: 0, turn_number: 1)
     end
 
-    it "erro zera a sequência, passa a vez e renova o prazo de 24h" do
+    it "erro passa a vez e renova o prazo de 24h, mas o jogador guarda os acertos para a próxima vez" do
       state = described_class.continue_after_feedback(play_normal(in_draw, "brasileiro", correct: true), now: now)
+      state = described_class.continue_after_feedback(play_normal(state, "sulamericano", correct: true), now: now)
       later = now + 3600
       state = described_class.continue_after_feedback(play_normal(state, "europeu", correct: false), now: later)
-      expect(state).to have_attributes(phase: :lobby, streak: 0, active_seat: 1, turn_number: 2, turn_deadline: later + 24 * 3600)
+      expect(state).to have_attributes(phase: :lobby, streak: 0, active_seat: 1, turn_number: 2, turn_deadline: later + 24 * 3600, saved_streaks: [ 2, 0 ])
+      expect(described_class.streak_of(state, 0)).to eq(2)
+
+      # O adversário erra de primeira: a vez volta com os 2 acertos guardados, e mais um libera o troféu.
+      back = described_class.continue_after_feedback(play_normal(described_class.enter_draw(state), "selecoes", correct: false), now: later)
+      expect(back).to have_attributes(active_seat: 0, streak: 2, phase: :lobby)
+      third = described_class.continue_after_feedback(play_normal(described_class.enter_draw(back), "escudos", correct: true), now: later)
+      expect(third).to have_attributes(phase: :trophy, streak: 3, active_seat: 0)
+    end
+
+    it "tempo esgotado na pergunta normal também guarda os acertos" do
+      asked = described_class.start_normal_question(in_draw.with(drawn_category: "europeu", streak: 1), question: question, now: now)
+      timed_out = described_class.continue_after_feedback(described_class.answer(asked, nil, now: now + 30), now: now + 30)
+      expect(timed_out.saved_streaks).to eq([ 1, 0 ])
     end
 
     it "três acertos seguidos liberam a escolha de troféu" do
@@ -156,10 +170,17 @@ RSpec.describe MatchEngine do
       expect(described_class.continue_after_feedback(fb, now: now)).to have_attributes(phase: :draw, streak: 0, active_seat: 0)
     end
 
-    it "erro decisivo não concede troféu e passa a vez" do
+    it "erro decisivo não concede troféu, zera a sequência e passa a vez" do
       fb = play_trophy(reach_trophy_choice(in_draw), "estadios", correct: false)
       expect(fb.trophies[0]).to eq([])
-      expect(described_class.continue_after_feedback(fb, now: now)).to have_attributes(phase: :lobby, streak: 0, active_seat: 1)
+      expect(described_class.continue_after_feedback(fb, now: now)).to have_attributes(phase: :lobby, streak: 0, active_seat: 1, saved_streaks: [ 0, 0 ])
+    end
+
+    it "quem estoura as 24h na escolha do troféu volta direto para a escolha" do
+      expired = described_class.expire_turn(reach_trophy_choice(in_draw), now: now + 24 * 3600)
+      expect(expired).to have_attributes(active_seat: 1, saved_streaks: [ 3, 0 ])
+      back = described_class.expire_turn(expired, now: expired.turn_deadline)
+      expect(back).to have_attributes(active_seat: 0, phase: :trophy, streak: 3)
     end
 
     it "categorias conquistadas continuam no sorteio normal" do
@@ -197,7 +218,7 @@ RSpec.describe MatchEngine do
 
     it "estouro passa a vez e conta para o jogador" do
       expired = described_class.expire_turn(described_class.new_match(now: now).with(streak: 2), now: deadline)
-      expect(expired).to have_attributes(phase: :lobby, active_seat: 1, streak: 0, consecutive_timeouts: [ 1, 0 ], turn_deadline: deadline + 24 * 3600)
+      expect(expired).to have_attributes(phase: :lobby, active_seat: 1, streak: 0, saved_streaks: [ 2, 0 ], consecutive_timeouts: [ 1, 0 ], turn_deadline: deadline + 24 * 3600)
     end
 
     it "três estouros seguidos do mesmo jogador dão W.O. ao adversário" do

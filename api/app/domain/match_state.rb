@@ -20,7 +20,8 @@ module MatchState
     TIME_FIELDS.each { |field| data[field] = data[field] && Time.iso8601(data[field]) }
     data[:question] = data[:question] && MatchEngine::QuestionRef.new(**data[:question])
     data[:feedback] = data[:feedback] && MatchEngine::Feedback.new(**data[:feedback].merge(context: data[:feedback][:context]&.to_sym))
-    %i[trophies attempts correct_answers consecutive_timeouts].each { |field| data[field] = data[field].map { |v| v.is_a?(Array) ? v.freeze : v }.freeze }
+    data[:saved_streaks] ||= [ 0, 0 ] # partidas criadas antes da sequência por jogador
+    %i[trophies attempts saved_streaks correct_answers consecutive_timeouts].each { |field| data[field] = data[field].map { |v| v.is_a?(Array) ? v.freeze : v }.freeze }
     MatchEngine::State.new(**data)
   end
 end

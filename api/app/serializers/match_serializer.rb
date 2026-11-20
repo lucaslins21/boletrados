@@ -39,7 +39,8 @@ module MatchSerializer
       user: UserSerializer.call(match_player.user),
       trophies: state ? state.trophies[seat] : [],
       attempts: state ? state.attempts[seat] : 0,
-      correct_answers: state ? state.correct_answers[seat] : 0
+      correct_answers: state ? state.correct_answers[seat] : 0,
+      streak: state ? MatchEngine.streak_of(state, seat) : 0
     }
   end
 

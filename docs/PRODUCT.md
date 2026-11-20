@@ -65,8 +65,9 @@ Não existe pergunta só de imagem: o enunciado é sempre obrigatório. A imagem
 
 - **Pergunta normal** (categoria sorteada):
   - acerto soma 1 à sequência, e o jogador continua;
-  - erro ou tempo esgotado zera a sequência e passa a vez.
-- **Três acertos normais seguidos** dão o direito de tentar um troféu: o jogador **escolhe** um troféu que ainda não tem e recebe a **pergunta decisiva** daquela categoria.
+  - erro ou tempo esgotado **passa a vez, mas não zera a sequência**: os acertos ficam guardados e o jogador continua deles na próxima vez (ex.: estava 2/3, errou, volta na próxima vez com 2/3).
+- A sequência é **de cada jogador**. **Só a pergunta decisiva zera** (acertando ou errando). Quem estoura as 24 h já na escolha do troféu volta direto para essa escolha na vez seguinte.
+- **Três acertos normais** (somados entre vezes) dão o direito de tentar um troféu: o jogador **escolhe** um troféu que ainda não tem e recebe a **pergunta decisiva** daquela categoria.
 - **Pergunta decisiva**:
   - **acerto** conquista o troféu, zera a sequência, **mantém a vez** e volta ao sorteio. **Acertar o troféu não encerra a vez**: dá para ganhar vários troféus numa mesma vez. A regra é configurável (`keepPossessionAfterTrophy`), mas esta é a regra atual;
   - **erro**: não ganha o troféu, zera a sequência e perde a vez.

@@ -6,7 +6,7 @@ const BASE = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3000').repl
 export type Seat = 0 | 1;
 export type LoginProvider = 'google' | 'facebook';
 export type ApiUser = { id: number; display_name: string; avatar_url: string | null; admin?: boolean; providers?: LoginProvider[] };
-export type MatchPlayer = { seat: Seat; user: ApiUser; trophies: CategoryId[]; attempts: number; correct_answers: number };
+export type MatchPlayer = { seat: Seat; user: ApiUser; trophies: CategoryId[]; attempts: number; correct_answers: number; streak: number };
 export type TurnPhase = 'lobby' | 'draw' | 'question' | 'trophy' | 'empty' | 'finished';
 export type MatchTurn = {
   active_seat: Seat; my_turn: boolean; phase: TurnPhase; streak: number; number: number;

@@ -67,8 +67,8 @@ export function OnlineLayout() {
 
 const RULES = [
   'Sorteie uma categoria e responda em 15 segundos.',
-  'Acertou, continua jogando. Errou, a vez passa.',
-  'Três acertos seguidos: escolha um troféu e responda a pergunta decisiva.',
+  'Acertou, continua jogando. Errou, a vez passa, mas seus acertos ficam guardados.',
+  'Com três acertos, escolha um troféu e responda a pergunta decisiva. Ela zera a sequência.',
   'Quem juntar os 6 troféus primeiro vence. Cada vez tem 24 horas.',
 ];
 
