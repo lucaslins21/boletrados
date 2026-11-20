@@ -5,5 +5,5 @@ module UserSerializer
   end
 
   # O próprio usuário logado (inclui permissões).
-  def self.me(user) = call(user).merge(admin: user.admin?)
+  def self.me(user) = call(user).merge(admin: user.admin?, providers: user.providers)
 end

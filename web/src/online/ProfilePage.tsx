@@ -8,6 +8,7 @@ import { ApiError, api, type CategoryStat, type HeadToHead, type Profile } from 
 import { CategoryBadge, Trophy as TrophyArt } from '../game/art';
 import { Loading } from '../game/Decor';
 import { Avatar } from '../game/Avatar';
+import { ConnectedAccounts } from './ConnectedAccounts';
 
 const pct = (part: number, whole: number) => (whole ? Math.round((part / whole) * 100) : 0);
 
@@ -29,7 +30,7 @@ export function ProfilePage() {
     <Link to="/" className="button button--primary">Minhas partidas <ArrowRight size={17}/></Link></div>;
   if (!profile) return <Loading label="Carregando perfil…"/>;
 
-  const { user, summary } = profile;
+  const { user, summary, is_me: isMe } = profile;
   return <div className="content-layout">
     <main className="main-card profile-card">
       <div className="profile-head">
@@ -50,6 +51,7 @@ export function ProfilePage() {
         <ul className="meter-list">{profile.categories.map(stat => <CategoryMeter key={stat.category} stat={stat}/>)}</ul>
         <p className="center-hint">Tempo esgotado conta como erro.</p>
       </section>
+      {isMe && <ConnectedAccounts/>}
     </main>
     <aside className="aside-panel">
       {profile.head_to_head && <HeadToHeadCard h2h={profile.head_to_head} opponentName={user.display_name}/>}

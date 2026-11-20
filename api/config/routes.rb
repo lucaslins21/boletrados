@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   end
   resource :session, only: :destroy
   get "me", to: "me#show"
+  post "identities/:provider", to: "identities#create", constraints: { provider: /google|facebook/ }
+  delete "identities/:provider", to: "identities#destroy", constraints: { provider: /google|facebook/ }
   resources :profiles, only: :show
 
   # Curadoria: envio de perguntas pelos usuários e moderação pelos administradores.

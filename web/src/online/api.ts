@@ -4,7 +4,8 @@ import type { CategoryId } from '../game/categories';
 const BASE = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
 
 export type Seat = 0 | 1;
-export type ApiUser = { id: number; display_name: string; avatar_url: string | null; admin?: boolean };
+export type LoginProvider = 'google' | 'facebook';
+export type ApiUser = { id: number; display_name: string; avatar_url: string | null; admin?: boolean; providers?: LoginProvider[] };
 export type MatchPlayer = { seat: Seat; user: ApiUser; trophies: CategoryId[]; attempts: number; correct_answers: number };
 export type TurnPhase = 'lobby' | 'draw' | 'question' | 'trophy' | 'empty' | 'finished';
 export type MatchTurn = {
@@ -111,6 +112,9 @@ export const api = {
   devLogin: (displayName: string) => request<{ user: ApiUser }>('POST', '/auth/dev', { display_name: displayName }),
   googleLogin: (credential: string) => request<{ user: ApiUser }>('POST', '/auth/google', { credential }),
   facebookLogin: (accessToken: string) => request<{ user: ApiUser }>('POST', '/auth/facebook', { access_token: accessToken }),
+  linkGoogle: (credential: string) => request<{ user: ApiUser }>('POST', '/identities/google', { credential }),
+  linkFacebook: (accessToken: string) => request<{ user: ApiUser }>('POST', '/identities/facebook', { access_token: accessToken }),
+  unlinkProvider: (provider: LoginProvider) => request<{ user: ApiUser }>('DELETE', `/identities/${provider}`),
   logout: () => request<null>('DELETE', '/session'),
 
   matches: () => request<{ matches: ApiMatch[] }>('GET', '/matches'),

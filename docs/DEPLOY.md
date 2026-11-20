@@ -81,7 +81,7 @@ GitHub Actions (de hora em hora) ──► POST /internal/tick     cron-job.org 
    - Vercel: `VITE_FACEBOOK_APP_ID` (tipo Configuração) e **Redeploy**.
 5. Mude o app de **Desenvolvimento** para **Ao vivo** (no topo do painel). Em desenvolvimento, só quem tem função no app consegue entrar.
 
-Contas Google e Facebook da mesma pessoa viram contas diferentes no jogo (o login nunca vincula por e-mail).
+O login nunca vincula contas por e-mail. Para usar Google e Facebook na mesma conta, o jogador conecta o segundo login em **Perfil › Contas conectadas** (uma conta vazia daquele login é absorvida; uma conta com histórico não é misturada).
 
 ## 6. Tornar-se administrador (moderação)
 

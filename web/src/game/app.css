@@ -115,3 +115,14 @@
 .app-main .home-empty{display:flex;align-items:center;gap:12px;text-align:left}
 .app-main .home-empty p{margin:0;font-size:15px;line-height:1.45;color:var(--bt-ink-2)}
 .app-main .aside-panel{display:block}
+
+/* Contas conectadas (perfil) */
+.accounts{margin-top:var(--bt-space-6)}
+.accounts-list{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.accounts-row{display:flex;align-items:center;gap:12px;min-height:52px;padding:6px 12px;background:var(--bt-soft);border-radius:16px;flex-wrap:wrap}
+.accounts-name{font:800 16px var(--bt-font-display);color:var(--bt-ink);min-width:84px}
+.accounts-on{display:inline-flex;align-items:center;gap:4px;color:var(--bt-green-dark);font:700 14px var(--bt-font-text)}
+.accounts-row .text-action{margin-left:auto;color:var(--bt-red-dark)}
+.accounts-row .login-google,.accounts-row .login-btn{flex:1;min-width:200px;max-width:none}
+.accounts-hint{margin:10px 0 0;font-size:13px;color:var(--bt-muted)}
+.accounts-done{margin:6px 0 0;font-weight:700;color:var(--bt-green-dark)}
