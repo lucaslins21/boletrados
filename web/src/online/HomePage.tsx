@@ -3,7 +3,7 @@ import type { FormEvent } from 'react';
 import { Check, Copy, KeyRound, Share2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router';
-import { Banner, Modal } from '../components/ui';
+import { Modal } from '../components/ui';
 import { ApiError, api, inviteUrl, type ApiMatch } from './api';
 import { LoginButtons } from './LoginCard';
 import { me, opponent, timeLeft } from './format';
@@ -132,22 +132,22 @@ function MatchCard({ match }: { match: ApiMatch }) {
 
 export function InviteShareModal({ token, code, onClose }: { token: string | null; code: string; onClose: () => void }) {
   const [copied, setCopied] = useState<'link' | 'code' | null>(null);
-  const link = token ? inviteUrl(token) : null;
-  const message = `Bora um X1 no Boletrados? ${link ?? ''} (código ${code})`.replace('  ', ' ');
+  // O endereço do convite aceita o token (mais longo) ou o próprio código: sem token, o link usa o código.
+  const link = inviteUrl(token ?? code);
+  const message = `Bora um X1 no Boletrados? ${link} (código ${code})`;
   const copy = (text: string, what: 'link' | 'code') => {
     void navigator.clipboard?.writeText(text).then(() => { setCopied(what); window.setTimeout(() => setCopied(null), 1800); });
   };
-  const share = () => { void navigator.share?.({ title: 'Boletrados', text: message, url: link ?? undefined }).catch(() => undefined); };
+  const share = () => { void navigator.share?.({ title: 'Boletrados', text: message, url: link }).catch(() => undefined); };
   return <Modal label="Convite criado" onClose={onClose}>
     <h2>Chame seu amigo</h2>
     <p>O convite vale por 7 dias.</p>
     <div className="invite-preview"><span>CÓDIGO</span><strong>{code}</strong>
       <button className="icon-button" onClick={() => copy(code, 'code')} aria-label="Copiar código">{copied === 'code' ? <Check size={18}/> : <Copy size={18}/>}</button></div>
-    {link && <div className="share-buttons">
+    <div className="share-buttons">
       <button className="button button--primary button--full" onClick={() => copy(link, 'link')}>{copied === 'link' ? <><Check size={18}/> Link copiado</> : <><Copy size={18}/> Copiar link</>}</button>
       <a className="button button--ghost button--full" href={`https://wa.me/?text=${encodeURIComponent(message)}`} target="_blank" rel="noreferrer">Enviar no WhatsApp</a>
       {'share' in navigator && <button className="button button--ghost button--full" onClick={share}><Share2 size={18}/> Compartilhar</button>}
-    </div>}
-    {!link && <Banner>O link só aparece logo após criar o convite. Use o código, que continua válido.</Banner>}
+    </div>
   </Modal>;
 }

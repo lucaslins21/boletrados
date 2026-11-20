@@ -27,7 +27,8 @@ export function OnlineLayout() {
   const { pathname } = useLocation();
   const [sheet, setSheet] = useState<'rules' | 'more' | null>(null);
   const ready = status === 'anonymous' || status === 'authenticated';
-  if (pathname.startsWith('/partidas/') && ready) return <MotionConfig reducedMotion="user"><Outlet/></MotionConfig>;
+  // A partida desenha a própria tela; o .gd-site mantém o visual novo nos modais (convite, desistir).
+  if (pathname.startsWith('/partidas/') && ready) return <MotionConfig reducedMotion="user"><div className="gd-site"><Outlet/></div></MotionConfig>;
 
   const welcome = status === 'anonymous' && pathname === '/';
   const wide = pathname.startsWith('/admin');
