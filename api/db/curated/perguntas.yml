@@ -1,0 +1,1896 @@
+# Banco de perguntas da curadoria do Boletrados.
+#
+# Importado a cada deploy por `bin/rails content:import` (app/services/curated_import.rb):
+# só ADICIONA perguntas novas (pelo `ref`); perguntas já importadas não são alteradas. Para corrigir
+# uma pergunta que já está no jogo, edite pelo painel /admin.
+#
+# Formato:
+#   ref          identificador único e estável (nunca reutilize um ref)
+#   categorias   1 a 3 slugs: brasileiro, europeu, sulamericano, selecoes, escudos, estadios
+#   dificuldade  facil | medio | dificil (ponto de partida; o jogo recalibra pelo desempenho real)
+#   pergunta     até 180 caracteres          correta / erradas  alternativas de até 60 caracteres
+#   explicacao   até 500 caracteres          fonte    link para conferir (opcional)
+#   imagem       arquivo em db/curated/escudos/ (PNG/JPEG/WebP até 512 KB), com o nome do clube apagado
+#
+# A alternativa correta vem escrita primeiro; a posição dela no jogo é sorteada de forma fixa pelo ref.
+# Fatos conferidos em novembro de 2026.
+
+# ---------------------------------------------------------------- Futebol Brasileiro
+- ref: cur-br-001
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Qual clube foi o primeiro campeão do Brasileirão na era dos pontos corridos, em 2003?"
+  correta: "Cruzeiro"
+  erradas: ["Santos", "São Paulo", "Athletico-PR"]
+  explicacao: "O Cruzeiro de Alex e Vanderlei Luxemburgo venceu o Brasileiro de 2003 e fechou a Tríplice Coroa, com o Mineiro e a Copa do Brasil."
+  fonte: "https://en.wikipedia.org/wiki/2003_Campeonato_Brasileiro_S%C3%A9rie_A"
+- ref: cur-br-002
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Quem é o maior artilheiro da história do Campeonato Brasileiro?"
+  correta: "Roberto Dinamite"
+  erradas: ["Romário", "Fred", "Túlio Maravilha"]
+  explicacao: "Roberto Dinamite marcou 190 gols em Campeonatos Brasileiros, a grande maioria pelo Vasco."
+  fonte: "https://en.wikipedia.org/wiki/Roberto_Dinamite"
+- ref: cur-br-003
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol do título do Corinthians sobre o Chelsea no Mundial de Clubes de 2012?"
+  correta: "Paolo Guerrero"
+  erradas: ["Emerson Sheik", "Danilo", "Jorge Henrique"]
+  explicacao: "Guerrero cabeceou para o gol no 1 a 0 em Yokohama, e o Corinthians foi bicampeão mundial."
+  fonte: "https://en.wikipedia.org/wiki/2012_FIFA_Club_World_Cup_final"
+- ref: cur-br-004
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Quem fez o gol do São Paulo na vitória por 1 a 0 sobre o Liverpool, na final do Mundial de 2005?"
+  correta: "Mineiro"
+  erradas: ["Amoroso", "Aloísio", "Rogério Ceni"]
+  explicacao: "O volante Mineiro marcou aos 27 do primeiro tempo, em Yokohama. Rogério Ceni foi eleito o melhor da final."
+  fonte: "https://en.wikipedia.org/wiki/2005_FIFA_Club_World_Championship_final"
+- ref: cur-br-005
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "O São Paulo de Telê Santana conquistou o Mundial de 1992, em Tóquio, vencendo qual clube?"
+  correta: "Barcelona"
+  erradas: ["Milan", "Ajax", "Juventus"]
+  explicacao: "O São Paulo virou para 2 a 1 sobre o Barcelona de Cruyff, com dois gols de Raí. No ano seguinte, venceu o Milan."
+  fonte: "https://en.wikipedia.org/wiki/1992_Intercontinental_Cup"
+- ref: cur-br-006
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Em 2023, qual destes clubes foi rebaixado pela primeira vez na sua história no Brasileirão?"
+  correta: "Santos"
+  erradas: ["Vasco", "Grêmio", "Internacional"]
+  explicacao: "O Santos caiu em 2023 pela primeira vez. Vasco (2008), Grêmio (1991) e Internacional (2016) já tinham sido rebaixados antes."
+  fonte: "https://en.wikipedia.org/wiki/2023_Campeonato_Brasileiro_S%C3%A9rie_A"
+- ref: cur-br-007
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Em que ano o Cruzeiro foi rebaixado pela primeira vez para a Série B?"
+  correta: "2019"
+  erradas: ["2016", "2018", "2020"]
+  explicacao: "O Cruzeiro caiu no Brasileiro de 2019 e só voltou à Série A em 2022, como campeão da Série B."
+  fonte: "https://en.wikipedia.org/wiki/2019_Campeonato_Brasileiro_S%C3%A9rie_A"
+- ref: cur-br-008
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Rogério Ceni é o goleiro com mais gols na história do futebol. Quantos ele marcou pelo São Paulo?"
+  correta: "131"
+  erradas: ["102", "118", "145"]
+  explicacao: "Foram 131 gols, entre faltas e pênaltis, em mais de 1.200 jogos pelo São Paulo."
+  fonte: "https://en.wikipedia.org/wiki/Rog%C3%A9rio_Ceni"
+- ref: cur-br-009
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Qual clube é o único tricampeão brasileiro consecutivo na era dos pontos corridos?"
+  correta: "São Paulo"
+  erradas: ["Palmeiras", "Flamengo", "Corinthians"]
+  explicacao: "O São Paulo venceu em 2006, 2007 e 2008. Palmeiras (2022–23) e Flamengo (2019–20) chegaram a bicampeonatos seguidos."
+  fonte: "https://en.wikipedia.org/wiki/S%C3%A3o_Paulo_FC"
+- ref: cur-br-010
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Com quantos pontos o Flamengo de Jorge Jesus foi campeão brasileiro em 2019?"
+  correta: "90"
+  erradas: ["86", "88", "92"]
+  explicacao: "Os 90 pontos são o recorde do Brasileiro com 20 clubes. O vice, Palmeiras, fez 74."
+  fonte: "https://en.wikipedia.org/wiki/2019_Campeonato_Brasileiro_S%C3%A9rie_A"
+- ref: cur-br-011
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Quantos gols Gabigol marcou no Brasileirão de 2019, quando foi o artilheiro do campeonato?"
+  correta: "25"
+  erradas: ["21", "23", "28"]
+  explicacao: "Gabigol marcou 25 gols e foi artilheiro do Brasileiro e da Libertadores no mesmo ano."
+  fonte: "https://en.wikipedia.org/wiki/2019_Campeonato_Brasileiro_S%C3%A9rie_A"
+- ref: cur-br-012
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Em 2024, o Botafogo ganhou a Libertadores e, poucos dias depois, qual outro título?"
+  correta: "Campeonato Brasileiro"
+  erradas: ["Copa do Brasil", "Supercopa do Brasil", "Recopa Sul-Americana"]
+  explicacao: "O Botafogo fez a dobradinha de 2024: Libertadores contra o Atlético-MG e o Brasileiro na última rodada."
+  fonte: "https://en.wikipedia.org/wiki/2024_Campeonato_Brasileiro_S%C3%A9rie_A"
+- ref: cur-br-013
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol do Internacional na vitória sobre o Barcelona, na final do Mundial de 2006?"
+  correta: "Adriano Gabiru"
+  erradas: ["Fernandão", "Alexandre Pato", "Iarley"]
+  explicacao: "Gabiru entrou no segundo tempo e marcou o gol do 1 a 0 em Yokohama, após passe de Iarley."
+  fonte: "https://en.wikipedia.org/wiki/2006_FIFA_Club_World_Cup_final"
+- ref: cur-br-014
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Quem marcou os dois gols do Grêmio na vitória sobre o Hamburgo, no Mundial de 1983?"
+  correta: "Renato Gaúcho"
+  erradas: ["Tarciso", "Paulo César Caju", "Baltazar"]
+  explicacao: "Renato fez os dois gols do 2 a 1, o segundo na prorrogação, em Tóquio."
+  fonte: "https://en.wikipedia.org/wiki/1983_Intercontinental_Cup"
+- ref: cur-br-015
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Contra qual clube Pelé marcou seu milésimo gol, de pênalti, no Maracanã, em 1969?"
+  correta: "Vasco"
+  erradas: ["Botafogo", "Flamengo", "Fluminense"]
+  explicacao: "Em 19 de novembro de 1969, Pelé cobrou pênalti no goleiro argentino Andrada, do Vasco."
+  fonte: "https://en.wikipedia.org/wiki/Pel%C3%A9"
+- ref: cur-br-016
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Quem é o maior artilheiro da história do Corinthians?"
+  correta: "Cláudio"
+  erradas: ["Baltazar", "Sócrates", "Marcelinho Carioca"]
+  explicacao: "Cláudio Christovam de Pinho marcou 305 gols pelo Corinthians, nas décadas de 1940 e 1950."
+- ref: cur-br-017
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Quem é o maior artilheiro da história do Palmeiras?"
+  correta: "Heitor"
+  erradas: ["Ademir da Guia", "César Maluco", "Evair"]
+  explicacao: "Heitor Marcelino Domingues fez mais de 300 gols entre 1916 e 1931, ainda no Palestra Italia. Ademir da Guia é o recordista de jogos."
+- ref: cur-br-018
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Quem é o maior artilheiro da história do Grêmio?"
+  correta: "Alcindo"
+  erradas: ["Renato Gaúcho", "Jardel", "Baltazar"]
+  explicacao: "Alcindo, o 'Bugre', brilhou nos anos 1960 e 1970 e é o maior goleador da história do clube."
+- ref: cur-br-019
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Quem é o maior artilheiro da história do Internacional?"
+  correta: "Carlitos"
+  erradas: ["Fernandão", "Claudiomiro", "Valdomiro"]
+  explicacao: "Carlitos marcou 485 gols pelo Inter nas décadas de 1930 e 1940, no time conhecido como 'Rolo Compressor'."
+- ref: cur-br-020
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Quem é o maior artilheiro da história do Botafogo?"
+  correta: "Quarentinha"
+  erradas: ["Garrincha", "Heleno de Freitas", "Jairzinho"]
+  explicacao: "Quarentinha fez 313 gols pelo Botafogo entre 1954 e 1964. Carvalho Leite é o segundo da lista."
+- ref: cur-br-021
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Quem é o maior artilheiro da história do Fluminense?"
+  correta: "Waldo"
+  erradas: ["Fred", "Rivellino", "Washington"]
+  explicacao: "Waldo marcou 319 gols pelo Fluminense entre 1954 e 1961. Fred é o maior artilheiro do clube no século XXI."
+- ref: cur-br-022
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Quem é o maior artilheiro da história do Cruzeiro?"
+  correta: "Tostão"
+  erradas: ["Dirceu Lopes", "Palhinha", "Alex"]
+  explicacao: "Tostão marcou 249 gols pelo Cruzeiro entre 1963 e 1972."
+- ref: cur-br-023
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Quem é o maior artilheiro da história do Atlético-MG?"
+  correta: "Reinaldo"
+  erradas: ["Dadá Maravilha", "Guilherme", "Hulk"]
+  explicacao: "Reinaldo, o 'Rei', marcou 255 gols pelo Galo entre 1973 e 1985."
+- ref: cur-br-024
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Quem é o maior artilheiro da história do São Paulo?"
+  correta: "Serginho Chulapa"
+  erradas: ["Rogério Ceni", "Raí", "Luis Fabiano"]
+  explicacao: "Serginho Chulapa marcou 242 gols pelo São Paulo. Luis Fabiano vem logo atrás."
+- ref: cur-br-025
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Qual clube venceu a primeira Taça Brasil, em 1959, batendo o Santos de Pelé na decisão?"
+  correta: "Bahia"
+  erradas: ["Vasco", "Palmeiras", "Grêmio"]
+  explicacao: "O Bahia foi o primeiro campeão nacional reconhecido e representou o Brasil na Libertadores de 1960."
+  fonte: "https://en.wikipedia.org/wiki/1959_Ta%C3%A7a_Brasil"
+- ref: cur-br-026
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Qual clube foi o primeiro campeão da Copa do Brasil, em 1989?"
+  correta: "Grêmio"
+  erradas: ["Criciúma", "Flamengo", "Internacional"]
+  explicacao: "O Grêmio venceu o Sport na final da primeira edição da Copa do Brasil."
+  fonte: "https://en.wikipedia.org/wiki/1989_Copa_do_Brasil"
+- ref: cur-br-027
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Em 1991, o Criciúma surpreendeu o país e venceu a Copa do Brasil. Quem era o técnico?"
+  correta: "Luiz Felipe Scolari"
+  erradas: ["Levir Culpi", "Muricy Ramalho", "Abel Braga"]
+  explicacao: "Felipão levou o Criciúma ao título sobre o Grêmio e à Libertadores de 1992."
+  fonte: "https://en.wikipedia.org/wiki/1991_Copa_do_Brasil"
+- ref: cur-br-028
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Qual clube do interior paulista venceu a Copa do Brasil de 2005, batendo o Fluminense na final?"
+  correta: "Paulista"
+  erradas: ["Santo André", "Bragantino", "Ituano"]
+  explicacao: "O Paulista, de Jundiaí, venceu o Fluminense e disputou a Libertadores de 2006."
+  fonte: "https://en.wikipedia.org/wiki/2005_Copa_do_Brasil"
+- ref: cur-br-029
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Em 2004, qual clube calou o Maracanã e venceu o Flamengo na final da Copa do Brasil?"
+  correta: "Santo André"
+  erradas: ["Paulista", "São Caetano", "Juventude"]
+  explicacao: "O Santo André ganhou por 2 a 0 no Maracanã, depois do 2 a 2 em São Paulo."
+  fonte: "https://en.wikipedia.org/wiki/2004_Copa_do_Brasil"
+- ref: cur-br-030
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Qual foi o primeiro clube do interior a ser campeão brasileiro, em 1978?"
+  correta: "Guarani"
+  erradas: ["Ponte Preta", "Bragantino", "Juventude"]
+  explicacao: "O Guarani de Careca e Zenon venceu o Palmeiras na final de 1978."
+  fonte: "https://en.wikipedia.org/wiki/1978_Campeonato_Brasileiro_S%C3%A9rie_A"
+- ref: cur-br-031
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "O Coritiba foi campeão brasileiro em 1985, nos pênaltis, no Maracanã. Quem era o adversário?"
+  correta: "Bangu"
+  erradas: ["Atlético-MG", "Flamengo", "Vasco"]
+  explicacao: "Depois do 1 a 1, o Coritiba venceu o Bangu nos pênaltis e conquistou seu único Brasileiro."
+  fonte: "https://en.wikipedia.org/wiki/1985_Campeonato_Brasileiro_S%C3%A9rie_A"
+- ref: cur-br-032
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Qual clube foi campeão brasileiro em 2001, com Kléberson e Alex Mineiro?"
+  correta: "Athletico-PR"
+  erradas: ["São Caetano", "Fluminense", "Grêmio"]
+  explicacao: "O então Atlético-PR venceu o São Caetano na final de 2001. Alex Mineiro foi o artilheiro da fase decisiva."
+  fonte: "https://en.wikipedia.org/wiki/2001_Campeonato_Brasileiro_S%C3%A9rie_A"
+- ref: cur-br-033
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Romário comemorou seu milésimo gol (pela sua própria contagem), em 2007, de pênalti. Por qual clube?"
+  correta: "Vasco"
+  erradas: ["Flamengo", "Fluminense", "America-RJ"]
+  explicacao: "O gol saiu contra o Sport, em São Januário, em maio de 2007."
+  fonte: "https://en.wikipedia.org/wiki/Rom%C3%A1rio"
+- ref: cur-br-034
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Quem marcou dois gols na vitória do Flamengo por 3 a 0 sobre o Liverpool, no Mundial de 1981?"
+  correta: "Nunes"
+  erradas: ["Zico", "Adílio", "Tita"]
+  explicacao: "Nunes fez dois e Adílio o outro, todos no primeiro tempo, com três assistências de Zico."
+  fonte: "https://en.wikipedia.org/wiki/1981_Intercontinental_Cup"
+- ref: cur-br-035
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Em 2021, o Atlético-MG de Cuca venceu o Brasileiro e qual outro título?"
+  correta: "Copa do Brasil"
+  erradas: ["Supercopa do Brasil", "Copa Sul-Americana", "Recopa Sul-Americana"]
+  explicacao: "O Galo fez a dobradinha nacional em 2021, com Hulk artilheiro do Brasileiro."
+  fonte: "https://en.wikipedia.org/wiki/2021_Copa_do_Brasil"
+- ref: cur-br-036
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Qual clube perdeu a final do Brasileiro de 2001 para o Athletico-PR?"
+  correta: "São Caetano"
+  erradas: ["Fluminense", "Atlético-MG", "Vasco"]
+  explicacao: "O São Caetano foi vice em 2000 (Copa João Havelange) e 2001, e da Libertadores de 2002."
+  fonte: "https://en.wikipedia.org/wiki/2001_Campeonato_Brasileiro_S%C3%A9rie_A"
+- ref: cur-br-037
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Qual clube foi campeão da Copa do Brasil de 1999, sua maior conquista nacional?"
+  correta: "Juventude"
+  erradas: ["Criciúma", "Paulista", "Santo André"]
+  explicacao: "O Juventude, de Caxias do Sul, venceu o Botafogo na final de 1999."
+  fonte: "https://en.wikipedia.org/wiki/1999_Copa_do_Brasil"
+- ref: cur-br-038
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Quem era o técnico do Flamengo campeão brasileiro e da Libertadores em 2019?"
+  correta: "Jorge Jesus"
+  erradas: ["Abel Braga", "Rogério Ceni", "Domènec Torrent"]
+  explicacao: "Jorge Jesus assumiu em junho de 2019 e conquistou a dobradinha. Abel Braga começou a temporada."
+- ref: cur-br-039
+  categorias: [brasileiro]
+  dificuldade: dificil
+  pergunta: "Em 1987, quem venceu a Copa União, o 'Módulo Verde' que reuniu os grandes clubes?"
+  correta: "Flamengo"
+  erradas: ["Internacional", "Atlético-MG", "Cruzeiro"]
+  explicacao: "O Flamengo de Zico, Bebeto e Renato venceu o Internacional na final do Módulo Verde."
+  fonte: "https://en.wikipedia.org/wiki/1987_Copa_Uni%C3%A3o"
+- ref: cur-br-040
+  categorias: [brasileiro]
+  dificuldade: medio
+  pergunta: "Quem é o maior artilheiro da história do Santos depois de Pelé?"
+  correta: "Pepe"
+  erradas: ["Coutinho", "Neymar", "Robinho"]
+  explicacao: "Pepe, o 'Canhão da Vila', marcou mais de 400 gols pelo Santos e só fica atrás de Pelé."
+
+# ---------------------------------------------------------------- Futebol Sul-Americano
+- ref: cur-sa-001
+  categorias: [sulamericano, brasileiro]
+  dificuldade: dificil
+  pergunta: "Qual destes jogadores NÃO divide o posto de maior artilheiro do São Paulo na Libertadores, com 14 gols?"
+  correta: "Luciano"
+  erradas: ["Rogério Ceni", "Luis Fabiano", "Jonathan Calleri"]
+  explicacao: "Rogério Ceni, Luis Fabiano e Calleri têm 14 gols cada pelo São Paulo na Libertadores (dados até novembro de 2026)."
+  fonte: "https://trivela.com.br/brasil/calleri-sao-paulo-artilharia-libertadores/"
+- ref: cur-sa-002
+  categorias: [sulamericano, brasileiro]
+  dificuldade: dificil
+  pergunta: "Na final da Libertadores de 2024, o Botafogo jogou com um a menos desde o primeiro minuto. Quem foi expulso?"
+  correta: "Gregore"
+  erradas: ["Marlon Freitas", "Bastos", "Alexander Barboza"]
+  explicacao: "Gregore levou vermelho com cerca de 30 segundos, por atingir Fausto Vera. Mesmo assim, o Botafogo venceu o Atlético-MG por 3 a 1."
+  fonte: "https://en.wikipedia.org/wiki/2024_Copa_Libertadores_final"
+- ref: cur-sa-003
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol do título do Palmeiras na final da Libertadores de 2020, contra o Santos?"
+  correta: "Breno Lopes"
+  erradas: ["Rony", "Gabriel Menino", "Luiz Adriano"]
+  explicacao: "Breno Lopes, que tinha saído do banco, marcou de cabeça nos acréscimos do 1 a 0 no Maracanã, em janeiro de 2021."
+  fonte: "https://en.wikipedia.org/wiki/2020_Copa_Libertadores_final"
+- ref: cur-sa-004
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol do título do Palmeiras na prorrogação da final da Libertadores de 2021, contra o Flamengo?"
+  correta: "Deyverson"
+  erradas: ["Raphael Veiga", "Dudu", "Rony"]
+  explicacao: "Deyverson aproveitou um erro de Andreas Pereira e fez o 2 a 1 em Montevidéu."
+  fonte: "https://en.wikipedia.org/wiki/2021_Copa_Libertadores_final"
+- ref: cur-sa-005
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol do título do Fluminense na prorrogação da final da Libertadores de 2023?"
+  correta: "John Kennedy"
+  erradas: ["Germán Cano", "Ganso", "Jhon Arias"]
+  explicacao: "Cano abriu o placar, o Boca empatou e John Kennedy fez o 2 a 1 no Maracanã, o primeiro título do Fluminense."
+  fonte: "https://en.wikipedia.org/wiki/2023_Copa_Libertadores_final"
+- ref: cur-sa-006
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Na Libertadores de 2013, o goleiro Victor defendeu com o pé um pênalti nos acréscimos. Contra qual time?"
+  correta: "Tijuana"
+  erradas: ["Olimpia", "Newell's Old Boys", "São Paulo"]
+  explicacao: "Foi nas quartas de final, no Independência. O Atlético-MG passou e depois foi campeão sobre o Olimpia."
+  fonte: "https://en.wikipedia.org/wiki/2013_Copa_Libertadores"
+- ref: cur-sa-007
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Quem marcou os dois gols do Corinthians no Pacaembu, na final da Libertadores de 2012 contra o Boca?"
+  correta: "Emerson Sheik"
+  erradas: ["Paulinho", "Danilo", "Romarinho"]
+  explicacao: "Sheik fez os dois gols do 2 a 0. Na ida, na Bombonera, Romarinho tinha empatado em 1 a 1."
+  fonte: "https://en.wikipedia.org/wiki/2012_Copa_Libertadores_finals"
+- ref: cur-sa-008
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Na final da Libertadores de 2011, o Santos de Neymar e Ganso venceu qual adversário?"
+  correta: "Peñarol"
+  erradas: ["Vélez Sarsfield", "Once Caldas", "Cerro Porteño"]
+  explicacao: "Depois do 0 a 0 em Montevidéu, o Santos ganhou por 2 a 1 no Pacaembu, com gols de Neymar e Danilo."
+  fonte: "https://en.wikipedia.org/wiki/2011_Copa_Libertadores_finals"
+- ref: cur-sa-009
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Na final da Libertadores de 1998, o Vasco derrotou qual clube equatoriano?"
+  correta: "Barcelona de Guayaquil"
+  erradas: ["Emelec", "LDU", "El Nacional"]
+  explicacao: "O Vasco venceu as duas partidas e foi campeão no ano do seu centenário."
+  fonte: "https://en.wikipedia.org/wiki/1998_Copa_Libertadores"
+- ref: cur-sa-010
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Na final da Libertadores de 2006, o Internacional derrotou qual clube brasileiro?"
+  correta: "São Paulo"
+  erradas: ["Corinthians", "Palmeiras", "Fluminense"]
+  explicacao: "O Inter venceu por 2 a 1 no Morumbi e empatou em 2 a 2 no Beira-Rio. O São Paulo era o atual campeão."
+  fonte: "https://en.wikipedia.org/wiki/2006_Copa_Libertadores"
+- ref: cur-sa-011
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Em 1999, o Palmeiras de Felipão venceu a Libertadores nos pênaltis contra qual clube?"
+  correta: "Deportivo Cali"
+  erradas: ["River Plate", "Cerro Porteño", "Corinthians"]
+  explicacao: "O Palmeiras perdeu por 1 a 0 em Cali, venceu por 2 a 1 no Palestra Italia e levou o título nos pênaltis."
+  fonte: "https://en.wikipedia.org/wiki/1999_Copa_Libertadores"
+- ref: cur-sa-012
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Na final da Libertadores de 2017, o Grêmio de Renato Gaúcho venceu qual clube argentino?"
+  correta: "Lanús"
+  erradas: ["River Plate", "Racing", "Estudiantes"]
+  explicacao: "O Grêmio venceu por 1 a 0 em Porto Alegre e por 2 a 1 em Lanús, com golaço de Luan."
+  fonte: "https://en.wikipedia.org/wiki/2017_Copa_Libertadores"
+- ref: cur-sa-013
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Na final da Libertadores de 1997, o Cruzeiro derrotou qual clube peruano?"
+  correta: "Sporting Cristal"
+  erradas: ["Universitario", "Alianza Lima", "Cienciano"]
+  explicacao: "Depois do 0 a 0 em Lima, o Cruzeiro venceu por 1 a 0 no Mineirão, gol de Elivélton."
+  fonte: "https://en.wikipedia.org/wiki/1997_Copa_Libertadores"
+- ref: cur-sa-014
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol do título do Flamengo na final da Libertadores de 2022, em Guayaquil?"
+  correta: "Gabigol"
+  erradas: ["Pedro", "Arrascaeta", "Everton Ribeiro"]
+  explicacao: "Gabigol fez o 1 a 0 sobre o Athletico-PR, depois de já ter marcado os dois gols da final de 2019."
+  fonte: "https://en.wikipedia.org/wiki/2022_Copa_Libertadores_final"
+- ref: cur-sa-015
+  categorias: [sulamericano]
+  dificuldade: medio
+  pergunta: "Qual clube é o maior campeão da história da Libertadores?"
+  correta: "Independiente"
+  erradas: ["Boca Juniors", "Peñarol", "River Plate"]
+  explicacao: "O Independiente tem sete títulos, quatro deles seguidos, entre 1972 e 1975. O Boca tem seis."
+  fonte: "https://en.wikipedia.org/wiki/Club_Atl%C3%A9tico_Independiente"
+- ref: cur-sa-016
+  categorias: [sulamericano]
+  dificuldade: medio
+  pergunta: "Em 2008, a LDU conquistou a Libertadores nos pênaltis, no Maracanã, contra qual time?"
+  correta: "Fluminense"
+  erradas: ["Flamengo", "Boca Juniors", "América do México"]
+  explicacao: "Mesmo com três gols de Thiago Neves no jogo de volta, o Fluminense perdeu nos pênaltis."
+  fonte: "https://en.wikipedia.org/wiki/2008_Copa_Libertadores"
+- ref: cur-sa-017
+  categorias: [sulamericano]
+  dificuldade: dificil
+  pergunta: "Qual clube colombiano surpreendeu o Boca e venceu a Libertadores de 2004?"
+  correta: "Once Caldas"
+  erradas: ["Atlético Nacional", "América de Cali", "Deportivo Cali"]
+  explicacao: "O Once Caldas venceu o Boca nos pênaltis, em Manizales, depois de dois empates."
+  fonte: "https://en.wikipedia.org/wiki/2004_Copa_Libertadores"
+- ref: cur-sa-018
+  categorias: [sulamericano]
+  dificuldade: medio
+  pergunta: "Qual é o único clube chileno campeão da Libertadores?"
+  correta: "Colo-Colo"
+  erradas: ["Universidad de Chile", "Universidad Católica", "Cobreloa"]
+  explicacao: "O Colo-Colo foi campeão em 1991, sobre o Olimpia. O Cobreloa foi vice duas vezes."
+  fonte: "https://en.wikipedia.org/wiki/1991_Copa_Libertadores"
+- ref: cur-sa-019
+  categorias: [sulamericano]
+  dificuldade: medio
+  pergunta: "Qual foi o primeiro clube colombiano campeão da Libertadores, em 1989?"
+  correta: "Atlético Nacional"
+  erradas: ["Millonarios", "América de Cali", "Once Caldas"]
+  explicacao: "O Atlético Nacional venceu o Olimpia nos pênaltis. Voltou a ser campeão em 2016."
+  fonte: "https://en.wikipedia.org/wiki/1989_Copa_Libertadores"
+- ref: cur-sa-020
+  categorias: [sulamericano]
+  dificuldade: dificil
+  pergunta: "Qual clube argentino venceu três Libertadores seguidas, entre 1968 e 1970?"
+  correta: "Estudiantes"
+  erradas: ["Independiente", "Racing", "Boca Juniors"]
+  explicacao: "O Estudiantes de La Plata fez o tri entre 1968 e 1970. O Independiente fez o tetra logo depois, de 1972 a 1975."
+  fonte: "https://en.wikipedia.org/wiki/Estudiantes_de_La_Plata"
+- ref: cur-sa-021
+  categorias: [sulamericano]
+  dificuldade: medio
+  pergunta: "Quem é o maior artilheiro da história da Libertadores?"
+  correta: "Alberto Spencer"
+  erradas: ["Pedro Rocha", "Fernando Morena", "Daniel Onega"]
+  explicacao: "O equatoriano Alberto Spencer marcou 54 gols, quase todos pelo Peñarol."
+  fonte: "https://en.wikipedia.org/wiki/Alberto_Spencer"
+- ref: cur-sa-022
+  categorias: [sulamericano]
+  dificuldade: dificil
+  pergunta: "Qual jogador tem mais títulos da Libertadores, com seis conquistas?"
+  correta: "Francisco Sá"
+  erradas: ["Ricardo Bochini", "Ricardo Pavoni", "Carlos Bianchi"]
+  explicacao: "O zagueiro argentino ganhou quatro pelo Independiente (1972 a 1975) e duas pelo Boca (1977 e 1978)."
+  fonte: "https://en.wikipedia.org/wiki/Francisco_S%C3%A1"
+- ref: cur-sa-023
+  categorias: [sulamericano]
+  dificuldade: dificil
+  pergunta: "Qual clube venceu a primeira edição da Copa Sul-Americana, em 2002?"
+  correta: "San Lorenzo"
+  erradas: ["Boca Juniors", "Atlético Nacional", "Cienciano"]
+  explicacao: "O San Lorenzo bateu o Atlético Nacional na final. O Cienciano venceu a edição seguinte, em 2003."
+  fonte: "https://en.wikipedia.org/wiki/2002_Copa_Sudamericana"
+- ref: cur-sa-024
+  categorias: [sulamericano]
+  dificuldade: medio
+  pergunta: "Qual técnico venceu quatro Libertadores, uma com o Vélez e três com o Boca?"
+  correta: "Carlos Bianchi"
+  erradas: ["Marcelo Gallardo", "Luis Cubilla", "Telê Santana"]
+  explicacao: "Bianchi venceu em 1994 (Vélez), 2000, 2001 e 2003 (Boca). Cubilla e Gallardo têm duas cada."
+  fonte: "https://en.wikipedia.org/wiki/Carlos_Bianchi"
+- ref: cur-sa-025
+  categorias: [sulamericano]
+  dificuldade: medio
+  pergunta: "Em 1994, o Vélez Sarsfield venceu a Libertadores nos pênaltis contra qual clube?"
+  correta: "São Paulo"
+  erradas: ["Palmeiras", "Peñarol", "Olimpia"]
+  explicacao: "O Vélez impediu o tri seguido do São Paulo e, no mesmo ano, venceu o Milan no Mundial."
+  fonte: "https://en.wikipedia.org/wiki/1994_Copa_Libertadores"
+- ref: cur-sa-026
+  categorias: [sulamericano]
+  dificuldade: dificil
+  pergunta: "Qual clube argentino venceu a Copa Sul-Americana de 2020, seu primeiro título internacional?"
+  correta: "Defensa y Justicia"
+  erradas: ["Lanús", "Talleres", "Argentinos Juniors"]
+  explicacao: "O Defensa y Justicia venceu o Lanús por 3 a 0 na final, disputada em janeiro de 2021, em Córdoba."
+  fonte: "https://en.wikipedia.org/wiki/2020_Copa_Sudamericana"
+- ref: cur-sa-027
+  categorias: [sulamericano, brasileiro]
+  dificuldade: dificil
+  pergunta: "Contra quem o Athletico-PR venceu, nos pênaltis, a final da Copa Sul-Americana de 2018?"
+  correta: "Junior Barranquilla"
+  erradas: ["Atlético Nacional", "Fluminense", "Independiente"]
+  explicacao: "Foi o primeiro título internacional do Athletico, que voltou a vencer a Sul-Americana em 2021."
+  fonte: "https://en.wikipedia.org/wiki/2018_Copa_Sudamericana"
+- ref: cur-sa-028
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "A Chapecoense foi declarada campeã da Sul-Americana de 2016 a pedido de qual adversário da final?"
+  correta: "Atlético Nacional"
+  erradas: ["Independiente", "San Lorenzo", "Junior Barranquilla"]
+  explicacao: "Após o acidente aéreo que vitimou a delegação da Chapecoense, o Atlético Nacional pediu que o título fosse dado ao clube brasileiro."
+  fonte: "https://en.wikipedia.org/wiki/2016_Copa_Sudamericana"
+- ref: cur-sa-029
+  categorias: [sulamericano, brasileiro]
+  dificuldade: medio
+  pergunta: "Na final da Libertadores de 2007, o Boca de Riquelme derrotou qual clube brasileiro?"
+  correta: "Grêmio"
+  erradas: ["Santos", "Cruzeiro", "São Paulo"]
+  explicacao: "O Boca venceu por 3 a 0 na Bombonera e 2 a 0 em Porto Alegre, com Riquelme decisivo."
+  fonte: "https://en.wikipedia.org/wiki/2007_Copa_Libertadores"
+- ref: cur-sa-030
+  categorias: [sulamericano]
+  dificuldade: medio
+  pergunta: "Qual é o único clube paraguaio campeão da Libertadores?"
+  correta: "Olimpia"
+  erradas: ["Cerro Porteño", "Libertad", "Guaraní"]
+  explicacao: "O Olimpia venceu em 1979, 1990 e 2002."
+  fonte: "https://en.wikipedia.org/wiki/Club_Olimpia"
+- ref: cur-sa-031
+  categorias: [sulamericano]
+  dificuldade: medio
+  pergunta: "Qual é o único clube equatoriano campeão da Libertadores?"
+  correta: "LDU"
+  erradas: ["Barcelona de Guayaquil", "Emelec", "Independiente del Valle"]
+  explicacao: "A LDU de Quito venceu em 2008. Barcelona de Guayaquil e Independiente del Valle já foram vice."
+  fonte: "https://en.wikipedia.org/wiki/L.D.U._Quito"
+- ref: cur-sa-032
+  categorias: [sulamericano]
+  dificuldade: dificil
+  pergunta: "Quantas Libertadores o Peñarol conquistou?"
+  correta: "5"
+  erradas: ["3", "4", "6"]
+  explicacao: "O Peñarol venceu em 1960, 1961, 1966, 1982 e 1987. É o maior campeão uruguaio do torneio."
+  fonte: "https://en.wikipedia.org/wiki/Pe%C3%B1arol"
+- ref: cur-sa-033
+  categorias: [sulamericano]
+  dificuldade: dificil
+  pergunta: "Na primeira Libertadores de Gallardo como técnico do River, em 2015, quem foi o adversário da final?"
+  correta: "Tigres"
+  erradas: ["Boca Juniors", "Atlético Nacional", "Independiente del Valle"]
+  explicacao: "O River venceu o mexicano Tigres por 3 a 0 no Monumental, depois do 0 a 0 no México."
+  fonte: "https://en.wikipedia.org/wiki/2015_Copa_Libertadores_finals"
+- ref: cur-sa-034
+  categorias: [sulamericano]
+  dificuldade: medio
+  pergunta: "Quem marcou um golaço de fora da área na prorrogação da final de 2018 entre River e Boca, em Madri?"
+  correta: "Juan Fernando Quintero"
+  erradas: ["Gonzalo Martínez", "Lucas Pratto", "Ignacio Fernández"]
+  explicacao: "Quintero fez o 2 a 1 e Pity Martínez fechou em 3 a 1, já sem goleiro no Boca, no Santiago Bernabéu."
+  fonte: "https://en.wikipedia.org/wiki/2018_Copa_Libertadores_finals"
+- ref: cur-sa-035
+  categorias: [sulamericano, brasileiro]
+  dificuldade: dificil
+  pergunta: "O Boca ganhou sua primeira Libertadores, em 1977, numa final contra qual clube brasileiro?"
+  correta: "Cruzeiro"
+  erradas: ["Internacional", "Palmeiras", "São Paulo"]
+  explicacao: "O Cruzeiro era o atual campeão. A decisão foi para o terceiro jogo, em Montevidéu, e o Boca venceu nos pênaltis."
+  fonte: "https://en.wikipedia.org/wiki/1977_Copa_Libertadores"
+- ref: cur-sa-036
+  categorias: [sulamericano]
+  dificuldade: dificil
+  pergunta: "Em 1967, o Racing venceu a Copa Intercontinental contra qual campeão europeu?"
+  correta: "Celtic"
+  erradas: ["Manchester United", "Milan", "Inter de Milão"]
+  explicacao: "Foi o primeiro título mundial de um clube argentino, decidido num terceiro jogo, em Montevidéu."
+  fonte: "https://en.wikipedia.org/wiki/1967_Intercontinental_Cup"
+- ref: cur-sa-037
+  categorias: [sulamericano]
+  dificuldade: medio
+  pergunta: "Quantas Libertadores o Boca Juniors conquistou?"
+  correta: "6"
+  erradas: ["5", "7", "8"]
+  explicacao: "O Boca venceu em 1977, 1978, 2000, 2001, 2003 e 2007. Só o Independiente, com sete, tem mais."
+  fonte: "https://en.wikipedia.org/wiki/Boca_Juniors"
+- ref: cur-sa-038
+  categorias: [sulamericano]
+  dificuldade: dificil
+  pergunta: "Qual clube equatoriano venceu a Copa Sul-Americana em 2019 e em 2022?"
+  correta: "Independiente del Valle"
+  erradas: ["LDU", "Emelec", "Barcelona de Guayaquil"]
+  explicacao: "O Independiente del Valle bateu o Colón em 2019 e o São Paulo em 2022."
+  fonte: "https://en.wikipedia.org/wiki/Independiente_del_Valle"
+
+# ---------------------------------------------------------------- Futebol Europeu
+- ref: cur-eu-001
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Na histórica virada do Liverpool sobre o Barcelona (4 a 0), na semifinal da Champions de 2019, quem marcou os gols?"
+  correta: "Origi e Wijnaldum"
+  erradas: ["Salah e Mané", "Origi e Firmino", "Wijnaldum e Henderson"]
+  explicacao: "Origi e Wijnaldum marcaram dois gols cada em Anfield, revertendo o 3 a 0 sofrido no Camp Nou. Salah e Firmino estavam lesionados."
+  fonte: "https://en.wikipedia.org/wiki/2018%E2%80%9319_UEFA_Champions_League_knockout_phase"
+- ref: cur-eu-002
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Na virada de Istambul, em 2005, quais jogadores marcaram os três gols do Liverpool contra o Milan?"
+  correta: "Gerrard, Šmicer e Xabi Alonso"
+  erradas: ["Gerrard, Cissé e Baroš", "Riise, Šmicer e Xabi Alonso", "Gerrard, García e Hamann"]
+  explicacao: "Os três gols saíram em seis minutos do segundo tempo. O Liverpool, que perdia por 3 a 0, venceu nos pênaltis, com Dudek brilhando."
+  fonte: "https://en.wikipedia.org/wiki/2005_UEFA_Champions_League_final"
+- ref: cur-eu-003
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Na final da Champions de 1999, o Manchester United virou sobre o Bayern nos acréscimos. Quem marcou?"
+  correta: "Sheringham e Solskjær"
+  erradas: ["Yorke e Cole", "Beckham e Solskjær", "Sheringham e Cole"]
+  explicacao: "Os dois reservas marcaram após escanteios de Beckham, no Camp Nou, e o United completou a Tríplice Coroa."
+  fonte: "https://en.wikipedia.org/wiki/1999_UEFA_Champions_League_final"
+- ref: cur-eu-004
+  categorias: [europeu]
+  dificuldade: facil
+  pergunta: "Quem empatou nos acréscimos a final da Champions de 2014, contra o Atlético de Madrid, abrindo caminho para a 'Décima'?"
+  correta: "Sergio Ramos"
+  erradas: ["Cristiano Ronaldo", "Gareth Bale", "Marcelo"]
+  explicacao: "Ramos cabeceou aos 93 minutos. Na prorrogação, Bale, Marcelo e Cristiano fecharam o 4 a 1, em Lisboa."
+  fonte: "https://en.wikipedia.org/wiki/2014_UEFA_Champions_League_final"
+- ref: cur-eu-005
+  categorias: [europeu]
+  dificuldade: facil
+  pergunta: "Quem era o técnico do Leicester campeão inglês em 2015–16?"
+  correta: "Claudio Ranieri"
+  erradas: ["Nigel Pearson", "Brendan Rodgers", "Craig Shakespeare"]
+  explicacao: "Ranieri conduziu o Leicester, que tinha escapado do rebaixamento na temporada anterior, a um título improvável."
+  fonte: "https://en.wikipedia.org/wiki/2015%E2%80%9316_Leicester_City_F.C._season"
+- ref: cur-eu-006
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "Quantos empates o Arsenal 'Invencível' teve na Premier League de 2003–04?"
+  correta: "12"
+  erradas: ["8", "10", "14"]
+  explicacao: "Foram 26 vitórias, 12 empates e nenhuma derrota em 38 jogos."
+  fonte: "https://en.wikipedia.org/wiki/2003%E2%80%9304_Arsenal_F.C._season"
+- ref: cur-eu-007
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Contra qual time Agüero marcou o gol do título do Manchester City nos acréscimos da última rodada de 2011–12?"
+  correta: "Queens Park Rangers"
+  erradas: ["Sunderland", "Newcastle", "Aston Villa"]
+  explicacao: "O City virou para 3 a 2 com gols de Dzeko e Agüero nos acréscimos e tirou o título do United no saldo de gols."
+  fonte: "https://en.wikipedia.org/wiki/2011%E2%80%9312_Manchester_City_F.C._season"
+- ref: cur-eu-008
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol do título do Bayern na final da Champions de 2013, contra o Borussia Dortmund?"
+  correta: "Arjen Robben"
+  erradas: ["Mario Mandžukić", "Thomas Müller", "Franck Ribéry"]
+  explicacao: "Mandžukić abriu o placar, Gündoğan empatou de pênalti e Robben fez o 2 a 1 aos 89 minutos, em Wembley."
+  fonte: "https://en.wikipedia.org/wiki/2013_UEFA_Champions_League_final"
+- ref: cur-eu-009
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Quem marcou os gols do Barcelona na final da Champions de 2009, contra o Manchester United, em Roma?"
+  correta: "Eto'o e Messi"
+  erradas: ["Messi e Henry", "Eto'o e Xavi", "Henry e Iniesta"]
+  explicacao: "Eto'o abriu o placar e Messi marcou de cabeça no 2 a 0, no primeiro ano de Guardiola."
+  fonte: "https://en.wikipedia.org/wiki/2009_UEFA_Champions_League_final"
+- ref: cur-eu-010
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Quem marcou os dois gols da Inter de Mourinho na final da Champions de 2010, contra o Bayern?"
+  correta: "Diego Milito"
+  erradas: ["Samuel Eto'o", "Wesley Sneijder", "Goran Pandev"]
+  explicacao: "Milito fez os dois gols do 2 a 0 no Santiago Bernabéu e a Inter completou a Tríplice Coroa."
+  fonte: "https://en.wikipedia.org/wiki/2010_UEFA_Champions_League_final"
+- ref: cur-eu-011
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "O Porto de Mourinho venceu a Champions de 2004 goleando qual clube na final?"
+  correta: "Monaco"
+  erradas: ["Deportivo La Coruña", "Chelsea", "Lyon"]
+  explicacao: "O Porto venceu o Monaco por 3 a 0 em Gelsenkirchen. O Deportivo caiu diante do Porto na semifinal."
+  fonte: "https://en.wikipedia.org/wiki/2004_UEFA_Champions_League_final"
+- ref: cur-eu-012
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "Qual goleiro defendeu quatro pênaltis na final da Copa dos Campeões de 1986, dando o título ao Steaua?"
+  correta: "Helmuth Duckadam"
+  erradas: ["Jean-Marie Pfaff", "Rinat Dasaev", "Andoni Zubizarreta"]
+  explicacao: "O Steaua Bucareste venceu o Barcelona em Sevilha, e Duckadam defendeu todas as cobranças catalãs."
+  fonte: "https://en.wikipedia.org/wiki/1986_European_Cup_final"
+- ref: cur-eu-013
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "Em 1991, o Estrela Vermelha venceu a Copa dos Campeões nos pênaltis. Contra quem?"
+  correta: "Olympique de Marseille"
+  erradas: ["Bayern de Munique", "Benfica", "Milan"]
+  explicacao: "A final, em Bari, terminou 0 a 0. O Marseille seria campeão dois anos depois."
+  fonte: "https://en.wikipedia.org/wiki/1991_European_Cup_final"
+- ref: cur-eu-014
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "Quem marcou de cabeça o gol do Marseille na vitória sobre o Milan, na final da Champions de 1993?"
+  correta: "Basile Boli"
+  erradas: ["Rudi Völler", "Alen Bokšić", "Didier Deschamps"]
+  explicacao: "O zagueiro Basile Boli fez o 1 a 0 em Munique, no primeiro título europeu de um clube francês."
+  fonte: "https://en.wikipedia.org/wiki/1993_UEFA_Champions_League_final"
+- ref: cur-eu-015
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol do Ajax, aos 18 anos, na final da Champions de 1995, contra o Milan?"
+  correta: "Patrick Kluivert"
+  erradas: ["Marc Overmars", "Jari Litmanen", "Edgar Davids"]
+  explicacao: "Kluivert saiu do banco e fez o 1 a 0 aos 85 minutos, em Viena."
+  fonte: "https://en.wikipedia.org/wiki/1995_UEFA_Champions_League_final"
+- ref: cur-eu-016
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "Na final da Champions de 1997, quem entrou e, no primeiro toque, encobriu o goleiro da Juventus?"
+  correta: "Lars Ricken"
+  erradas: ["Karl-Heinz Riedle", "Andreas Möller", "Stéphane Chapuisat"]
+  explicacao: "Ricken entrou segundos antes e fez o 3 a 1 do Borussia Dortmund, em Munique. Riedle marcou os outros dois."
+  fonte: "https://en.wikipedia.org/wiki/1997_UEFA_Champions_League_final"
+- ref: cur-eu-017
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Quem era o técnico do Chelsea campeão da Champions de 2012, na final contra o Bayern, em Munique?"
+  correta: "Roberto Di Matteo"
+  erradas: ["André Villas-Boas", "Carlo Ancelotti", "Rafael Benítez"]
+  explicacao: "Di Matteo assumiu no meio da temporada, no lugar de Villas-Boas. Drogba empatou no fim e bateu o pênalti decisivo."
+  fonte: "https://en.wikipedia.org/wiki/2012_UEFA_Champions_League_final"
+- ref: cur-eu-018
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Em 2012, Messi bateu o recorde de gols num ano civil. Quantos ele marcou?"
+  correta: "91"
+  erradas: ["85", "88", "96"]
+  explicacao: "Messi marcou 91 gols por Barcelona e Argentina, superando os 85 de Gerd Müller em 1972."
+  fonte: "https://en.wikipedia.org/wiki/Lionel_Messi"
+- ref: cur-eu-019
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Quantas Champions League Cristiano Ronaldo conquistou como jogador?"
+  correta: "5"
+  erradas: ["4", "6", "7"]
+  explicacao: "Uma pelo Manchester United (2008) e quatro pelo Real Madrid (2014, 2016, 2017 e 2018)."
+  fonte: "https://en.wikipedia.org/wiki/Cristiano_Ronaldo"
+- ref: cur-eu-020
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "Qual destes jogadores NÃO tem seis títulos da Champions League?"
+  correta: "Cristiano Ronaldo"
+  erradas: ["Paco Gento", "Luka Modrić", "Toni Kroos"]
+  explicacao: "Gento, Modrić, Kroos, Carvajal e Nacho têm seis. Cristiano Ronaldo tem cinco."
+  fonte: "https://en.wikipedia.org/wiki/Paco_Gento"
+- ref: cur-eu-021
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Em 2023, o Napoli voltou a ser campeão italiano depois de 33 anos. Quem era o técnico?"
+  correta: "Luciano Spalletti"
+  erradas: ["Maurizio Sarri", "Gennaro Gattuso", "Carlo Ancelotti"]
+  explicacao: "Com Osimhen e Kvaratskhelia, o Napoli de Spalletti ganhou o primeiro Scudetto desde a era Maradona."
+  fonte: "https://en.wikipedia.org/wiki/2022%E2%80%9323_SSC_Napoli_season"
+- ref: cur-eu-022
+  categorias: [europeu]
+  dificuldade: facil
+  pergunta: "Em 2023–24, o Bayer Leverkusen foi campeão alemão invicto pela primeira vez. Quem era o técnico?"
+  correta: "Xabi Alonso"
+  erradas: ["Gerardo Seoane", "Roger Schmidt", "Peter Bosz"]
+  explicacao: "Xabi Alonso encerrou a sequência de 11 títulos seguidos do Bayern e ainda venceu a Copa da Alemanha."
+  fonte: "https://en.wikipedia.org/wiki/2023%E2%80%9324_Bayer_04_Leverkusen_season"
+- ref: cur-eu-023
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "Na última rodada de La Liga 2013–14, quem fez de cabeça o gol do título do Atlético de Madrid no Camp Nou?"
+  correta: "Diego Godín"
+  erradas: ["Diego Costa", "Raúl García", "Koke"]
+  explicacao: "Godín empatou em 1 a 1, e o resultado deu ao Atlético seu primeiro título espanhol desde 1996."
+  fonte: "https://en.wikipedia.org/wiki/2013%E2%80%9314_La_Liga"
+- ref: cur-eu-024
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "No 'Centenariazo' de 2002, qual clube venceu o Real Madrid na final da Copa do Rei, no Bernabéu, no dia do centenário rival?"
+  correta: "Deportivo La Coruña"
+  erradas: ["Valencia", "Real Zaragoza", "Real Betis"]
+  explicacao: "O Deportivo venceu por 2 a 1, com gols de Sergio e Tristán, em 6 de março de 2002."
+  fonte: "https://en.wikipedia.org/wiki/2002_Copa_del_Rey_final"
+- ref: cur-eu-025
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "Em 2011–12, qual clube surpreendeu o PSG e foi campeão francês pela primeira vez?"
+  correta: "Montpellier"
+  erradas: ["Lille", "Saint-Étienne", "Bordeaux"]
+  explicacao: "O Montpellier de Olivier Giroud terminou três pontos à frente do PSG, recém-comprado pelo Catar."
+  fonte: "https://en.wikipedia.org/wiki/2011%E2%80%9312_Ligue_1"
+- ref: cur-eu-026
+  categorias: [europeu, brasileiro]
+  dificuldade: medio
+  pergunta: "Qual brasileiro foi artilheiro e campeão da Bundesliga 2008–09 pelo Wolfsburg?"
+  correta: "Grafite"
+  erradas: ["Diego", "Ailton", "Marcelinho Paraíba"]
+  explicacao: "Grafite fez 28 gols e formou dupla com Dzeko no primeiro título alemão do Wolfsburg."
+  fonte: "https://en.wikipedia.org/wiki/2008%E2%80%9309_VfL_Wolfsburg_season"
+- ref: cur-eu-027
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "Qual clube foi campeão alemão em 1997–98 logo depois de subir da segunda divisão?"
+  correta: "Kaiserslautern"
+  erradas: ["Werder Bremen", "Wolfsburg", "Stuttgart"]
+  explicacao: "O Kaiserslautern de Otto Rehhagel virou o primeiro clube a vencer a Bundesliga no ano seguinte ao acesso."
+  fonte: "https://en.wikipedia.org/wiki/1997%E2%80%9398_Bundesliga"
+- ref: cur-eu-028
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Qual clube ganhou a Premier League de 1994–95, com Alan Shearer e Kenny Dalglish?"
+  correta: "Blackburn Rovers"
+  erradas: ["Newcastle", "Manchester United", "Leeds United"]
+  explicacao: "O Blackburn bateu o Manchester United na corrida pelo título por um ponto."
+  fonte: "https://en.wikipedia.org/wiki/1994%E2%80%9395_FA_Premier_League"
+- ref: cur-eu-029
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Qual foi o primeiro clube britânico a vencer a Copa dos Campeões, em 1967?"
+  correta: "Celtic"
+  erradas: ["Manchester United", "Liverpool", "Rangers"]
+  explicacao: "Os 'Leões de Lisboa' bateram a Inter por 2 a 1, todos nascidos perto de Glasgow."
+  fonte: "https://en.wikipedia.org/wiki/1967_European_Cup_final"
+- ref: cur-eu-030
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Qual técnico levou o Nottingham Forest a duas Copas dos Campeões seguidas, em 1979 e 1980?"
+  correta: "Brian Clough"
+  erradas: ["Bob Paisley", "Don Revie", "Bill Shankly"]
+  explicacao: "Clough e o assistente Peter Taylor levaram o Forest da segunda divisão ao bicampeonato europeu."
+  fonte: "https://en.wikipedia.org/wiki/Brian_Clough"
+- ref: cur-eu-031
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "Qual clube inglês venceu o Bayern na final da Copa dos Campeões de 1982, em Roterdã?"
+  correta: "Aston Villa"
+  erradas: ["Liverpool", "Nottingham Forest", "Ipswich Town"]
+  explicacao: "Peter Withe fez o gol do 1 a 0 do Aston Villa."
+  fonte: "https://en.wikipedia.org/wiki/1982_European_Cup_final"
+- ref: cur-eu-032
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "Qual foi o primeiro clube holandês a vencer a Copa dos Campeões, em 1970?"
+  correta: "Feyenoord"
+  erradas: ["Ajax", "PSV", "AZ"]
+  explicacao: "O Feyenoord venceu o Celtic na final, em Milão. O Ajax faria o tri a seguir, de 1971 a 1973."
+  fonte: "https://en.wikipedia.org/wiki/1970_European_Cup_final"
+- ref: cur-eu-033
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Qual destes craques NUNCA ganhou a Champions League?"
+  correta: "Zlatan Ibrahimović"
+  erradas: ["Ronaldinho", "Kaká", "Samuel Eto'o"]
+  explicacao: "Ibrahimović passou por Ajax, Juventus, Inter, Barcelona, Milan, PSG e Manchester United sem vencer a Champions."
+- ref: cur-eu-034
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Quantas Champions League Carlo Ancelotti venceu como técnico?"
+  correta: "5"
+  erradas: ["3", "4", "6"]
+  explicacao: "Duas com o Milan (2003 e 2007) e três com o Real Madrid (2014, 2022 e 2024), um recorde."
+  fonte: "https://en.wikipedia.org/wiki/Carlo_Ancelotti"
+- ref: cur-eu-035
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Quem é o maior artilheiro da história da Premier League?"
+  correta: "Alan Shearer"
+  erradas: ["Harry Kane", "Wayne Rooney", "Mohamed Salah"]
+  explicacao: "Shearer marcou 260 gols por Blackburn e Newcastle."
+  fonte: "https://en.wikipedia.org/wiki/List_of_Premier_League_top_scorers"
+- ref: cur-eu-036
+  categorias: [europeu]
+  dificuldade: dificil
+  pergunta: "Lewandowski quebrou em 2020–21 o recorde de gols numa edição da Bundesliga, que era de Gerd Müller. Quantos ele fez?"
+  correta: "41"
+  erradas: ["40", "38", "43"]
+  explicacao: "Lewandowski marcou o 41º gol no último minuto da última rodada. Gerd Müller tinha 40, desde 1971–72."
+  fonte: "https://en.wikipedia.org/wiki/Robert_Lewandowski"
+- ref: cur-eu-037
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Qual clube é o maior campeão da Liga Europa (antiga Copa da UEFA)?"
+  correta: "Sevilla"
+  erradas: ["Inter de Milão", "Liverpool", "Atlético de Madrid"]
+  explicacao: "O Sevilla tem sete títulos e nunca perdeu uma final do torneio."
+  fonte: "https://en.wikipedia.org/wiki/Sevilla_FC"
+- ref: cur-eu-038
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Quem é o maior artilheiro da história do Arsenal?"
+  correta: "Thierry Henry"
+  erradas: ["Ian Wright", "Robin van Persie", "Dennis Bergkamp"]
+  explicacao: "Henry marcou 228 gols pelo Arsenal. Ian Wright é o segundo."
+  fonte: "https://en.wikipedia.org/wiki/Thierry_Henry"
+- ref: cur-eu-039
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol do primeiro título de Champions do Manchester City, em 2023, contra a Inter?"
+  correta: "Rodri"
+  erradas: ["Erling Haaland", "Kevin De Bruyne", "Bernardo Silva"]
+  explicacao: "Rodri chutou de primeira para o 1 a 0 em Istambul, e o City completou a Tríplice Coroa."
+  fonte: "https://en.wikipedia.org/wiki/2023_UEFA_Champions_League_final"
+- ref: cur-eu-040
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Por qual placar o PSG venceu a Inter na final da Champions de 2025, seu primeiro título europeu?"
+  correta: "5 a 0"
+  erradas: ["2 a 0", "3 a 1", "4 a 1"]
+  explicacao: "Foi a maior goleada da história das finais de Champions, em Munique, com dois gols de Désiré Doué."
+  fonte: "https://en.wikipedia.org/wiki/2025_UEFA_Champions_League_final"
+- ref: cur-eu-041
+  categorias: [europeu, brasileiro]
+  dificuldade: medio
+  pergunta: "Quem marcou os gols do Real Madrid na final da Champions de 2024, contra o Borussia Dortmund?"
+  correta: "Carvajal e Vinícius Júnior"
+  erradas: ["Bellingham e Vinícius Júnior", "Rodrygo e Carvajal", "Valverde e Vinícius Júnior"]
+  explicacao: "Carvajal abriu de cabeça e Vinícius fechou o 2 a 0, em Wembley. Foi a 15ª Champions do Real."
+  fonte: "https://en.wikipedia.org/wiki/2024_UEFA_Champions_League_final"
+- ref: cur-eu-042
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Em 2022, o Eintracht Frankfurt venceu a Liga Europa nos pênaltis. Contra qual clube?"
+  correta: "Rangers"
+  erradas: ["West Ham", "Barcelona", "RB Leipzig"]
+  explicacao: "A final, em Sevilha, terminou 1 a 1. O Eintracht tinha eliminado o Barcelona nas quartas, no Camp Nou."
+  fonte: "https://en.wikipedia.org/wiki/2022_UEFA_Europa_League_final"
+- ref: cur-eu-043
+  categorias: [europeu]
+  dificuldade: facil
+  pergunta: "Na final da Champions de 2018, Gareth Bale marcou um golaço de bicicleta. Contra quem?"
+  correta: "Liverpool"
+  erradas: ["Juventus", "Atlético de Madrid", "Bayern de Munique"]
+  explicacao: "O Real venceu por 3 a 1 em Kiev e chegou ao tri seguido com Zidane."
+  fonte: "https://en.wikipedia.org/wiki/2018_UEFA_Champions_League_final"
+- ref: cur-eu-044
+  categorias: [europeu]
+  dificuldade: medio
+  pergunta: "Quantas Champions League Paolo Maldini venceu, todas pelo Milan?"
+  correta: "5"
+  erradas: ["3", "4", "6"]
+  explicacao: "Maldini venceu em 1989, 1990, 1994, 2003 e 2007, e jogou oito finais."
+  fonte: "https://en.wikipedia.org/wiki/Paolo_Maldini"
+
+# ---------------------------------------------------------------- Seleções
+- ref: cur-se-001
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol da virada do Uruguai sobre o Brasil no Maracanazo, em 1950?"
+  correta: "Alcides Ghiggia"
+  erradas: ["Juan Alberto Schiaffino", "Obdulio Varela", "Óscar Míguez"]
+  explicacao: "Schiaffino empatou e Ghiggia fez o 2 a 1 aos 34 do segundo tempo, diante de cerca de 200 mil pessoas."
+  fonte: "https://en.wikipedia.org/wiki/Uruguay_v_Brazil_(1950_FIFA_World_Cup)"
+- ref: cur-se-002
+  categorias: [selecoes]
+  dificuldade: facil
+  pergunta: "No 7 a 1 de 2014, qual alemão se tornou o maior artilheiro da história das Copas?"
+  correta: "Miroslav Klose"
+  erradas: ["Thomas Müller", "Toni Kroos", "André Schürrle"]
+  explicacao: "Klose fez o segundo gol e chegou a 16 em Copas, passando Ronaldo Fenômeno, que tinha 15."
+  fonte: "https://en.wikipedia.org/wiki/Brazil_v_Germany_(2014_FIFA_World_Cup)"
+- ref: cur-se-003
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Qual jogador tem o recorde de gols numa única Copa do Mundo, com 13 em 1958?"
+  correta: "Just Fontaine"
+  erradas: ["Sándor Kocsis", "Gerd Müller", "Eusébio"]
+  explicacao: "O francês Just Fontaine marcou 13 gols em seis jogos na Suécia. Kocsis tinha feito 11 em 1954."
+  fonte: "https://en.wikipedia.org/wiki/Just_Fontaine"
+- ref: cur-se-004
+  categorias: [selecoes]
+  dificuldade: dificil
+  pergunta: "Quem bateu o pênalti que deu o título da Copa de 2022 à Argentina, contra a França?"
+  correta: "Gonzalo Montiel"
+  erradas: ["Lionel Messi", "Leandro Paredes", "Paulo Dybala"]
+  explicacao: "Depois do 3 a 3, com três gols de Mbappé, Montiel converteu a quarta cobrança argentina."
+  fonte: "https://en.wikipedia.org/wiki/2022_FIFA_World_Cup_final"
+- ref: cur-se-005
+  categorias: [selecoes]
+  dificuldade: dificil
+  pergunta: "Na final da Copa de 2006, quem converteu o último pênalti da Itália contra a França?"
+  correta: "Fabio Grosso"
+  erradas: ["Alessandro Del Piero", "Andrea Pirlo", "Marco Materazzi"]
+  explicacao: "Trezeguet acertou o travessão e Grosso fechou a série. Foi a final da cabeçada de Zidane em Materazzi."
+  fonte: "https://en.wikipedia.org/wiki/2006_FIFA_World_Cup_final"
+- ref: cur-se-006
+  categorias: [selecoes, brasileiro]
+  dificuldade: dificil
+  pergunta: "Qual jogador do Brasil desperdiçou pênalti na final da Copa de 1994, contra a Itália?"
+  correta: "Márcio Santos"
+  erradas: ["Branco", "Dunga", "Romário"]
+  explicacao: "Márcio Santos errou a primeira cobrança. Romário, Branco e Dunga marcaram, e Baggio chutou por cima."
+  fonte: "https://en.wikipedia.org/wiki/1994_FIFA_World_Cup_final"
+- ref: cur-se-007
+  categorias: [selecoes, brasileiro]
+  dificuldade: medio
+  pergunta: "Quem fechou o placar de 4 a 1 sobre a Itália, na final da Copa de 1970?"
+  correta: "Carlos Alberto Torres"
+  erradas: ["Jairzinho", "Pelé", "Rivellino"]
+  explicacao: "O capitão finalizou uma jogada coletiva que passou por quase todo o time, após passe de Pelé."
+  fonte: "https://en.wikipedia.org/wiki/1970_FIFA_World_Cup_final"
+- ref: cur-se-008
+  categorias: [selecoes, brasileiro]
+  dificuldade: medio
+  pergunta: "Quem substituiu Pelé, lesionado, e marcou na final da Copa de 1962?"
+  correta: "Amarildo"
+  erradas: ["Vavá", "Zito", "Coutinho"]
+  explicacao: "Amarildo, o 'Possesso', empatou a final contra a Tchecoslováquia. Zito e Vavá marcaram os outros gols do 3 a 1."
+  fonte: "https://en.wikipedia.org/wiki/1962_FIFA_World_Cup_final"
+- ref: cur-se-009
+  categorias: [selecoes, brasileiro]
+  dificuldade: medio
+  pergunta: "Quem marcou os três gols da Itália na vitória por 3 a 2 sobre o Brasil, em 1982?"
+  correta: "Paolo Rossi"
+  erradas: ["Francesco Graziani", "Bruno Conti", "Marco Tardelli"]
+  explicacao: "A 'Tragédia do Sarriá' eliminou a seleção de Telê Santana. Rossi terminou a Copa como campeão e artilheiro."
+  fonte: "https://en.wikipedia.org/wiki/Brazil_v_Italy_(1982_FIFA_World_Cup)"
+- ref: cur-se-010
+  categorias: [selecoes]
+  dificuldade: dificil
+  pergunta: "Quem marcou o gol da virada da Alemanha Ocidental sobre a Hungria na final de 1954, o 'Milagre de Berna'?"
+  correta: "Helmut Rahn"
+  erradas: ["Max Morlock", "Fritz Walter", "Hans Schäfer"]
+  explicacao: "A Hungria de Puskás vencia por 2 a 0. Morlock e Rahn empataram, e Rahn fez o 3 a 2 a seis minutos do fim."
+  fonte: "https://en.wikipedia.org/wiki/1954_FIFA_World_Cup_final"
+- ref: cur-se-011
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol da Grécia na final da Euro 2004, contra Portugal, em Lisboa?"
+  correta: "Angelos Charisteas"
+  erradas: ["Theodoros Zagorakis", "Giorgos Karagounis", "Traianos Dellas"]
+  explicacao: "Charisteas cabeceou para o 1 a 0. A Grécia de Otto Rehhagel também tinha vencido Portugal na estreia."
+  fonte: "https://en.wikipedia.org/wiki/UEFA_Euro_2004_final"
+- ref: cur-se-012
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "A Dinamarca campeã da Euro 1992 só entrou no torneio no lugar de qual seleção?"
+  correta: "Iugoslávia"
+  erradas: ["União Soviética", "Tchecoslováquia", "Escócia"]
+  explicacao: "A Iugoslávia foi excluída por causa da guerra. A Dinamarca, chamada às pressas, venceu a Alemanha na final."
+  fonte: "https://en.wikipedia.org/wiki/UEFA_Euro_1992"
+- ref: cur-se-013
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol do título de Portugal na prorrogação da final da Euro 2016, contra a França?"
+  correta: "Éder"
+  erradas: ["Nani", "Ricardo Quaresma", "Renato Sanches"]
+  explicacao: "Éder chutou de fora da área no Stade de France. Cristiano Ronaldo saiu lesionado no primeiro tempo."
+  fonte: "https://en.wikipedia.org/wiki/UEFA_Euro_2016_final"
+- ref: cur-se-014
+  categorias: [selecoes]
+  dificuldade: dificil
+  pergunta: "Quem marcou o gol do título da Espanha sobre a Inglaterra na final da Euro 2024, em Berlim?"
+  correta: "Mikel Oyarzabal"
+  erradas: ["Nico Williams", "Dani Olmo", "Lamine Yamal"]
+  explicacao: "Nico Williams abriu o placar, Palmer empatou e Oyarzabal fez o 2 a 1 aos 86 minutos. Foi o quarto título europeu da Espanha."
+  fonte: "https://en.wikipedia.org/wiki/UEFA_Euro_2024_final"
+- ref: cur-se-015
+  categorias: [selecoes, sulamericano]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol da Argentina na vitória sobre o Brasil, no Maracanã, na final da Copa América de 2021?"
+  correta: "Ángel Di María"
+  erradas: ["Lionel Messi", "Lautaro Martínez", "Rodrigo De Paul"]
+  explicacao: "Di María encobriu Ederson após lançamento de De Paul. Foi o primeiro título de Messi pela seleção principal."
+  fonte: "https://en.wikipedia.org/wiki/2021_Copa_Am%C3%A9rica_final"
+- ref: cur-se-016
+  categorias: [selecoes, sulamericano]
+  dificuldade: medio
+  pergunta: "Qual seleção tem mais títulos da Copa América?"
+  correta: "Argentina"
+  erradas: ["Uruguai", "Brasil", "Chile"]
+  explicacao: "Com o título de 2024, a Argentina chegou a 16 e passou o Uruguai, que tem 15. O Brasil tem 9."
+  fonte: "https://en.wikipedia.org/wiki/Copa_Am%C3%A9rica"
+- ref: cur-se-017
+  categorias: [selecoes, sulamericano]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol da Argentina na prorrogação da final da Copa América de 2024, contra a Colômbia?"
+  correta: "Lautaro Martínez"
+  erradas: ["Julián Álvarez", "Ángel Di María", "Giovani Lo Celso"]
+  explicacao: "Lautaro fez o 1 a 0 em Miami e terminou a competição como artilheiro."
+  fonte: "https://en.wikipedia.org/wiki/2024_Copa_Am%C3%A9rica_final"
+- ref: cur-se-018
+  categorias: [selecoes, sulamericano]
+  dificuldade: medio
+  pergunta: "O Chile ganhou as Copas Américas de 2015 e 2016 vencendo qual seleção nas duas finais?"
+  correta: "Argentina"
+  erradas: ["Brasil", "Uruguai", "Colômbia"]
+  explicacao: "As duas finais terminaram 0 a 0, e o Chile venceu nos pênaltis."
+  fonte: "https://en.wikipedia.org/wiki/Copa_Am%C3%A9rica_Centenario_final"
+- ref: cur-se-019
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Na Euro 2016, a Islândia estreante eliminou qual seleção nas oitavas de final?"
+  correta: "Inglaterra"
+  erradas: ["Portugal", "Áustria", "França"]
+  explicacao: "A Islândia venceu a Inglaterra por 2 a 1 em Nice. Caiu nas quartas, diante da França."
+  fonte: "https://en.wikipedia.org/wiki/England_v_Iceland_(UEFA_Euro_2016)"
+- ref: cur-se-020
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Qual foi a primeira seleção africana a chegar a uma semifinal de Copa do Mundo?"
+  correta: "Marrocos"
+  erradas: ["Camarões", "Gana", "Senegal"]
+  explicacao: "Em 2022, Marrocos eliminou Espanha e Portugal antes de cair para a França."
+  fonte: "https://en.wikipedia.org/wiki/Morocco_national_football_team"
+- ref: cur-se-021
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Na abertura da Copa de 1990, qual seleção venceu a Argentina, então campeã do mundo?"
+  correta: "Camarões"
+  erradas: ["Romênia", "União Soviética", "Colômbia"]
+  explicacao: "Camarões venceu por 1 a 0 em Milão, gol de Omam-Biyik, e chegou às quartas com Roger Milla."
+  fonte: "https://en.wikipedia.org/wiki/1990_FIFA_World_Cup"
+- ref: cur-se-022
+  categorias: [selecoes, brasileiro]
+  dificuldade: medio
+  pergunta: "Quem é o maior artilheiro da história da Seleção Brasileira?"
+  correta: "Neymar"
+  erradas: ["Pelé", "Ronaldo", "Romário"]
+  explicacao: "Neymar passou Pelé em 2023. A CBF registra 77 gols de Pelé em jogos oficiais."
+  fonte: "https://en.wikipedia.org/wiki/Neymar"
+- ref: cur-se-023
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Qual jogador tem mais partidas disputadas na história das Copas do Mundo?"
+  correta: "Lionel Messi"
+  erradas: ["Lothar Matthäus", "Miroslav Klose", "Paolo Maldini"]
+  explicacao: "Messi chegou a 26 jogos na final de 2022, passando os 25 de Lothar Matthäus."
+  fonte: "https://en.wikipedia.org/wiki/List_of_FIFA_World_Cup_records_and_statistics"
+- ref: cur-se-024
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Quem marcou três gols na final da Copa de 1966, a única conquistada pela Inglaterra?"
+  correta: "Geoff Hurst"
+  erradas: ["Bobby Charlton", "Martin Peters", "Roger Hunt"]
+  explicacao: "Hurst fez três no 4 a 2 sobre a Alemanha Ocidental, em Wembley, um deles o famoso gol da bola no travessão."
+  fonte: "https://en.wikipedia.org/wiki/1966_FIFA_World_Cup_final"
+- ref: cur-se-025
+  categorias: [selecoes, sulamericano]
+  dificuldade: medio
+  pergunta: "Quem foi o artilheiro da Copa de 1978, vencida pela Argentina?"
+  correta: "Mario Kempes"
+  erradas: ["Daniel Passarella", "Leopoldo Luque", "Rob Rensenbrink"]
+  explicacao: "Kempes marcou seis gols, dois deles na final contra a Holanda."
+  fonte: "https://en.wikipedia.org/wiki/Mario_Kempes"
+- ref: cur-se-026
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Por qual placar a França venceu a Croácia na final da Copa de 2018?"
+  correta: "4 a 2"
+  erradas: ["2 a 0", "3 a 1", "2 a 1"]
+  explicacao: "Em Moscou, a França marcou com Mandžukić (contra), Griezmann, Pogba e Mbappé."
+  fonte: "https://en.wikipedia.org/wiki/2018_FIFA_World_Cup_final"
+- ref: cur-se-027
+  categorias: [selecoes, brasileiro]
+  dificuldade: medio
+  pergunta: "Qual seleção eliminou o Brasil nas quartas de final da Copa de 2018?"
+  correta: "Bélgica"
+  erradas: ["França", "Croácia", "Uruguai"]
+  explicacao: "A Bélgica venceu por 2 a 1 em Kazan, com gol contra de Fernandinho e outro de De Bruyne."
+  fonte: "https://en.wikipedia.org/wiki/2018_FIFA_World_Cup_knockout_stage"
+- ref: cur-se-028
+  categorias: [selecoes, brasileiro]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol da França que eliminou o Brasil nas quartas de final da Copa de 2006?"
+  correta: "Thierry Henry"
+  erradas: ["Zinedine Zidane", "Franck Ribéry", "David Trezeguet"]
+  explicacao: "Henry completou um cruzamento de falta de Zidane, livre na segunda trave."
+  fonte: "https://en.wikipedia.org/wiki/2006_FIFA_World_Cup_knockout_stage"
+- ref: cur-se-029
+  categorias: [selecoes, brasileiro]
+  dificuldade: dificil
+  pergunta: "Quem fez o gol do bicampeonato olímpico do Brasil, na prorrogação da final de Tóquio 2020?"
+  correta: "Malcom"
+  erradas: ["Richarlison", "Matheus Cunha", "Paulinho"]
+  explicacao: "Matheus Cunha abriu o placar, a Espanha empatou e Malcom fez o 2 a 1 na prorrogação, em Yokohama."
+  fonte: "https://en.wikipedia.org/wiki/Football_at_the_2020_Summer_Olympics_%E2%80%93_Men%27s_tournament"
+- ref: cur-se-030
+  categorias: [selecoes, brasileiro]
+  dificuldade: medio
+  pergunta: "Na final olímpica de 2016, no Maracanã, quem converteu o pênalti do primeiro ouro olímpico do Brasil?"
+  correta: "Neymar"
+  erradas: ["Gabriel Jesus", "Luan", "Renato Augusto"]
+  explicacao: "Depois do 1 a 1 com a Alemanha, Weverton defendeu a cobrança de Petersen e Neymar fechou a série."
+  fonte: "https://en.wikipedia.org/wiki/Football_at_the_2016_Summer_Olympics_%E2%80%93_Men%27s_tournament"
+- ref: cur-se-031
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Quantos gols Mbappé marcou na Copa de 2022, quando foi o artilheiro?"
+  correta: "8"
+  erradas: ["6", "7", "9"]
+  explicacao: "Mbappé fez 8 gols, três deles na final. Messi marcou 7."
+  fonte: "https://en.wikipedia.org/wiki/2022_FIFA_World_Cup"
+- ref: cur-se-032
+  categorias: [selecoes, brasileiro]
+  dificuldade: dificil
+  pergunta: "Quem fez o gol de empate da Croácia contra o Brasil, nas quartas de final da Copa de 2022?"
+  correta: "Bruno Petković"
+  erradas: ["Luka Modrić", "Ivan Perišić", "Andrej Kramarić"]
+  explicacao: "Neymar abriu o placar na prorrogação, Petković empatou aos 117 minutos e a Croácia venceu nos pênaltis."
+  fonte: "https://en.wikipedia.org/wiki/2022_FIFA_World_Cup_knockout_stage"
+- ref: cur-se-033
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Qual seleção venceu a 'Laranja Mecânica' da Holanda na final da Copa de 1974?"
+  correta: "Alemanha Ocidental"
+  erradas: ["Polônia", "Brasil", "Argentina"]
+  explicacao: "A Alemanha Ocidental virou para 2 a 1 em Munique, com gols de Breitner e Gerd Müller."
+  fonte: "https://en.wikipedia.org/wiki/1974_FIFA_World_Cup_final"
+- ref: cur-se-034
+  categorias: [selecoes]
+  dificuldade: dificil
+  pergunta: "Qual seleção eliminou a Itália, anfitriã, nas semifinais da Copa de 1990?"
+  correta: "Argentina"
+  erradas: ["Alemanha Ocidental", "Inglaterra", "Camarões"]
+  explicacao: "A Argentina de Maradona venceu nos pênaltis, em Nápoles, com Goycochea defendendo duas cobranças."
+  fonte: "https://en.wikipedia.org/wiki/1990_FIFA_World_Cup_knockout_stage"
+- ref: cur-se-035
+  categorias: [selecoes]
+  dificuldade: dificil
+  pergunta: "Qual seleção venceu a primeira Eurocopa, em 1960?"
+  correta: "União Soviética"
+  erradas: ["Espanha", "Iugoslávia", "Itália"]
+  explicacao: "A União Soviética de Lev Yashin venceu a Iugoslávia na prorrogação, em Paris."
+  fonte: "https://en.wikipedia.org/wiki/1960_European_Nations%27_Cup"
+- ref: cur-se-036
+  categorias: [selecoes]
+  dificuldade: medio
+  pergunta: "Quem marcou o gol do título da Espanha na prorrogação da final da Copa de 2010?"
+  correta: "Andrés Iniesta"
+  erradas: ["David Villa", "Fernando Torres", "Xavi"]
+  explicacao: "Iniesta fez o 1 a 0 sobre a Holanda aos 116 minutos, em Joanesburgo."
+  fonte: "https://en.wikipedia.org/wiki/2010_FIFA_World_Cup_final"
+
+# ---------------------------------------------------------------- Escudos (texto)
+- ref: cur-es-001
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "Qual animal aparece no escudo do Porto?"
+  correta: "Um dragão"
+  erradas: ["Uma águia", "Um leão", "Um galo"]
+  explicacao: "O dragão do Porto vem do brasão da cidade. A águia é do Benfica e o leão, do Sporting."
+- ref: cur-es-002
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "A cruz vermelha sobre fundo branco no escudo do Barcelona é a cruz de qual santo, padroeiro da Catalunha?"
+  correta: "São Jorge"
+  erradas: ["Santo André", "São Tiago", "São Bento"]
+  explicacao: "O escudo junta a cruz de Sant Jordi, a senyera catalã e as cores azul e grená do clube."
+- ref: cur-es-003
+  categorias: [escudos, europeu]
+  dificuldade: dificil
+  pergunta: "Em 1931, o Real Madrid tirou a coroa do escudo e deixou de usar o 'Real' no nome. Por quê?"
+  correta: "A Espanha virou república"
+  erradas: ["Rompeu com o rei Alfonso XIII", "Exigência da federação espanhola", "Mudança de estádio"]
+  explicacao: "Com a Segunda República, os símbolos da monarquia saíram dos clubes. A coroa voltou depois da Guerra Civil."
+  fonte: "https://www.realmadrid.com/static/sobre-el-real-madrid/historia/futbol/1931-1940"
+- ref: cur-es-004
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "Em 2021, a Inter de Milão adotou um escudo minimalista. Quais letras ele traz?"
+  correta: "I e M"
+  erradas: ["F, C e I", "I, N e T", "F e I"]
+  explicacao: "O escudo de 2021 manteve o círculo e trocou o 'FCIM' pelas letras I e M entrelaçadas."
+- ref: cur-es-005
+  categorias: [escudos, brasileiro]
+  dificuldade: medio
+  pergunta: "Como é popularmente chamada a cruz do escudo do Vasco?"
+  correta: "Cruz de Malta"
+  erradas: ["Cruz de Cristo", "Cruz de Lorena", "Cruz de Santiago"]
+  explicacao: "Ela é tecnicamente a cruz da Ordem de Cristo, das caravelas portuguesas, mas virou 'Cruz de Malta' na boca da torcida."
+- ref: cur-es-006
+  categorias: [escudos, brasileiro]
+  dificuldade: medio
+  pergunta: "Antes de 1942, o Palmeiras tinha qual nome?"
+  correta: "Palestra Italia"
+  erradas: ["Società Italiana", "Clube Italiano Paulista", "Sport Club Italia"]
+  explicacao: "Durante a Segunda Guerra, nomes ligados aos países do Eixo foram proibidos e o Palestra virou Palmeiras."
+- ref: cur-es-007
+  categorias: [escudos, brasileiro]
+  dificuldade: medio
+  pergunta: "Qual clube mineiro também se chamava Palestra Itália até 1942?"
+  correta: "Cruzeiro"
+  erradas: ["Atlético-MG", "América-MG", "Villa Nova"]
+  explicacao: "O Palestra Itália de Belo Horizonte passou a se chamar Cruzeiro Esporte Clube, numa referência ao Cruzeiro do Sul."
+- ref: cur-es-008
+  categorias: [escudos, europeu]
+  dificuldade: dificil
+  pergunta: "Quais elementos do brasão de Madri aparecem no escudo do Atlético de Madrid?"
+  correta: "Um urso e um medronheiro"
+  erradas: ["Uma coroa e uma torre", "Um leão e uma estrela", "Uma águia e um castelo"]
+  explicacao: "O urso e o medronheiro (el oso y el madroño) são o símbolo de Madri e ficam no escudo rojiblanco."
+- ref: cur-es-009
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "O galo empoleirado sobre uma bola é símbolo de qual clube inglês?"
+  correta: "Tottenham"
+  erradas: ["Arsenal", "West Ham", "Everton"]
+  explicacao: "O galo é ligado a Harry Hotspur, nobre que dá nome ao clube."
+- ref: cur-es-010
+  categorias: [escudos, europeu]
+  dificuldade: dificil
+  pergunta: "A torre do escudo do Everton representa qual construção de Liverpool?"
+  correta: "A Torre do Príncipe Rupert"
+  erradas: ["A torre do relógio do porto", "A torre da catedral", "O farol de Crosby"]
+  explicacao: "A Prince Rupert's Tower, antiga cadeia do bairro de Everton, aparece no escudo desde 1938."
+- ref: cur-es-011
+  categorias: [escudos, europeu]
+  dificuldade: dificil
+  pergunta: "Qual flor estilizada é o símbolo da Fiorentina?"
+  correta: "O lírio"
+  erradas: ["A rosa", "A tulipa", "A margarida"]
+  explicacao: "O lírio (giglio) vermelho é o brasão de Florença e está no escudo da Fiorentina."
+- ref: cur-es-012
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "Qual símbolo irlandês está no escudo do Celtic?"
+  correta: "Um trevo de quatro folhas"
+  erradas: ["Uma harpa", "Uma cruz celta", "Um carvalho"]
+  explicacao: "O trevo homenageia as raízes irlandesas do clube, fundado em Glasgow em 1887."
+- ref: cur-es-013
+  categorias: [escudos, brasileiro]
+  dificuldade: medio
+  pergunta: "Qual clube é conhecido como 'Leão da Ilha'?"
+  correta: "Sport"
+  erradas: ["Fortaleza", "Vitória", "Remo"]
+  explicacao: "O apelido vem do estádio, a Ilha do Retiro, no Recife. O Fortaleza é o 'Leão do Pici' e o Vitória, o 'Leão da Barra'."
+- ref: cur-es-014
+  categorias: [escudos, brasileiro]
+  dificuldade: medio
+  pergunta: "Qual clube nordestino é conhecido como 'Vovô'?"
+  correta: "Ceará"
+  erradas: ["Fortaleza", "ABC", "Bahia"]
+  explicacao: "O Ceará Sporting Club, de 1914, é o clube mais antigo em atividade entre os grandes de Fortaleza."
+- ref: cur-es-015
+  categorias: [escudos, brasileiro]
+  dificuldade: medio
+  pergunta: "Qual clube é chamado de 'Timbu'?"
+  correta: "Náutico"
+  erradas: ["Santa Cruz", "Sport", "CRB"]
+  explicacao: "Timbu é como o gambá é chamado no Nordeste, e virou o mascote e o apelido do Náutico."
+- ref: cur-es-016
+  categorias: [escudos, brasileiro]
+  dificuldade: dificil
+  pergunta: "Qual clube do Pará é conhecido como 'Papão da Curuzu'?"
+  correta: "Paysandu"
+  erradas: ["Remo", "Tuna Luso", "Águia de Marabá"]
+  explicacao: "A Curuzu é o estádio do Paysandu, em Belém. O rival Remo é o 'Leão Azul'."
+- ref: cur-es-017
+  categorias: [escudos, brasileiro]
+  dificuldade: medio
+  pergunta: "Qual é o apelido da Ponte Preta, de Campinas?"
+  correta: "Macaca"
+  erradas: ["Bugre", "Tigre", "Coelho"]
+  explicacao: "'Bugre' é o rival Guarani, 'Tigre' é o Criciúma e 'Coelho' é o América-MG."
+- ref: cur-es-018
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "Qual monumento aparece no escudo do PSG?"
+  correta: "A Torre Eiffel"
+  erradas: ["O Arco do Triunfo", "A Catedral de Notre-Dame", "A Basílica de Sacré-Cœur"]
+  explicacao: "A torre fica sobre fundo azul, com uma flor-de-lis, símbolo da realeza francesa, abaixo dela."
+- ref: cur-es-019
+  categorias: [escudos, europeu]
+  dificuldade: facil
+  pergunta: "Qual figura da mitologia romana está no escudo da Roma?"
+  correta: "A loba com Rômulo e Remo"
+  erradas: ["Marte, deus da guerra", "A águia imperial", "Júpiter"]
+  explicacao: "A loba capitolina amamentando os gêmeos fundadores de Roma é o símbolo do clube."
+- ref: cur-es-020
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "Em 2017, a Juventus trocou o escudo tradicional por um logo baseado em qual letra?"
+  correta: "J"
+  erradas: ["V", "T", "G"]
+  explicacao: "O novo logo trocou o escudo oval com o touro de Turim por um 'J' estilizado, em preto e branco."
+
+# ---------------------------------------------------------------- Estádios
+- ref: cur-et-001
+  categorias: [estadios, sulamericano]
+  dificuldade: medio
+  pergunta: "Racing e Independiente têm estádios a poucas quadras um do outro, em Avellaneda. Quais são eles?"
+  correta: "El Cilindro e Libertadores de América"
+  erradas: ["La Bombonera e El Monumental", "El Gasómetro e El Fortín", "El Cilindro e El Gasómetro"]
+  explicacao: "O Cilindro (Presidente Perón) é do Racing e o Libertadores de América (Ricardo Bochini) é do Independiente."
+  fonte: "https://en.wikipedia.org/wiki/Avellaneda_derby"
+- ref: cur-et-002
+  categorias: [estadios, europeu]
+  dificuldade: medio
+  pergunta: "A 'Muralha Amarela', a maior arquibancada em pé da Europa, fica em qual estádio?"
+  correta: "Signal Iduna Park"
+  erradas: ["Allianz Arena", "Veltins-Arena", "Olympiastadion"]
+  explicacao: "A Südtribüne do Borussia Dortmund recebe cerca de 25 mil torcedores."
+  fonte: "https://en.wikipedia.org/wiki/Westfalenstadion"
+- ref: cur-et-003
+  categorias: [estadios, europeu]
+  dificuldade: medio
+  pergunta: "Qual é o nome oficial do San Siro, estádio que Milan e Inter dividem?"
+  correta: "Giuseppe Meazza"
+  erradas: ["Gianni Brera", "Gianni Agnelli", "Silvio Piola"]
+  explicacao: "O nome homenageia Giuseppe Meazza, bicampeão do mundo que jogou pelos dois clubes."
+  fonte: "https://en.wikipedia.org/wiki/San_Siro"
+- ref: cur-et-004
+  categorias: [estadios, sulamericano]
+  dificuldade: medio
+  pergunta: "Qual é o nome oficial da Bombonera, estádio do Boca Juniors?"
+  correta: "Alberto J. Armando"
+  erradas: ["Antonio Vespucio Liberti", "Diego Armando Maradona", "José Amalfitani"]
+  explicacao: "O nome homenageia um ex-presidente do Boca. Antonio Liberti dá nome ao Monumental do River."
+  fonte: "https://en.wikipedia.org/wiki/La_Bombonera"
+- ref: cur-et-005
+  categorias: [estadios, sulamericano]
+  dificuldade: dificil
+  pergunta: "O Monumental de Núñez, do River Plate, tem o nome oficial de qual ex-presidente do clube?"
+  correta: "Antonio Vespucio Liberti"
+  erradas: ["Alberto J. Armando", "José Amalfitani", "Pedro Bidegain"]
+  explicacao: "José Amalfitani dá nome ao estádio do Vélez, e Pedro Bidegain, ao Nuevo Gasómetro do San Lorenzo."
+  fonte: "https://en.wikipedia.org/wiki/Estadio_Monumental_(Buenos_Aires)"
+- ref: cur-et-006
+  categorias: [estadios, selecoes, sulamericano]
+  dificuldade: medio
+  pergunta: "Qual estádio foi construído para a primeira Copa do Mundo, em 1930, e recebeu a final?"
+  correta: "Estádio Centenário"
+  erradas: ["Gran Parque Central", "Estádio Pocitos", "Estádio Monumental"]
+  explicacao: "O Centenário, em Montevidéu, homenageia os cem anos da primeira Constituição uruguaia."
+  fonte: "https://en.wikipedia.org/wiki/Estadio_Centenario"
+- ref: cur-et-007
+  categorias: [estadios, brasileiro]
+  dificuldade: medio
+  pergunta: "Qual é o nome oficial do Maracanã?"
+  correta: "Estádio Jornalista Mário Filho"
+  erradas: ["Estádio Governador Magalhães Pinto", "Estádio Jornalista Nelson Rodrigues", "Estádio Municipal Paulo Machado de Carvalho"]
+  explicacao: "Mário Filho, irmão de Nelson Rodrigues, foi um dos maiores defensores da construção do estádio."
+  fonte: "https://en.wikipedia.org/wiki/Maracan%C3%A3_Stadium"
+- ref: cur-et-008
+  categorias: [estadios, brasileiro]
+  dificuldade: dificil
+  pergunta: "Qual é o nome oficial do Mineirão?"
+  correta: "Estádio Governador Magalhães Pinto"
+  erradas: ["Estádio Raimundo Sampaio", "Estádio Jornalista Felipe Drummond", "Estádio Juscelino Kubitschek"]
+  explicacao: "O Mineirão foi inaugurado em 1965. 'Raimundo Sampaio' é o Independência e 'Felipe Drummond', o Mineirinho."
+  fonte: "https://en.wikipedia.org/wiki/Mineir%C3%A3o"
+- ref: cur-et-009
+  categorias: [estadios, brasileiro]
+  dificuldade: medio
+  pergunta: "Qual é o nome oficial do Morumbi, estádio do São Paulo?"
+  correta: "Cícero Pompeu de Toledo"
+  erradas: ["Paulo Machado de Carvalho", "Conde Rodolfo Crespi", "Urbano Caldeira"]
+  explicacao: "Homenageia o presidente que liderou a construção. Paulo Machado de Carvalho é o Pacaembu e Urbano Caldeira, a Vila Belmiro."
+  fonte: "https://en.wikipedia.org/wiki/Est%C3%A1dio_do_Morumbi"
+- ref: cur-et-010
+  categorias: [estadios, brasileiro]
+  dificuldade: dificil
+  pergunta: "Qual é o nome oficial do Beira-Rio, do Internacional?"
+  correta: "José Pinheiro Borda"
+  erradas: ["Olímpico Monumental", "Ildo Meneghetti", "Plácido Castelo"]
+  explicacao: "José Pinheiro Borda foi o engenheiro português que comandou a obra, inaugurada em 1969."
+  fonte: "https://en.wikipedia.org/wiki/Est%C3%A1dio_Beira-Rio"
+- ref: cur-et-011
+  categorias: [estadios, brasileiro]
+  dificuldade: dificil
+  pergunta: "Qual é o nome oficial da Vila Belmiro, do Santos?"
+  correta: "Estádio Urbano Caldeira"
+  erradas: ["Estádio Ulrico Mursa", "Estádio Brinco de Ouro", "Estádio Moisés Lucarelli"]
+  explicacao: "Urbano Caldeira foi jogador, técnico e dirigente do Santos. Ulrico Mursa é o estádio da Portuguesa Santista."
+  fonte: "https://en.wikipedia.org/wiki/Est%C3%A1dio_Urbano_Caldeira"
+- ref: cur-et-012
+  categorias: [estadios, brasileiro]
+  dificuldade: medio
+  pergunta: "Inaugurado em 1927 com dinheiro de sócios e torcedores, São Januário pertence a qual clube?"
+  correta: "Vasco"
+  erradas: ["Flamengo", "Fluminense", "America-RJ"]
+  explicacao: "São Januário foi por anos o maior estádio do Brasil e recebeu jogos da Seleção e discursos de Getúlio Vargas."
+  fonte: "https://en.wikipedia.org/wiki/Est%C3%A1dio_S%C3%A3o_Janu%C3%A1rio"
+- ref: cur-et-013
+  categorias: [estadios, brasileiro]
+  dificuldade: medio
+  pergunta: "Qual destes estádios do Recife pertence ao Santa Cruz?"
+  correta: "Arruda"
+  erradas: ["Aflitos", "Ilha do Retiro", "Arena de Pernambuco"]
+  explicacao: "O Arruda (José do Rego Maciel) é do Santa Cruz. Os Aflitos são do Náutico e a Ilha do Retiro, do Sport."
+  fonte: "https://en.wikipedia.org/wiki/Est%C3%A1dio_do_Arruda"
+- ref: cur-et-014
+  categorias: [estadios, selecoes]
+  dificuldade: medio
+  pergunta: "Qual estádio recebeu as finais das Copas de 1970 e 1986?"
+  correta: "Estádio Azteca"
+  erradas: ["Estádio Jalisco", "Rose Bowl", "Estádio Centenário"]
+  explicacao: "O Azteca, na Cidade do México, viu Pelé em 1970 e Maradona em 1986, e é sede da Copa de 2026."
+  fonte: "https://en.wikipedia.org/wiki/Estadio_Azteca"
+- ref: cur-et-015
+  categorias: [estadios, selecoes]
+  dificuldade: medio
+  pergunta: "Em qual estádio foi a final da Copa de 1994, entre Brasil e Itália?"
+  correta: "Rose Bowl"
+  erradas: ["Giants Stadium", "Soldier Field", "Stanford Stadium"]
+  explicacao: "O Rose Bowl fica em Pasadena, na Califórnia, e também recebeu a final da Copa feminina de 1999."
+  fonte: "https://en.wikipedia.org/wiki/Rose_Bowl_(stadium)"
+- ref: cur-et-016
+  categorias: [estadios, sulamericano]
+  dificuldade: medio
+  pergunta: "O Estádio Hernando Siles, famoso pela altitude de mais de 3.600 metros, fica em qual cidade?"
+  correta: "La Paz"
+  erradas: ["Quito", "Cusco", "Sucre"]
+  explicacao: "É o principal estádio da seleção boliviana e um dos mais altos do futebol profissional."
+  fonte: "https://en.wikipedia.org/wiki/Estadio_Hernando_Siles"
+- ref: cur-et-017
+  categorias: [estadios, sulamericano]
+  dificuldade: medio
+  pergunta: "Atlético Nacional e Independiente Medellín dividem qual estádio?"
+  correta: "Atanasio Girardot"
+  erradas: ["El Campín", "Pascual Guerrero", "Metropolitano Roberto Meléndez"]
+  explicacao: "O Atanasio Girardot fica em Medellín. El Campín é de Bogotá e o Pascual Guerrero, de Cali."
+  fonte: "https://en.wikipedia.org/wiki/Estadio_Atanasio_Girardot"
+- ref: cur-et-018
+  categorias: [estadios, europeu]
+  dificuldade: medio
+  pergunta: "Qual estádio é conhecido como 'La Catedral'?"
+  correta: "San Mamés, do Athletic Bilbao"
+  erradas: ["Mestalla, do Valencia", "Anoeta, da Real Sociedad", "Benito Villamarín, do Betis"]
+  explicacao: "O apelido vem do antigo San Mamés. O novo estádio, de 2013, manteve o nome e o apelido."
+  fonte: "https://en.wikipedia.org/wiki/San_Mam%C3%A9s_Stadium"
+- ref: cur-et-019
+  categorias: [estadios, europeu]
+  dificuldade: dificil
+  pergunta: "'De Kuip', ou 'A Banheira', é o estádio de qual clube?"
+  correta: "Feyenoord"
+  erradas: ["Ajax", "PSV", "AZ"]
+  explicacao: "O De Kuip fica em Roterdã e é um dos estádios mais tradicionais da Europa."
+  fonte: "https://en.wikipedia.org/wiki/De_Kuip"
+- ref: cur-et-020
+  categorias: [estadios, europeu]
+  dificuldade: dificil
+  pergunta: "Qual estádio a torcida chama de 'Paradise' (Paraíso)?"
+  correta: "Celtic Park"
+  erradas: ["Ibrox", "Hampden Park", "Anfield"]
+  explicacao: "Celtic Park, em Glasgow, é a casa do Celtic. Ibrox é do rival Rangers."
+  fonte: "https://en.wikipedia.org/wiki/Celtic_Park"
+- ref: cur-et-021
+  categorias: [estadios, sulamericano]
+  dificuldade: dificil
+  pergunta: "Como se chama o estádio inaugurado pelo Peñarol em 2016?"
+  correta: "Campeón del Siglo"
+  erradas: ["Gran Parque Central", "Luis Franzini", "Jardines del Hipódromo"]
+  explicacao: "O nome provoca o rival Nacional, dono do Gran Parque Central. Antes, o Peñarol mandava jogos no Centenário."
+  fonte: "https://en.wikipedia.org/wiki/Estadio_Campe%C3%B3n_del_Siglo"
+- ref: cur-et-022
+  categorias: [estadios, sulamericano]
+  dificuldade: medio
+  pergunta: "Qual clube uruguaio é dono do Gran Parque Central, que recebeu jogos da Copa de 1930?"
+  correta: "Nacional"
+  erradas: ["Peñarol", "Defensor Sporting", "Danubio"]
+  explicacao: "O Gran Parque Central recebeu, em 13 de julho de 1930, um dos dois primeiros jogos da história das Copas."
+  fonte: "https://en.wikipedia.org/wiki/Estadio_Gran_Parque_Central"
+- ref: cur-et-023
+  categorias: [estadios, europeu]
+  dificuldade: medio
+  pergunta: "A final da Champions de 2014, a da 'Décima' do Real Madrid, foi jogada em qual estádio?"
+  correta: "Estádio da Luz"
+  erradas: ["Estádio do Dragão", "Estádio José Alvalade", "Estádio Nacional"]
+  explicacao: "O Real venceu o Atlético por 4 a 1 na casa do Benfica, em Lisboa."
+  fonte: "https://en.wikipedia.org/wiki/2014_UEFA_Champions_League_final"
+- ref: cur-et-024
+  categorias: [estadios, selecoes, brasileiro]
+  dificuldade: medio
+  pergunta: "Qual estádio recebeu a abertura da Copa de 2014, entre Brasil e Croácia?"
+  correta: "Arena Corinthians"
+  erradas: ["Maracanã", "Mané Garrincha", "Mineirão"]
+  explicacao: "O Brasil venceu por 3 a 1, com dois gols de Neymar, em Itaquera."
+  fonte: "https://en.wikipedia.org/wiki/Arena_Corinthians"
+- ref: cur-et-025
+  categorias: [estadios, brasileiro]
+  dificuldade: medio
+  pergunta: "Antes da Arena, inaugurada em 2012, qual era o estádio do Grêmio?"
+  correta: "Olímpico Monumental"
+  erradas: ["Estádio dos Eucaliptos", "Estádio Centenário", "Estádio da Baixada"]
+  explicacao: "O Grêmio jogou no Olímpico de 1954 a 2012. Os Eucaliptos foram a casa do Inter antes do Beira-Rio."
+  fonte: "https://en.wikipedia.org/wiki/Est%C3%A1dio_Ol%C3%ADmpico_Monumental"
+- ref: cur-et-026
+  categorias: [estadios, brasileiro]
+  dificuldade: dificil
+  pergunta: "Antes do Beira-Rio, inaugurado em 1969, o Internacional mandava jogos em qual estádio?"
+  correta: "Estádio dos Eucaliptos"
+  erradas: ["Olímpico Monumental", "Estádio da Baixada", "Estádio Centenário"]
+  explicacao: "Os Eucaliptos receberam jogos da Copa de 1950 e foram a casa do Inter até 1969."
+  fonte: "https://en.wikipedia.org/wiki/Est%C3%A1dio_dos_Eucaliptos"
+- ref: cur-et-027
+  categorias: [estadios, europeu]
+  dificuldade: medio
+  pergunta: "Como se chama a arquibancada mais famosa de Anfield?"
+  correta: "The Kop"
+  erradas: ["Stretford End", "Shed End", "North Bank"]
+  explicacao: "O nome vem de Spion Kop, colina de uma batalha na África do Sul. As outras são de United, Chelsea e Arsenal."
+  fonte: "https://en.wikipedia.org/wiki/Anfield"
+- ref: cur-et-028
+  categorias: [estadios, sulamericano]
+  dificuldade: dificil
+  pergunta: "Millonarios e Santa Fe dividem qual estádio, em Bogotá?"
+  correta: "El Campín"
+  erradas: ["Atanasio Girardot", "Pascual Guerrero", "Palogrande"]
+  explicacao: "O nome oficial é Estádio Nemesio Camacho. Palogrande é o estádio do Once Caldas, em Manizales."
+  fonte: "https://en.wikipedia.org/wiki/Estadio_El_Camp%C3%ADn"
+- ref: cur-et-029
+  categorias: [estadios, selecoes, brasileiro]
+  dificuldade: dificil
+  pergunta: "Em qual estádio o Brasil venceu a Suécia na final da Copa de 1958?"
+  correta: "Råsunda"
+  erradas: ["Ullevi", "Malmö Stadion", "Olympiastadion"]
+  explicacao: "O Råsunda ficava em Solna, ao lado de Estocolmo, e foi demolido em 2013."
+  fonte: "https://en.wikipedia.org/wiki/R%C3%A5sunda_Stadium"
+- ref: cur-et-030
+  categorias: [estadios, selecoes, brasileiro]
+  dificuldade: medio
+  pergunta: "Em qual cidade o Brasil venceu a Alemanha na final da Copa de 2002?"
+  correta: "Yokohama"
+  erradas: ["Seul", "Tóquio", "Saitama"]
+  explicacao: "A final foi no Estádio Internacional de Yokohama, com dois gols de Ronaldo."
+  fonte: "https://en.wikipedia.org/wiki/2002_FIFA_World_Cup_final"
+- ref: cur-et-031
+  categorias: [estadios, europeu]
+  dificuldade: medio
+  pergunta: "José Alvalade é o estádio de qual clube?"
+  correta: "Sporting"
+  erradas: ["Benfica", "Belenenses", "Boavista"]
+  explicacao: "O nome homenageia o fundador do Sporting. O estádio atual foi construído para a Euro 2004."
+  fonte: "https://en.wikipedia.org/wiki/Est%C3%A1dio_Jos%C3%A9_Alvalade"
+- ref: cur-et-032
+  categorias: [estadios, europeu]
+  dificuldade: medio
+  pergunta: "Qual estádio tem uma fachada que acende em cores diferentes, como vermelho para o Bayern?"
+  correta: "Allianz Arena"
+  erradas: ["Signal Iduna Park", "Olympiastadion", "Volksparkstadion"]
+  explicacao: "Inaugurada em 2005, a Allianz Arena, em Munique, já foi azul e branca nos jogos do 1860 Munique."
+  fonte: "https://en.wikipedia.org/wiki/Allianz_Arena"
+- ref: cur-et-033
+  categorias: [estadios, sulamericano]
+  dificuldade: dificil
+  pergunta: "Qual é o estádio do Vélez Sarsfield, em Buenos Aires?"
+  correta: "José Amalfitani"
+  erradas: ["Pedro Bidegain", "Tomás Adolfo Ducó", "Diego Armando Maradona"]
+  explicacao: "O José Amalfitani, ou 'El Fortín de Liniers', recebeu jogos da Copa de 1978. O Ducó é do Huracán."
+  fonte: "https://en.wikipedia.org/wiki/Estadio_Jos%C3%A9_Amalfitani"
+- ref: cur-et-034
+  categorias: [estadios, europeu]
+  dificuldade: medio
+  pergunta: "Mestalla, um dos estádios mais antigos da Espanha, é a casa de qual clube?"
+  correta: "Valencia"
+  erradas: ["Villarreal", "Levante", "Sevilla"]
+  explicacao: "O Mestalla foi inaugurado em 1923. O Levante joga no Ciutat de València."
+  fonte: "https://en.wikipedia.org/wiki/Mestalla_Stadium"
+
+# ---------------------------------------------------------------- Escudos (imagem; o nome do clube foi apagado da arte)
+- ref: cur-ei-001
+  categorias: [escudos, europeu]
+  dificuldade: dificil
+  pergunta: "De qual clube é este escudo?"
+  imagem: "standard.png"
+  correta: "Standard Liège"
+  erradas: ["Anderlecht", "Club Brugge", "Genk"]
+  explicacao: "O escudo do Standard traz as letras S e L entrelaçadas, a coroa e o ano de fundação, 1898."
+- ref: cur-ei-002
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "brugge.png"
+  correta: "Club Brugge"
+  erradas: ["Anderlecht", "Gent", "Standard Liège"]
+  explicacao: "As listras azuis e pretas, a coroa e o ano de 1891 são do Club Brugge, maior campeão belga do século XXI."
+- ref: cur-ei-003
+  categorias: [escudos, sulamericano]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "colocolo.png"
+  correta: "Colo-Colo"
+  erradas: ["Universidad de Chile", "Universidad Católica", "Cobreloa"]
+  explicacao: "O perfil é do cacique mapuche Colo-Colo, que dá nome ao clube chileno, campeão da Libertadores em 1991."
+- ref: cur-ei-004
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "dinamozagreb.png"
+  correta: "Dinamo Zagreb"
+  erradas: ["Hajduk Split", "Estrela Vermelha", "Partizan"]
+  explicacao: "O xadrez vermelho e branco da Croácia e o 'd' em azul identificam o Dinamo Zagreb."
+- ref: cur-ei-005
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "fenerbahce.png"
+  correta: "Fenerbahçe"
+  erradas: ["Galatasaray", "Beşiktaş", "Trabzonspor"]
+  explicacao: "O escudo do Fenerbahçe tem as faixas amarela e azul e um ramo de carvalho. No original, o anel traz o nome e o ano de 1907."
+- ref: cur-ei-006
+  categorias: [escudos, europeu]
+  dificuldade: facil
+  pergunta: "De qual clube é este escudo?"
+  imagem: "galatasaray.png"
+  correta: "Galatasaray"
+  erradas: ["Fenerbahçe", "Beşiktaş", "Trabzonspor"]
+  explicacao: "O monograma GS, em amarelo e vermelho, é do Galatasaray, campeão da Copa da UEFA em 2000."
+- ref: cur-ei-007
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "olympiacos.png"
+  correta: "Olympiacos"
+  erradas: ["Panathinaikos", "AEK Atenas", "PAOK"]
+  explicacao: "O atleta coroado de louros e o ano de 1925 são do Olympiacos, do Pireu."
+- ref: cur-ei-008
+  categorias: [escudos, sulamericano]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "penarol.png"
+  correta: "Peñarol"
+  erradas: ["The Strongest", "Danubio", "Nacional"]
+  explicacao: "As listras amarelas e pretas e as estrelas dos títulos internacionais são do Peñarol, de Montevidéu."
+- ref: cur-ei-009
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "psv.png"
+  correta: "PSV"
+  erradas: ["Feyenoord", "Ajax", "AZ"]
+  explicacao: "A flâmula sobre listras vermelhas e brancas é do PSV, de Eindhoven, fundado em 1913."
+- ref: cur-ei-010
+  categorias: [escudos, europeu]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "torino.png"
+  correta: "Torino"
+  erradas: ["Genoa", "Bologna", "Sampdoria"]
+  explicacao: "O touro rampante é o símbolo da cidade de Turim e está no escudo grená do Torino, fundado em 1906."
+- ref: cur-ei-011
+  categorias: [escudos, sulamericano]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "atlnacional.png"
+  correta: "Atlético Nacional"
+  erradas: ["Deportivo Cali", "Once Caldas", "Independiente Medellín"]
+  explicacao: "O escudo verde e branco, com a faixa diagonal, é do Atlético Nacional, de Medellín, bicampeão da Libertadores."
+- ref: cur-ei-012
+  categorias: [escudos, sulamericano]
+  dificuldade: facil
+  pergunta: "De qual clube é este escudo?"
+  imagem: "cerro.png"
+  correta: "Cerro Porteño"
+  erradas: ["San Lorenzo", "Olimpia", "Libertad"]
+  explicacao: "As listras azuis e grenás e o monograma CP são do Cerro Porteño, grande rival do Olimpia em Assunção."
+- ref: cur-ei-013
+  categorias: [escudos, sulamericano]
+  dificuldade: dificil
+  pergunta: "De qual clube é este escudo, do qual apagamos o nome?"
+  imagem: "estudiantes.png"
+  correta: "Estudiantes"
+  erradas: ["Atlético de Madrid", "Unión de Santa Fe", "Instituto"]
+  explicacao: "Sem as letras EDLP, sobram as listras vermelhas e brancas do Estudiantes de La Plata, tetracampeão da Libertadores."
+- ref: cur-ei-014
+  categorias: [escudos, brasileiro]
+  dificuldade: dificil
+  pergunta: "De qual clube é este escudo, do qual apagamos o nome?"
+  imagem: "fortaleza.png"
+  correta: "Fortaleza"
+  erradas: ["Bahia", "Paraná", "Ceará"]
+  explicacao: "O escudo tricolor em azul, branco e vermelho, que traz o nome do clube no alto, é do Fortaleza, o 'Leão do Pici'."
+- ref: cur-ei-015
+  categorias: [escudos, sulamericano]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "ldu.png"
+  correta: "LDU"
+  erradas: ["Universidad Católica", "Universitario", "Universidad de Chile"]
+  explicacao: "O 'U' sobre o triângulo azul e vermelho é da Liga Deportiva Universitaria de Quito, campeã da Libertadores de 2008."
+- ref: cur-ei-016
+  categorias: [escudos, sulamericano]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "millonarios.png"
+  correta: "Millonarios"
+  erradas: ["Santa Fe", "América de Cali", "Atlético Nacional"]
+  explicacao: "O 'M' e os anéis azuis são do Millonarios, de Bogotá, que teve Di Stéfano no time do 'Ballet Azul'."
+- ref: cur-ei-017
+  categorias: [escudos, sulamericano]
+  dificuldade: dificil
+  pergunta: "De qual clube é este escudo, do qual apagamos as letras?"
+  imagem: "newells.png"
+  correta: "Newell's Old Boys"
+  erradas: ["Colón", "Patronato", "Rosario Central"]
+  explicacao: "O escudo dividido em vermelho e preto, com as letras NOB, é do Newell's Old Boys, de Rosário, clube onde Messi começou."
+- ref: cur-ei-018
+  categorias: [escudos, sulamericano]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "udechile.png"
+  correta: "Universidad de Chile"
+  erradas: ["Universidad Católica", "LDU", "Universitario"]
+  explicacao: "O 'U' com a coruja (o 'chuncho') é da Universidad de Chile, campeã da Sul-Americana de 2011."
+- ref: cur-ei-019
+  categorias: [escudos, sulamericano]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "velez.png"
+  correta: "Vélez Sarsfield"
+  erradas: ["Gimnasia y Esgrima", "Talleres", "Quilmes"]
+  explicacao: "O 'V' azul com as letras CAVS (Club Atlético Vélez Sarsfield) é do Vélez, campeão mundial em 1994."
+- ref: cur-ei-020
+  categorias: [escudos, brasileiro]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "sport.png"
+  correta: "Sport"
+  erradas: ["Vitória", "Flamengo", "Athletico-PR"]
+  explicacao: "O leão dourado sobre as listras rubro-negras é do Sport, o 'Leão da Ilha', do Recife."
+- ref: cur-ei-021
+  categorias: [escudos, brasileiro]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "vitoria.png"
+  correta: "Vitória"
+  erradas: ["Sport", "Flamengo", "Athletico-PR"]
+  explicacao: "O monograma do Esporte Clube Vitória, de Salvador, sobre o vermelho e preto. É o 'Leão da Barra'."
+- ref: cur-ei-022
+  categorias: [escudos, brasileiro]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo?"
+  imagem: "santacruz.png"
+  correta: "Santa Cruz"
+  erradas: ["Botafogo-PB", "ABC", "Treze"]
+  explicacao: "O monograma SCFC sobre o preto, branco e vermelho é do Santa Cruz, a 'Cobra Coral' do Recife."
+- ref: cur-ei-023
+  categorias: [escudos, brasileiro]
+  dificuldade: dificil
+  pergunta: "De qual clube é este escudo, do qual apagamos o nome?"
+  imagem: "nautico.png"
+  correta: "Náutico"
+  erradas: ["América-RN", "CRB", "Bangu"]
+  explicacao: "Os remos, a bola e as letras CNC (Clube Náutico Capibaribe) lembram a origem do Náutico no remo, no Recife."
+- ref: cur-ei-024
+  categorias: [escudos, brasileiro]
+  dificuldade: medio
+  pergunta: "De qual clube é este escudo, do qual apagamos o nome?"
+  imagem: "goias.png"
+  correta: "Goiás"
+  erradas: ["Guarani", "Coritiba", "Juventude"]
+  explicacao: "O 'G' branco sobre o verde é do Goiás Esporte Clube, fundado em 1943, em Goiânia."
+- ref: cur-ei-025
+  categorias: [escudos, brasileiro]
+  dificuldade: dificil
+  pergunta: "De qual clube é este escudo, do qual apagamos o nome?"
+  imagem: "criciuma.png"
+  correta: "Criciúma"
+  erradas: ["Mirassol", "Amazonas", "Brasil de Pelotas"]
+  explicacao: "O símbolo amarelo e preto, com as três estrelas, é do Criciúma, o 'Tigre', campeão da Copa do Brasil de 1991."
+

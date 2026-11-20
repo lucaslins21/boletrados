@@ -232,3 +232,6 @@ body:has(.gd){background:var(--bt-pitch)}
 .gd-site .login-legal{font-size:var(--bt-text-xs);line-height:1.5;color:var(--bt-muted)}
 .gd-site .footer-links{display:flex;gap:var(--bt-space-5);flex-wrap:wrap}
 .gd-site .footer-links a{color:#fff;font-size:var(--bt-text-sm);text-shadow:0 1px 0 #0003}
+
+/* Imagem da pergunta no painel: fundo claro (escudos pretos somem no fundo escuro herdado) */
+.gd-site .question-image{background:var(--bt-soft);border:1px solid var(--bt-edge-soft);padding:12px;object-fit:contain}

@@ -97,7 +97,7 @@ export function TermsPage() {
     <p>Ao enviar uma pergunta, você garante que ela é sua ou que pode usá-la, que as informações conferem com a fonte indicada e que imagens enviadas não violam direitos de terceiros. Você autoriza o Boletrados a revisar, editar, publicar e usar a pergunta no jogo, sem pagamento. A moderação pode recusar ou arquivar qualquer pergunta.</p>
 
     <h2>Marcas e nomes</h2>
-    <p>Nomes de clubes, seleções, competições e estádios aparecem só como referência factual. O Boletrados não tem relação com essas entidades nem usa seus escudos ou logotipos.</p>
+    <p>Nomes de clubes, seleções, competições e estádios aparecem só como referência factual. Escudos de clubes aparecem apenas em perguntas de identificação, com finalidade informativa e sem fins comerciais, e pertencem aos seus titulares. O Boletrados não tem relação com essas entidades. Se você representa um clube e quer a remoção de um escudo, escreva para <Mail/>.</p>
 
     <h2>Suspensão</h2>
     <p>Contas que desrespeitarem estes termos podem ser suspensas ou excluídas. Você pode encerrar a sua quando quiser, pedindo pelo e-mail abaixo.</p>

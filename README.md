@@ -10,7 +10,7 @@ Quiz de futebol mobile-first com partidas X1 assíncronas entre amigos, sorteio 
 > - avisos de vez por Web Push, perfil e estatísticas, envio de perguntas e moderação;
 > - Política de Privacidade (`/privacidade`) e Termos de Uso (`/termos`).
 >
-> As 54 perguntas atuais são demonstrativas e serão substituídas pelas curadas. Produto em [`docs/PRODUCT.md`](docs/PRODUCT.md), arquitetura em [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md) e identidade visual em [`docs/ART_DIRECTION.md`](docs/ART_DIRECTION.md).
+> O banco começa com 237 perguntas curadas (`api/db/curated/perguntas.yml`, incluindo 25 escudos com imagem), importadas a cada deploy. Produto em [`docs/PRODUCT.md`](docs/PRODUCT.md), arquitetura em [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md) e identidade visual em [`docs/ART_DIRECTION.md`](docs/ART_DIRECTION.md).
 
 Monorepo:
 
@@ -143,7 +143,9 @@ web/public/favicon.svg   # Rosto do mascote
 api/
   app/domain/match_engine.rb      # Regras do X1 (funções puras, servidor é a fonte da verdade)
   app/services/question_picker.rb # Pergunta inédita + exposição na mesma transação
-  db/seeds/demo_questions.json    # Perguntas demonstrativas (fonte do seed)
+  db/curated/perguntas.yml        # Banco curado (importado por bin/rails content:import a cada deploy)
+  db/curated/escudos/             # Imagens dos escudos, com o nome do clube apagado
+  db/seeds/demo_questions.json    # Perguntas demonstrativas antigas (arquivadas em produção)
   spec/                           # RSpec
 docs/
   PRODUCT.md             # Regras fechadas, detalhes e próximos passos

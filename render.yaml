@@ -11,7 +11,8 @@ services:
       paths: [ "api/**" ]
     buildCommand: bundle install
     # db:prepare cria/migra o banco (e roda os seeds só na criação). Plano grátis não tem pre-deploy command.
-    startCommand: bundle exec rails db:prepare && bundle exec puma -C config/puma.rb
+    # content:import adiciona as perguntas novas da curadoria (db/curated); nunca altera as já existentes.
+    startCommand: bundle exec rails db:prepare && bundle exec rails content:import && bundle exec puma -C config/puma.rb
     healthCheckPath: /up
     autoDeploy: true
     envVars:
@@ -39,5 +40,3 @@ services:
         sync: false
       - key: VAPID_SUBJECT
         value: mailto:avisos@boletrados.invalid
-      - key: SEED_DEMO_QUESTIONS
-        value: "1" # remover quando houver perguntas curadas

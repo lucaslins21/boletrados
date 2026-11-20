@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_19_150004) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_20_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -159,7 +159,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_150004) do
   end
 
   create_table "question_images", force: :cascade do |t|
-    t.bigint "uploader_id", null: false
+    t.bigint "uploader_id"
     t.string "key", null: false
     t.string "content_type", null: false
     t.integer "byte_size", null: false
@@ -169,7 +169,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_150004) do
     t.index ["key"], name: "index_question_images_on_key", unique: true
     t.index ["uploader_id"], name: "index_question_images_on_uploader_id"
     t.check_constraint "byte_size > 0 AND byte_size <= 524288", name: "question_images_byte_size_range"
-    t.check_constraint "content_type::text = ANY (ARRAY['image/jpeg'::character varying, 'image/png'::character varying, 'image/webp'::character varying]::text[])", name: "question_images_content_type_values"
+    t.check_constraint "content_type::text = ANY (ARRAY['image/jpeg'::character varying::text, 'image/png'::character varying::text, 'image/webp'::character varying::text])", name: "question_images_content_type_values"
   end
 
   create_table "question_reviews", force: :cascade do |t|
@@ -181,8 +181,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_150004) do
     t.datetime "created_at", null: false
     t.index ["question_id"], name: "index_question_reviews_on_question_id"
     t.index ["reviewer_id"], name: "index_question_reviews_on_reviewer_id"
-    t.check_constraint "decision::text = ANY (ARRAY['approve'::character varying, 'reject'::character varying, 'request_changes'::character varying, 'archive'::character varying, 'restore'::character varying, 'edit'::character varying]::text[])", name: "question_reviews_decision_values"
-    t.check_constraint "reviewer_kind::text = ANY (ARRAY['admin'::character varying, 'community'::character varying]::text[])", name: "question_reviews_kind_values"
+    t.check_constraint "decision::text = ANY (ARRAY['approve'::character varying::text, 'reject'::character varying::text, 'request_changes'::character varying::text, 'archive'::character varying::text, 'restore'::character varying::text, 'edit'::character varying::text])", name: "question_reviews_decision_values"
+    t.check_constraint "reviewer_kind::text = ANY (ARRAY['admin'::character varying::text, 'community'::character varying::text])", name: "question_reviews_kind_values"
   end
 
   create_table "question_versions", force: :cascade do |t|
@@ -221,9 +221,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_19_150004) do
     t.index ["status"], name: "index_questions_on_status"
     t.check_constraint "cardinality(options) = 4", name: "questions_four_options"
     t.check_constraint "correct_index >= 0 AND correct_index <= 3", name: "questions_correct_index_range"
-    t.check_constraint "difficulty::text = ANY (ARRAY['easy'::character varying, 'medium'::character varying, 'hard'::character varying]::text[])", name: "questions_difficulty_values"
-    t.check_constraint "initial_difficulty::text = ANY (ARRAY['easy'::character varying, 'medium'::character varying, 'hard'::character varying]::text[])", name: "questions_initial_difficulty_values"
-    t.check_constraint "status::text = ANY (ARRAY['submitted'::character varying, 'in_review'::character varying, 'changes_requested'::character varying, 'rejected'::character varying, 'published'::character varying, 'archived'::character varying]::text[])", name: "questions_status_values"
+    t.check_constraint "difficulty::text = ANY (ARRAY['easy'::character varying::text, 'medium'::character varying::text, 'hard'::character varying::text])", name: "questions_difficulty_values"
+    t.check_constraint "initial_difficulty::text = ANY (ARRAY['easy'::character varying::text, 'medium'::character varying::text, 'hard'::character varying::text])", name: "questions_initial_difficulty_values"
+    t.check_constraint "status::text = ANY (ARRAY['submitted'::character varying::text, 'in_review'::character varying::text, 'changes_requested'::character varying::text, 'rejected'::character varying::text, 'published'::character varying::text, 'archived'::character varying::text])", name: "questions_status_values"
   end
 
   create_table "sessions", force: :cascade do |t|

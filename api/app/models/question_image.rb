@@ -7,7 +7,7 @@ class QuestionImage < ApplicationRecord
     "image/webp" => ->(b) { b.byteslice(0, 4) == "RIFF".b && b.byteslice(8, 4) == "WEBP".b }
   }.freeze
 
-  belongs_to :uploader, class_name: "User"
+  belongs_to :uploader, class_name: "User", optional: true # nulo = imagem da curadoria (db/curated)
   has_many :questions, foreign_key: :image_id, dependent: :nullify, inverse_of: :image
 
   def self.detect_type(bytes) = SIGNATURES.find { |_type, check| check.call(bytes) }&.first
@@ -21,13 +21,18 @@ class QuestionImage < ApplicationRecord
             checksum: Digest::SHA256.hexdigest(bytes), data: bytes, created_at: Time.current)
   end
 
+  # Imagem da curadoria: mesma validação do envio, sem dono. Reaproveita a existente com o mesmo conteúdo.
+  def self.curated!(bytes)
+    find_by(uploader_id: nil, checksum: Digest::SHA256.hexdigest(bytes)) || from_upload!(nil, bytes)
+  end
+
   def path = "/question_images/#{key}"
 
   # Quem pode ver: quem enviou, admins e quem já foi exposto a uma pergunta com esta imagem
   # (assim ninguém baixa as imagens antes de a pergunta aparecer).
   def visible_to?(user)
     return false unless user
-    return true if uploader_id == user.id || user.admin?
+    return true if (uploader_id && uploader_id == user.id) || user.admin?
 
     QuestionExposure.where(user: user, question_id: questions.select(:id)).exists?
   end

@@ -37,7 +37,7 @@ GitHub Actions (de hora em hora) ──► POST /internal/tick     cron-job.org 
 | `GOOGLE_CLIENT_ID` | do passo 5 (pode ficar vazio no começo, mas sem ele não há login em produção) |
 | `VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY` | gere localmente com `docker compose run --rm api bin/rails push:vapid_keys`. **A privada é segredo.** |
 
-`SECRET_KEY_BASE` e `TICK_TOKEN` são gerados pelo Render. `SEED_DEMO_QUESTIONS=1` carrega as 54 perguntas demo enquanto não houver perguntas curadas.
+`SECRET_KEY_BASE` e `TICK_TOKEN` são gerados pelo Render. A cada deploy, `bin/rails content:import` adiciona as perguntas novas da curadoria (`api/db/curated/perguntas.yml`) sem alterar as que já existem.
 
 4. Depois do deploy, `https://boletrados-api.onrender.com/up` deve responder 200. Se o Render der outro nome ao serviço, use esse nome nos passos seguintes.
 
@@ -77,7 +77,7 @@ docker compose run --rm -e RAILS_ENV=production -e SECRET_KEY_BASE_DUMMY=1 \
 ```
 
 3. Recarregue o site: o link **Moderação** aparece no cabeçalho. Para listar ou remover admins, use `admin:list` e `admin:revoke[...]`.
-4. Quando houver perguntas curadas suficientes, remova `SEED_DEMO_QUESTIONS` do Render e arquive as demo pelo painel. Elas continuam no banco, mas fora do jogo.
+4. As perguntas demo foram arquivadas automaticamente na primeira importação da curadoria. Se `SEED_DEMO_QUESTIONS` ainda existir no Render, pode removê-la.
 
 ## 7. Conferência
 
