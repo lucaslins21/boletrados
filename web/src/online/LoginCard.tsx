@@ -22,11 +22,12 @@ declare global {
   interface Window { google?: { accounts: { id: GoogleId } }; FB?: FacebookSdk; fbAsyncInit?: () => void }
 }
 
+// Sem crossOrigin: o script do Google não envia Access-Control-Allow-Origin e seria bloqueado.
 function loadScript(src: string, ready: () => boolean, label: string): Promise<void> {
   if (ready()) return Promise.resolve();
   return new Promise((resolve, reject) => {
     const existing = document.querySelector<HTMLScriptElement>(`script[src="${src}"]`);
-    const script = existing ?? Object.assign(document.createElement('script'), { src, async: true, defer: true, crossOrigin: 'anonymous' });
+    const script = existing ?? Object.assign(document.createElement('script'), { src, async: true, defer: true });
     script.addEventListener('load', () => resolve(), { once: true });
     script.addEventListener('error', () => reject(new Error(`Falha ao carregar o login ${label}.`)), { once: true });
     if (!existing) document.head.appendChild(script);
