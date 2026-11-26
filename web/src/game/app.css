@@ -11,7 +11,7 @@
 .app-top-logo{display:grid;place-items:center}
 
 /* Conteúdo */
-.app-main{position:relative;z-index:2;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;width:100%;max-width:520px;margin:0 auto;padding:6px 16px 20px}
+.app-main{position:relative;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;width:100%;max-width:520px;margin:0 auto;padding:6px 16px 20px}
 .app-main--wide{max-width:1120px}
 .app-main--fill{overflow:hidden;display:flex;flex-direction:column;padding-bottom:0}
 .app-main--fill>.app-page{flex:1;min-height:0;display:flex;flex-direction:column}
