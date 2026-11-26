@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Check } from 'lucide-react';
 import { ApiError, api, type ApiUser, type LoginProvider } from './api';
-import { FACEBOOK_APP_ID, FacebookButton, GOOGLE_CLIENT_ID, GoogleButton } from './LoginCard';
+import { FACEBOOK_LOGIN, FacebookButton, GOOGLE_CLIENT_ID, GoogleButton } from './LoginCard';
 import { useSession } from './session';
 
 const LABEL: Record<LoginProvider, string> = { google: 'Google', facebook: 'Facebook' };
@@ -17,7 +17,7 @@ export function ConnectedAccounts() {
     promise.then(({ user: next }) => { signedIn(next); setDone(success); })
       .catch((e: unknown) => setError(e instanceof ApiError ? e.message : 'Não foi possível concluir.'));
   }, [signedIn]);
-  const available: LoginProvider[] = (['google', 'facebook'] as const).filter(p => (p === 'google' ? GOOGLE_CLIENT_ID : FACEBOOK_APP_ID) || providers.includes(p));
+  const available: LoginProvider[] = (['google', 'facebook'] as const).filter(p => (p === 'google' ? GOOGLE_CLIENT_ID : FACEBOOK_LOGIN) || providers.includes(p));
   if (!user || !available.length) return null;
 
   return <section className="accounts" aria-labelledby="accounts-title">

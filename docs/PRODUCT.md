@@ -255,7 +255,7 @@ Não reabrir decisões fechadas. Preservar o histórico e o trabalho feito. Não
 | Detecção de duplicatas | ✅ (heurística: texto + resposta + números; a IA fica para o futuro) |
 | Dificuldade dinâmica (contadores, faixas, mínimo de 50, timeouts à parte) | ✅ — falta considerar habilidade e manipulação |
 | Imagens nas perguntas | ✅ |
-| Banco curado inicial: 237 perguntas (25 de escudo com imagem, nome do clube apagado), importado a cada deploy por `content:import`; as 54 demo foram arquivadas | ✅ |
+| Banco curado: 1.033 perguntas, 152 com imagem (41 escudos sem o nome do clube, 45 estádios e 66 jogadores, com fotos livres da Wikimedia Commons e crédito na explicação), importado a cada deploy por `content:import`; as 54 demo foram arquivadas | ✅ |
 | Dificultar cópia do texto | ✅ — **falta registrar eventos suspeitos** |
 | Identidade "Dia de jogo" na partida: sorteio com bolinha que abre, pergunta com resultado nas alternativas, escolha e conquista de troféu, vitória | ✅ |
 | "Dia de jogo" nas demais telas (home, convite, perfil, perguntas, moderação), com ícones próprios das categorias | ✅ |

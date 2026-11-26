@@ -10,7 +10,7 @@ Quiz de futebol mobile-first com partidas X1 assíncronas entre amigos, sorteio 
 > - avisos de vez por Web Push, perfil e estatísticas, envio de perguntas e moderação;
 > - Política de Privacidade (`/privacidade`) e Termos de Uso (`/termos`).
 >
-> O banco começa com 237 perguntas curadas (`api/db/curated/perguntas.yml`, incluindo 25 escudos com imagem), importadas a cada deploy. Produto em [`docs/PRODUCT.md`](docs/PRODUCT.md), arquitetura em [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md) e identidade visual em [`docs/ART_DIRECTION.md`](docs/ART_DIRECTION.md).
+> O banco tem 1.033 perguntas curadas (`api/db/curated/perguntas.yml`), 152 delas com imagem (escudos, estádios e jogadores), importadas a cada deploy. Produto em [`docs/PRODUCT.md`](docs/PRODUCT.md), arquitetura em [`docs/ARQUITETURA.md`](docs/ARQUITETURA.md) e identidade visual em [`docs/ART_DIRECTION.md`](docs/ART_DIRECTION.md).
 
 Monorepo:
 

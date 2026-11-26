@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   /** Client ID OAuth do Google (público). Sem ele, só o login de desenvolvimento aparece (em npm run dev). */
   readonly VITE_GOOGLE_CLIENT_ID?: string;
   readonly VITE_FACEBOOK_APP_ID?: string;
+  readonly VITE_FACEBOOK_LOGIN?: string;
 }
 
 interface ImportMeta {

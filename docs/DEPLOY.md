@@ -79,6 +79,7 @@ GitHub Actions (de hora em hora) ──► POST /internal/tick     cron-job.org 
 4. Copie o **ID do app** (público) e a **Chave secreta do app** (**segredo**):
    - Render: `FACEBOOK_APP_ID` e `FACEBOOK_APP_SECRET`;
    - Vercel: `VITE_FACEBOOK_APP_ID` (tipo Configuração) e **Redeploy**.
+   - Para mostrar o botão: Vercel `VITE_FACEBOOK_LOGIN` = `on` (Configuração) e **Redeploy**. Sem ela, o botão fica escondido (útil enquanto o app não é publicado na Meta).
 5. Mude o app de **Desenvolvimento** para **Ao vivo** (no topo do painel). Em desenvolvimento, só quem tem função no app consegue entrar.
 
 O login nunca vincula contas por e-mail. Para usar Google e Facebook na mesma conta, o jogador conecta o segundo login em **Perfil › Contas conectadas** (uma conta vazia daquele login é absorvida; uma conta com histórico não é misturada).

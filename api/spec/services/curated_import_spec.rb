@@ -20,7 +20,8 @@ RSpec.describe CuratedImport do
 
   def import!(list = entries)
     dir.join("perguntas.yml").write(list.to_yaml)
-    dir.join("standard.png").binwrite(png)
+    dir.join("escudos").mkpath
+    dir.join("escudos/standard.png").binwrite(png)
     described_class.call(path: dir.join("perguntas.yml"), images_dir: dir)
   end
 
@@ -61,6 +62,19 @@ RSpec.describe CuratedImport do
     expect(demo.published.count).to eq(0)
     demo.first.update!(status: "published") # restaurada pela moderação
     expect(import!.archived_demo).to eq(0) # sem perguntas novas, não mexe
+  end
+
+  it "aceita imagem em subpasta e acrescenta o crédito da foto à explicação" do
+    photo = { "ref" => "cur-t-003", "categorias" => %w[estadios], "dificuldade" => "medio",
+              "pergunta" => "Que estádio é este?", "imagem" => "estadios/x.png", "correta" => "Maracanã",
+              "erradas" => %w[Mineirão Morumbi Pacaembu], "explicacao" => "Estádio do Rio.",
+              "credito" => "Foto: Fulano / Wikimedia Commons (CC BY-SA 4.0)." }
+    dir.join("estadios").mkpath
+    dir.join("estadios/x.png").binwrite(png + "y")
+    import!(entries + [ photo ])
+    q = Question.find_by!(external_ref: "cur-t-003")
+    expect(q.explanation).to eq("Estádio do Rio. Foto: Fulano / Wikimedia Commons (CC BY-SA 4.0).")
+    expect(q.image).to be_present
   end
 
   it "espalha a resposta correta entre as quatro posições" do

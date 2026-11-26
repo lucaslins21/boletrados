@@ -6,6 +6,8 @@ import { useSession } from './session';
 
 export const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 export const FACEBOOK_APP_ID = import.meta.env.VITE_FACEBOOK_APP_ID;
+/** Botão do Facebook só aparece com VITE_FACEBOOK_LOGIN=on (desligado até a Meta publicar o app). */
+export const FACEBOOK_LOGIN = !!FACEBOOK_APP_ID && import.meta.env.VITE_FACEBOOK_LOGIN === 'on';
 const GIS_SRC = 'https://accounts.google.com/gsi/client';
 const FB_SRC = 'https://connect.facebook.net/pt_BR/sdk.js';
 const FB_VERSION = 'v26.0';
@@ -101,9 +103,9 @@ function DevLogin({ onError }: { onError: (message: string) => void }) {
 export function LoginButtons() {
   const [error, setError] = useState<string | null>(null);
   const finish = useLoginResult(setError);
-  const none = !FACEBOOK_APP_ID && !GOOGLE_CLIENT_ID && !import.meta.env.DEV;
+  const none = !FACEBOOK_LOGIN && !GOOGLE_CLIENT_ID && !import.meta.env.DEV;
   return <div className="login-buttons">
-    {FACEBOOK_APP_ID && <FacebookButton onToken={token => finish(api.facebookLogin(token))} onError={setError}/>}
+    {FACEBOOK_LOGIN && <FacebookButton onToken={token => finish(api.facebookLogin(token))} onError={setError}/>}
     {GOOGLE_CLIENT_ID && <GoogleButton onCredential={credential => finish(api.googleLogin(credential))} onError={setError}/>}
     {import.meta.env.DEV && <DevLogin onError={setError}/>}
     {none && <p className="form-error">Login ainda não configurado neste ambiente.</p>}

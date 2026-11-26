@@ -1,4 +1,4 @@
-# Importa o banco de perguntas da curadoria (db/curated/perguntas.yml + imagens em db/curated/escudos).
+# Importa o banco de perguntas da curadoria (db/curated/perguntas.yml + imagens em db/curated/<pasta>/).
 #
 # - Idempotente e só ADICIONA: pergunta cujo `ref` já existe não é tocada (edições feitas pela moderação
 #   no painel são preservadas). Para corrigir uma pergunta já importada, use o painel /admin.
@@ -6,11 +6,13 @@
 # - A alternativa correta é escrita primeiro no arquivo; a posição final é sorteada de forma
 #   determinística pelo `ref` (estável entre importações e espalhada entre A, B, C e D).
 # - Na primeira importação que adiciona perguntas, as demonstrativas (demo-*) são arquivadas.
+# - `imagem` é relativo a db/curated (ex.: escudos/standard.png); um nome solto é procurado em escudos/.
+# - `credito` (autor e licença da foto) é acrescentado ao fim da explicação, como pedem as licenças livres.
 class CuratedImport
   LEVELS = { "facil" => "easy", "medio" => "medium", "dificil" => "hard" }.freeze
   Result = Data.define(:created, :skipped, :archived_demo)
 
-  def self.call(path: Rails.root.join("db/curated/perguntas.yml"), images_dir: Rails.root.join("db/curated/escudos"))
+  def self.call(path: Rails.root.join("db/curated/perguntas.yml"), images_dir: Rails.root.join("db/curated"))
     new(path, images_dir).call
   end
 
@@ -51,12 +53,16 @@ class CuratedImport
     level = LEVELS.fetch(entry.fetch("dificuldade"))
     question = Question.new(
       external_ref: ref, prompt: entry.fetch("pergunta"), options:, correct_index: position,
-      explanation: entry.fetch("explicacao"), source_url: entry["fonte"].presence,
+      explanation: [ entry.fetch("explicacao"), entry["credito"].presence ].compact.join(" "), source_url: entry["fonte"].presence,
       initial_difficulty: level, difficulty: level, status: "published", published_at: Time.current
     )
-    question.image = QuestionImage.curated!(@images_dir.join(entry["imagem"]).binread) if entry["imagem"].present?
+    question.image = QuestionImage.curated!(image_path(entry["imagem"]).binread) if entry["imagem"].present?
     entry.fetch("categorias").each { |slug| question.question_categories.build(category: categories.fetch(slug)) }
     question
+  end
+
+  def image_path(name)
+    name.include?("/") ? @images_dir.join(name) : @images_dir.join("escudos", name)
   end
 
   def archive_demo!
